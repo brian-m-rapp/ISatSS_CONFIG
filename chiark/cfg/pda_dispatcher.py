@@ -66,8 +66,8 @@ ambigFilter = []
 ambigFilter.append({'criteria':'substring', 'requires':{'parms':{'contains':'metopa', 'contains':'l2_winds-lite_ambiguity'}}})
 
 job['sources'] = {}
-job['sources']['pda'] = {'protocol':'FTPS', 'host':'140.90.190.143', 'authid':1, 'timeout':30, 'paths':{}, 'sessions':1}
-job['sources']['pda']['paths']['ascat'] = {'path':'/PDAFileLinks/GLOBAL/ASCAT'}
+job['sources']['pda'] = {'protocol':'FTPS', 'host':'masaq', 'authid':1, 'timeout':30, 'paths':{}, 'sessions':1}
+job['sources']['pda']['paths']['ascat'] = {'path':'/data/PDAFileLinks/GLOBAL/ASCAT'}
 
 job['sources']['pda']['paths']['ascat']['files'] = {}
 job['sources']['pda']['paths']['ascat']['files']['winds'] = {'filt':windsFilter}

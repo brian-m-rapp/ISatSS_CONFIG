@@ -267,7 +267,7 @@ groups[8]['jobs'][2]  = {'host':1,'cfg':'g16_george_meso'}
 groups[8]['jobs'][3]  = {'host':1,'cfg':'g16_ncm'}
 
 groups[9] = {}
-groups[9]['name']     = 'goes-16_ldm_glm'
+groups[9]['name']     = 'pda'
 groups[9]['description'] = """
 PDA product group
 """
