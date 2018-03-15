@@ -144,6 +144,7 @@ nodes[38] = {'path':'/dev/shm/isatss_data/info/38_hcast_input',           'files
 nodes[42] = {'path':'/dev/shm/isatss_data/info/42_ldm_arch_input',        'filesystem': '/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'} #
 nodes[54] = {'path':'/dev/shm/isatss_data/info/54_ldm_out_input',         'filesystem': '/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
 
+nodes[58] = {'path':'/data/isatss_data/decoders',    'filesystem': '/',    'ctype':'data','stype':'attached','root':'/data/isatss_data/decoders'}
 
 # system defaults
 defaults = {}
