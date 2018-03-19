@@ -28,19 +28,13 @@ job['log_node'] = 1
 
 job['notifications']   = {}
 
+job['data'] = {}
 job['data']['winds'] = {}
-job['data']['winds']['location']     = {'node':59}
+job['data']['winds']['location']     = {'node':60}
 job['data']['winds']['aging']        = {'window':3600, 'mode':'creationtime'}
 job['data']['winds']['method']       = {'technique':'inplace'}
 job['data']['winds']['activeonly']   = True
 job['data']['winds']['schedule']     = {'interval':600}
-
-job['data']['ambig'] = {}
-job['data']['ambig']['location']     = {'node':59}
-job['data']['ambig']['aging']        = {'window':3600, 'mode':'creationtime'}
-job['data']['ambig']['method']       = {'technique':'inplace'}
-job['data']['ambig']['activeonly']   = True
-job['data']['ambig']['schedule']     = {'interval':600}
 
 job['data']['log']                   = {}
 job['data']['log']['location']       = {'node':job['log_node']}
@@ -54,16 +48,37 @@ job['data']['log']['activeonly']     = True
 job['loglevel']    = 5
 job['cntl_node']   = 11
 
-job['input_type']  = {'type':'infofile','node':42,'delete_file':True, 'delete_info':True}
+job['input_type']  = {'type':'infofile','node':59,'delete_file':True, 'delete_info':True}
+
+datestr = []
+datestr.append({'method':'extract_field','delimiter':'/','field':-1,'name':'basename','target':'file'})
+datestr.append({'method':'extract_field','delimiter':'_','field':1,'start_char':0,'nchar':8,'name':'datestr'})
+
+timestr = []
+timestr.append({'method':'extract_field','delimiter':'/','field':-1,'name':'basename','target':'file'})
+timestr.append({'method':'extract_field','delimiter':'_','field':2,'start_char':0,'nchar':4,'name':'datestr'})
+
+instance = []
+instance.append({'method':'extract_field','delimiter':'/','field':-1,'start_char':-1,'name':'instance','target':'file'})
 
 job['outputs'] = {}
-job['outputs']['abi'] = {'dataitem':'ldminarch','filt':[], 'path':[]}
-job['outputs']['abi']['filt'].append({'filt':'substring','target':'file','contains':'_ABI-','name':'ABI Test'})
-pathstack = []
-pathstack.append({'method':'extract_field','delimiter':'/','field':-1,'name':'basename','target':'file'})
-pathstack.append({'method':'extract_field','delimiter':'_','field':3,'start_char':1,'nchar':9,'name':'startfieldextract'})
-pathstack.append({'method':'date_reformat','inspec':'%Y%j%H','outspec':'%Y%m%d%H','name':'startfieldreformat'})
-job['outputs']['abi']['path'].append({'default':'abi_','name':'prefix'})
-job['outputs']['abi']['path'].append({'target':'file','stack':pathstack,'name':'yearmodahr'})
+job['outputs']['winds'] = {'dataitem':'winds','filt':[], 'path':[], 'use_name': False}
+job['outputs']['winds']['filt'].append({'filt':'substring', 'target':'file', 'contains':'ascat_',        'name':'contains ascat'})
+job['outputs']['winds']['filt'].append({'filt':'substring', 'target':'file', 'contains':'metopa',        'name':'contains metopa'})
+job['outputs']['winds']['filt'].append({'filt':'substring', 'target':'file', 'endswith':'l2_winds-lite', 'name':'endswith l2_winds-lite'})
+job['outputs']['winds']['path'].append({'default':'ascata_hi/','name':'subdir'})
+job['outputs']['winds']['path'].append({'target':'file','stack':datestr,'name':'date'})
+job['outputs']['winds']['path'].append({'target':'file','stack':timestr,'name':'time'})
+job['outputs']['winds']['path'].append({'default':'.ascat','name':'ext'})
 
+job['outputs']['ambig'] = {'dataitem':'winds','filt':[], 'path':[], 'use_name': False}
+job['outputs']['ambig']['filt'].append({'filt':'substring', 'target':'file', 'contains':'ascat_',         'name':'contains ascat'})
+job['outputs']['ambig']['filt'].append({'filt':'substring', 'target':'file', 'contains':'metopa',         'name':'contains metopa'})
+job['outputs']['ambig']['filt'].append({'filt':'substring', 'target':'file', 'contains':'lite_ambiguity', 'name':'contains lite_ambiguity'})
+job['outputs']['ambig']['path'].append({'default':'ascata_hi_ambig','name':'dirprefix'})
+job['outputs']['ambig']['path'].append({'target':'file','stack':instance,'name':'inst'})
+job['outputs']['ambig']['path'].append({'default':'/','name':'dirchar'})
+job['outputs']['ambig']['path'].append({'target':'file','stack':datestr, 'name':'date'})
+job['outputs']['ambig']['path'].append({'target':'file','stack':timestr, 'name':'time'})
+job['outputs']['ambig']['path'].append({'default':'.ascat','name':'ext'})
 
