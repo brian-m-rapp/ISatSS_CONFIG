@@ -26,8 +26,8 @@ job['log']      = 'pda_dispatch_log'
 job['log_node'] = 1
 
 job['notifications']   = {}
-job['notifications']['winds']   = {'node':58, 'enabled':True, 'fields':['file', 'node'], 'prefix':'grbl1b'}
-job['notifications']['ambig']   = {'node':58, 'enabled':True, 'fields':['file', 'node'], 'prefix':'hcast'}
+job['notifications']['winds']   = {'node':59, 'enabled':True, 'fields':['file', 'node'], 'prefix':'winds'}
+job['notifications']['ambig']   = {'node':59, 'enabled':True, 'fields':['file', 'node'], 'prefix':'ambig'}
 
 job['data'] = {}	# Need to modify
 job['data']['winds']                   = {}
@@ -46,30 +46,36 @@ job['data']['log']['method']          = {'technique':'inplace'}
 job['data']['log']['schedule']        = {'interval':3600}
 job['data']['log']['activeonly']      = True
 
-job['loglevel']         = 6
+job['loglevel']         = 5
 job['cntl_node']        = 20	# Need to modify
 job['max_sleep']        = 10	# Need to modify
 job['work_time']        = 60	# Need to modify
 
+'''
 windsNaming    = {'inspec':'', 'outspec':''}
 windsRetriever = {'enabled':True, 'dataitem':'winds', 'notifications':['winds'], 'naming':windsNaming}
+'''
+windsRetriever = {'enabled':True, 'dataitem':'winds', 'notifications':['winds']}
 windsFilter    = []
+windsFilter.append({'filt':'substring', 'target':'name', 'startswith':'ascat', 'name':'startswith ascat'})
 windsFilter.append({'filt':'substring', 'target':'name', 'contains':'metopa', 'name':'contains metopa'})
 windsFilter.append({'filt':'substring', 'target':'name', 'endswith':'l2_winds-lite', 'name':'endswith l2_winds-lite'})
 
+'''
 ambigNaming    = {'inspec':'', 'outspec':''}
 ambigRetriever = {'enabled':True, 'dataitem':'winds', 'notifications':['ambig'], 'naming':ambigNaming}
+'''
+ambigRetriever = {'enabled':True, 'dataitem':'winds', 'notifications':['ambig']}
 ambigFilter    = []
+ambigFilter.append({'filt':'substring', 'target':'name', 'startswith':'ascat', 'name':'startswith ascat'})
 ambigFilter.append({'filt':'substring', 'target':'name', 'contains':'metopa', 'name':'contains metopa'})
 ambigFilter.append({'filt':'substring', 'target':'name', 'contains':'l2_winds-lite_ambiguity', 'name':'contains l2_winds-lite_ambiguity'})
 
 job['sources'] = {}
 job['sources']['pda'] = {'protocol':'FTPS', 'host':'lotus', 'authid':3, 'timeout':30, 'paths':{}, 'sessions':1}
 job['sources']['pda']['paths']['ascat'] = {'path':'/appdata/PDAFileLinks/GLOBAL/ASCAT', 'files':{}}
-job['sources']['pda']['paths']['ascat']['files']['winds'] = {'retrieve':{}, 'filt':windsFilter}
-job['sources']['pda']['paths']['ascat']['files']['winds']['retrieve']['winds'] = windsRetriever
-job['sources']['pda']['paths']['ascat']['files']['ambig'] = {'retrieve':{}, 'filt':ambigFilter}
-job['sources']['pda']['paths']['ascat']['files']['ambig']['retrieve']['ambig'] = ambigRetriever
+job['sources']['pda']['paths']['ascat']['files']['winds'] = {'retrieve':{'winds':windsRetriever}, 'filt':windsFilter}
+job['sources']['pda']['paths']['ascat']['files']['ambig'] = {'retrieve':{'ambig':ambigRetriever}, 'filt':ambigFilter}
 
 """
 job['sources']['ldm']['paths']['dropzone']['files']['grbl1b']  = {'retrieve':{},'filt':grbfiltdef}
