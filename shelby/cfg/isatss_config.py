@@ -20,6 +20,8 @@
 """
 Name of the ISatSS Processing facility - MI6 includes this in telemetry, notifications, and alerts
 """
+sudocmd = 'sudo -iu'
+
 site = 'NAPO'
 
 tier = 'dev'	# dev/qa/ops - unique to IDP deployment, not used outside of this configuration file
