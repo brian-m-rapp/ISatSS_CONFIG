@@ -62,7 +62,7 @@ instance = []
 instance.append({'method':'extract_field','delimiter':'/','field':-1,'start_char':-1,'name':'instance','target':'file'})
 
 job['outputs'] = {}
-job['outputs']['winds'] = {'dataitem':'winds','filt':[], 'path':[], 'use_name': False}
+job['outputs']['winds'] = {'dataitem':'winds','filt':[], 'path':[], 'appendname': False}
 job['outputs']['winds']['filt'].append({'filt':'substring', 'target':'file', 'contains':'ascat_',        'name':'contains ascat'})
 job['outputs']['winds']['filt'].append({'filt':'substring', 'target':'file', 'contains':'metopa',        'name':'contains metopa'})
 job['outputs']['winds']['filt'].append({'filt':'substring', 'target':'file', 'endswith':'l2_winds-lite', 'name':'endswith l2_winds-lite'})
@@ -71,7 +71,7 @@ job['outputs']['winds']['path'].append({'target':'file','stack':datestr,'name':'
 job['outputs']['winds']['path'].append({'target':'file','stack':timestr,'name':'time'})
 job['outputs']['winds']['path'].append({'default':'.ascat','name':'ext'})
 
-job['outputs']['ambig'] = {'dataitem':'winds','filt':[], 'path':[], 'use_name': False}
+job['outputs']['ambig'] = {'dataitem':'winds','filt':[], 'path':[], 'appendname': False}
 job['outputs']['ambig']['filt'].append({'filt':'substring', 'target':'file', 'contains':'ascat_',         'name':'contains ascat'})
 job['outputs']['ambig']['filt'].append({'filt':'substring', 'target':'file', 'contains':'metopa',         'name':'contains metopa'})
 job['outputs']['ambig']['filt'].append({'filt':'substring', 'target':'file', 'contains':'lite_ambiguity', 'name':'contains lite_ambiguity'})
