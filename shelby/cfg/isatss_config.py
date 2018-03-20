@@ -45,7 +45,8 @@ hosts[2] = {'host':'grb01.nhc.noaa.gov','user':'ldm', 'ext':1336,'cmd':4,'resp':
 hosts = {}
 
 hosts[1] = {'host':'shelby.napo.nws.noaa.gov', 'shortname':'shelby'}
-hosts[2] = {'host':'dev1.napo.nws.noaa.gov',   'shortname':'dev1', 'connecteas':'140.90.141.140', 'resolvenames':False}
+#hosts[2] = {'host':'dev1.napo.nws.noaa.gov',   'shortname':'dev1', 'connecteas':'140.90.141.140', 'resolvenames':False}
+hosts[2] = {'host':'dev1.napo.nws.noaa.gov',   'shortname':'dev1'}
 
 hattr = {}
 hattr[1] = {'nics': [('netname', 'eth0')],   'filesystems': []}
