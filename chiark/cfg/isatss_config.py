@@ -18,8 +18,8 @@
 """
 
 hosts = {}
-hosts[0] = {'host':'chiark.dilireum.org', 'shortname':'chiark'}
-hosts[1] = {'host':'masaq.dilireum.org',  'shortname':'masaq'}
+hosts[1] = {'host':'chiark.dilireum.org', 'shortname':'chiark'}
+hosts[2] = {'host':'masaq.dilireum.org',  'shortname':'masaq'}
 
 hattr = {}
 hattr[1] = {'nics': [('netname', 'eth0')],   'filesystems': []}
