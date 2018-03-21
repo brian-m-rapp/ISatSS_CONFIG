@@ -195,8 +195,8 @@ groups[4]['description'] = """
 ISatSS LDM Output Group
 """
 groups[4]['jobs']     = {}
-groups[4]['jobs'][1]  = {'host':1,'cfg':'ldm_output_replicator'}
-groups[4]['jobs'][2]  = {'host':1,'cfg':'ldm_output_manager'}
+groups[4]['jobs'][1]  = {'host':2,'cfg':'ldm_output_replicator'}
+groups[4]['jobs'][2]  = {'host':2,'cfg':'ldm_output_manager'}
 
 groups[5] = {}
 groups[5]['name']     = 'ldmin'
@@ -206,9 +206,9 @@ ldm_input_manager runs an instance of LDMer on the LDM Input Server, placing dat
 ldm_dispatch_manager runs an instance of Dispatcher on the LDM Input Server, 
 """
 groups[5]['jobs']     = {}
-groups[5]['jobs'][1]  = {'host':2,'cfg':'ldm_input_manager'}
-groups[5]['jobs'][2]  = {'host':2,'cfg':'ldm_in_dispatcher'}
-groups[5]['jobs'][3]  = {'host':2,'cfg':'ldm_in_replicator'}
+groups[5]['jobs'][1]  = {'host':1,'cfg':'ldm_input_manager'}
+groups[5]['jobs'][2]  = {'host':1,'cfg':'ldm_in_dispatcher'}
+groups[5]['jobs'][3]  = {'host':1,'cfg':'ldm_in_replicator'}
 
 groups[6] = {}
 groups[6]['name']     = 'goes-16_grb_ldm_l1b_processing'
@@ -217,8 +217,8 @@ The ldm_l1b_processing group generates AWIPS-II compatible reflectance and brigh
 tiles from full scene ABI L1B scene files.
 """
 groups[6]['jobs']     = {}
-groups[6]['jobs'][1]  = {'host':1,'cfg':'g16_george_l1b'}
-groups[6]['jobs'][2]  = {'host':1,'cfg':'g16_tile_replicator'}
+groups[6]['jobs'][1]  = {'host':2,'cfg':'g16_george_l1b'}
+groups[6]['jobs'][2]  = {'host':2,'cfg':'g16_tile_replicator'}
 
 
 
@@ -229,10 +229,10 @@ The pkt_l1b_processing group generates AWIPS-II compatible reflectance and brigh
 tiles from incoming GRB CCSDS packets.
 """
 groups[7]['jobs']     = {}
-groups[7]['jobs'][1]  = {'host':1,'cfg':'gpacket_config'}
-groups[7]['jobs'][2]  = {'host':1,'cfg':'grb_abi_lhcp_processor'}
-groups[7]['jobs'][3]  = {'host':1,'cfg':'grb_abi_rhcp_processor'}
-groups[7]['jobs'][4]  = {'host':1,'cfg':'grb_abi_band2_processor'}
+groups[7]['jobs'][1]  = {'host':2,'cfg':'gpacket_config'}
+groups[7]['jobs'][2]  = {'host':2,'cfg':'grb_abi_lhcp_processor'}
+groups[7]['jobs'][3]  = {'host':2,'cfg':'grb_abi_rhcp_processor'}
+groups[7]['jobs'][4]  = {'host':2,'cfg':'grb_abi_band2_processor'}
 
 groups[8] = {}
 groups[8]['name']     = 'goes-16_grb_nawips_imagery'
@@ -240,9 +240,9 @@ groups[8]['description'] = """
 The ncp_imagery group translates incoming ABI tiles into NAWIPS compatible McIDAS Area Files
 """
 groups[8]['jobs']     = {}
-groups[8]['jobs'][1]  = {'host':1,'cfg':'g16_george_fdco'}
-groups[8]['jobs'][2]  = {'host':1,'cfg':'g16_george_meso'}
-groups[8]['jobs'][3]  = {'host':1,'cfg':'g16_ncm'}
+groups[8]['jobs'][1]  = {'host':2,'cfg':'g16_george_fdco'}
+groups[8]['jobs'][2]  = {'host':2,'cfg':'g16_george_meso'}
+groups[8]['jobs'][3]  = {'host':2,'cfg':'g16_ncm'}
 
 groups[9] = {}
 groups[9]['name']     = 'pda'
@@ -250,5 +250,5 @@ groups[9]['description'] = """
 PDA product group
 """
 groups[9]['jobs']     = {}
-groups[9]['jobs'][1] = {'host':1,'cfg':'pda_dispatcher'}
-groups[9]['jobs'][2] = {'host':1,'cfg':'pda_replicator'}
+groups[9]['jobs'][1] = {'host':2,'cfg':'pda_dispatcher'}
+groups[9]['jobs'][2] = {'host':2,'cfg':'pda_replicator'}
