@@ -202,9 +202,9 @@ ldm_input_manager runs an instance of LDMer on the LDM Input Server, placing dat
 ldm_dispatch_manager runs an instance of Dispatcher on the LDM Input Server, 
 """
 groups[5]['jobs']     = {}
-groups[5]['jobs'][1]  = {'host':1,'cfg':'ldm_input_manager'}
-groups[5]['jobs'][2]  = {'host':1,'cfg':'ldm_in_dispatcher'}
-groups[5]['jobs'][3]  = {'host':1,'cfg':'ldm_in_replicator'}
+groups[5]['jobs'][1]  = {'host':2,'cfg':'ldm_input_manager'}
+groups[5]['jobs'][2]  = {'host':2,'cfg':'ldm_in_dispatcher'}
+groups[5]['jobs'][3]  = {'host':2,'cfg':'ldm_in_replicator'}
 
 groups[6] = {}
 groups[6]['name']     = 'goes-16_grb_ldm_l1b_processing'
