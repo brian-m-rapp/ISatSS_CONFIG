@@ -1,4 +1,4 @@
-# isatss job definition for garbage collector
+# isatss job definition for himawari dispatcher
 
 
 """
@@ -21,10 +21,10 @@
 
 
 job = {}
-job['name']  = 'grb_notifier'
-job['cmd']   = 'notifier'
-job['class'] = 'Notifier'
-job['log']   = 'grb_notifier_log'
+job['name']  = 'h8_dispatcher'
+job['cmd']   = 'dispatcher'
+job['class'] = 'Dispatcher'
+job['log']   = 'h8_dispatcher_log'
 
 job['data'] = {}
 job['data']['log']                    = {}
@@ -36,21 +36,7 @@ job['data']['log']['method']          = {'technique':'inplace'}
 job['data']['log']['schedule']        = {'interval':3600}
 job['data']['log']['activeonly']      = True
 
+job['src'] = {}
+job['src'][1] = {'protocol':'}
 
-job['input_type']  = {'type':'infofile','node':16,'delete_file':True, 'delete_info':True}
-job['pause_empty'] = 60.0
-job['qlimit']      = 10
-
-job['vlabs'] = {}
-#job['vlabs']['dev'] = {}
-#job['vlabs']['dev']['urlbase']     = 'https://vlab-dev.ncep.noaa.gov'
-#job['vlabs']['dev']['sslnoverify'] = True
-job['vlabs']['ops'] = {}
-job['vlabs']['ops']['urlbase']     = 'https://vlab.ncep.noaa.gov'
-job['vlabs']['ops']['sslnoverify'] = False
-
-job['batch_interval'] = 300
-job['es_index']		  = 'isatss_products'
-job['es_dtype']       = 'product_batch'
-job['site']           = 'CPRK'
 

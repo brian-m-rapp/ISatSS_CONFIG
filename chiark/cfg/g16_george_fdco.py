@@ -1,4 +1,4 @@
-# isatss goes-r 2km abi l1b to fixed grid tiles
+# isatss goes-r abi l1b to fixed grid tiles
 
 """
     IDP Satellite Support Subsystem
@@ -19,29 +19,23 @@
 """
 
 job = {}
-job['name']  = 'george_goesr_test_tiles_scmirecttiles'
-job['cmd']   = 'george'
-job['class'] = 'GeoRGE'
-job['log']   = 'george_goesr_test_tiles_scmirecttiles_log'
-
-job['notifications'] = {}
-job['notifications']['ncm'] = {'node':8,'enabled':True,'fields':['file','node'],'prefix':'abi_fixed_tiles'}
-job['notifications']['mon'] = {'node':16,'enabled':False,'fields':['file'],'prefix':'abi_fixed_tiles'}
+job['name']   = 'g16_george_fdco'
+job['cmd']    = 'george'
+job['class']  = 'GeoRGE'
+job['log']    = 'g16_george_fdco_log'
+job['log_id'] = 1
 
 job['data']  = {}
 job['data']['products'] = {}
-job['data']['products']['location']   = {'node':15, 'path':'goesr/reprojected'}
-job['data']['products']['aging']      = {'window':7200, 'mode':'nested','fmt':'%Y%m%d%H%M%S.nc','extract':{'method':'tail','nchars':17}}
+job['data']['products']['location']   = {'node':51}
+job['data']['products']['aging']      = {'window':3600, 'mode':'creationtime'}
 job['data']['products']['method']     = {'technique':'inplace'}
-job['data']['infoncm']                = {}
-job['data']['infoncm']['location']    = {'node':8}
-job['data']['infoncm']['filter']      = {'type':'starts','test':job['notifications']['ncm']['prefix']}
-job['data']['infoncm']['aging']       = {'window':3600, 'mode':'creationtime'}
-job['data']['infoncm']['method']      = {'technique':'inplace'}
-job['data']['infoncm']['activeonly']  = True
-job['data']['infoncm']['schedule']    = {'interval':600}
+job['data']['prodinfo'] = {}
+job['data']['prodinfo']['location']   = {'node':8}
+job['data']['prodinfo']['aging']      = {'window':3600, 'mode':'creationtime'}
+job['data']['prodinfo']['method']     = {'technique':'inplace'}
 job['data']['log']                    = {}
-job['data']['log']['location']        = {'node':1,'path':'log'}
+job['data']['log']['location']        = {'node':job['log_id']}
 job['data']['log']['aging']           = {'window':2,'mode':'count'}
 job['data']['log']['archive']         = {'window':7,'mode':'count'}
 job['data']['log']['roots']           = [job['log']]
@@ -50,15 +44,18 @@ job['data']['log']['schedule']        = {'interval':3600}
 job['data']['log']['activeonly']      = True
 
 job['pause_empty'] = 5
-job['qlimit']      = 100	# number of queued items to process in single run of the process method
-job['maxopen']     = 500	# maximum number of input files to hold open at any one time
-job['cache_life']  = 1200
-job['cache_check'] = 120
+job['qlimit']      = 500
+job['maxopen']     = 500
+job['cache_life']  = 86400
+job['cache_check'] = 300
 
-job['input_type']  = {'type':'infofile','node':12,'delete_file':False, 'delete_info':True}
 
-job['cntl_node']     = 13
 
+job['input_type']    = {'type':'infofile','node':12,'delete_file':True, 'delete_info':True}
+
+job['cntl_node']     = 28
+
+job['notifications'] = {'ncm':{'node':8,'enabled':True,'prefix':'fdco'}}
 
 job['hash_definition'] = []
 job['hash_definition'].append({'parm':'reftime','meta':{'src':'globalmeta/start_date_time','fmt':'float','method':'string_to_unixtime','in_tfmt':'%Y%j%H%M%S'},'info':'reftime', 'part':'dynamic'})
@@ -97,13 +94,15 @@ el_off_stack.append('*')
 job['grid_definition'].append({'parm':'el_off', 'meta':{'method':'calc','stack':el_off_stack,'fmt':'float'},                     'info':'el_off',  'part':'parms'})
 job['grid_definition'].append({'parm':'lon0',   'meta':{'src':'globalmeta/satellite_longitude','fmt':'float'},                  'info':'lon0',    'part':'parms'})
 
+
+
 job['grids']              = {}
 job['grids'][1]           = {'type':'Rectilinear','xlen':4500,'ylen':4500, 'ncname':'rectilinear_projection'}		#2km FD rectilinear
-job['grids'][1]['parms']  = {'j0':2250,'lat0':0.0,'i0':2250,'lon0':-89.5,'dlat':0.0312,'dlon':0.0312}
+job['grids'][1]['parms']  = {'j0':2250,'lat0':0.0,'i0':2250,'lon0':-75.0,'dlat':0.0312,'dlon':0.0312}
 job['grids'][2]           = {'type':'Rectilinear','xlen':9000,'ylen':9000, 'ncname':'rectilinear_projection'}		#1km FD rectilinear
-job['grids'][2]['parms']  = {'j0':4500,'lat0':0.0,'i0':4500,'lon0':-89.5,'dlat':0.0156,'dlon':0.0156}
+job['grids'][2]['parms']  = {'j0':4500,'lat0':0.0,'i0':4500,'lon0':-75.0,'dlat':0.0156,'dlon':0.0156}
 job['grids'][3]           = {'type':'Rectilinear','xlen':18000,'ylen':18000, 'ncname':'rectilinear_projection'}		#hkm FD rectilinear
-job['grids'][3]['parms']  = {'j0':9000,'lat0':0.0,'i0':9000,'lon0':-89.5,'dlat':0.0078,'dlon':0.0078}
+job['grids'][3]['parms']  = {'j0':9000,'lat0':0.0,'i0':9000,'lon0':-75.0,'dlat':0.0078,'dlon':0.0078}
 job['grids'][4]           = {'type':'Rectilinear','xlen':3000,'ylen':2000, 'ncname':'rectilinear_projection'}		#2km CO rectilinear
 job['grids'][4]['parms']  = {'j0':1000,'lat0':29.28,'i0':1500,'lon0':-91.39,'dlat':0.022,'dlon':0.022}
 job['grids'][5]           = {'type':'Rectilinear','xlen':6000,'ylen':4000, 'ncname':'rectilinear_projection'}		#1km CO rectilinear
@@ -332,6 +331,7 @@ job['tilesets'][6]['tiles'][14] = {'x0':3000,'y0':6000,'xlen':3000,'ylen':2000}
 job['tilesets'][6]['tiles'][15] = {'x0':6000,'y0':6000,'xlen':3000,'ylen':2000}
 job['tilesets'][6]['tiles'][16] = {'x0':9000,'y0':6000,'xlen':3000,'ylen':2000}
 
+
 job['defaults'] = {}
 job['defaults']['inputs'] = {}
 job['defaults']['inputs']['gridtype'] = 'static'
@@ -397,9 +397,6 @@ job['defaults']['outputs']['tileset'] = 1
 job['defaults']['outputs']['notify'] = ['ncm']
 job['defaults']['outputs']['enabled'] = True
 job['defaults']['outputs']['pathdef'] = []
-job['defaults']['outputs']['pathdef'].append({'src':'globalmeta/start_date_time','method':'tstring_reformat','in_tfmt':'%Y%j%H%M%S','tfmt':'%Y%m%d','delimiter':'/'})
-job['defaults']['outputs']['pathdef'].append({'src':'globalmeta/start_date_time','method':'tstring_reformat','in_tfmt':'%Y%j%H%M%S','tfmt':'%H','delimiter':'/'})
-job['defaults']['outputs']['pathdef'].append({'src':'globalmeta/channel_id','fmt':'str','pad':2,'padval':'0','delimiter':''})
 job['defaults']['outputs']['namedef'] = []
 job['defaults']['outputs']['namedef'].append({'ident':'product','pad':2,'padval':'a','delimiter':'_'})
 job['defaults']['outputs']['namedef'].append({'src':'globalmeta/channel_id','fmt':'str','pad':2,'padval':'0','delimiter':'_'})

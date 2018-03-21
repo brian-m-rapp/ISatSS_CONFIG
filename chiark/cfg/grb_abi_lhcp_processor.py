@@ -26,7 +26,7 @@ job['cmd']   = 'grber'
 job['class'] = 'GRBProc'
 job['log']   = 'grb_abi_lhcp_processor_log'
 
-job['inpath']      = '/scratch/isatss_data/incoming/grb_lhcp/abi'
+job['inpath']        = {'node':4,'path':'abi'}
 job['apids']         = {}
 job['apids']['skip'] = ['101','111','141','151','161','171','181','191']	# band 2 FD M1, M2
 job['notifications'] = {}
@@ -42,7 +42,7 @@ job['qlimit']      = 1000
 job['data'] = {}
 job['data']['products']               = {}
 job['data']['products']['location']   = {'node':14, 'type':'datapath', 'path':'abi'}
-job['data']['products']['aging']      = {'window':86400, 'mode':'elapsedname', 'fmt':'%Y%m%d%H'}
+job['data']['products']['aging']      = {'window':3600, 'mode':'elapsedname', 'fmt':'%Y%m%d%H'}
 job['data']['products']['method']     = {'technique':'stage', 'path':'incinerator'}
 job['data']['products']['activeonly'] = True															# check pidfile
 job['data']['products']['schedule']   = {'interval':600}

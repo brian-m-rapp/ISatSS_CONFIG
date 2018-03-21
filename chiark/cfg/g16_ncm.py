@@ -20,18 +20,25 @@
 
 
 job = {}
-job['name']  = 'ncm_goesr_scmirecttiles_area'
+job['name']  = 'g16_ncm'
 job['cmd']   = 'ncm'
 job['class'] = 'NCM'
-job['log']   = 'ncm_goesr_scmirecttiles_area_log'
+job['log']   = 'g16_ncm_log'
+job['log_id'] = 1
 
 job['data']  = {}
 job['data']['products'] = {}
-job['data']['products']['location']   = {'node':14,'type':'datapath','path':'area/goes16'}
-job['data']['products']['aging']      = {'window':86400, 'mode':'nested','fmt':'%Y%m%d_%H%M','extract':{'method':'head','nchars':13}}
-job['data']['products']['method']     = {'technique':'stage','path':'isatss_incinerator'}
+job['data']['products']['location']   = {'node':25}
+job['data']['products']['aging']      = {'window':3600, 'mode':'creationtime'}
+job['data']['products']['method']     = {'technique':'inplace'}
+job['data']['prodinfo'] = {}
+job['data']['prodinfo']['location']   = {'node':6}
+job['data']['prodinfo']['aging']      = {'window':3600, 'mode':'creationtime'}
+job['data']['prodinfo']['method']     = {'technique':'inplace'}
+
+
 job['data']['log']                    = {}
-job['data']['log']['location']        = {'node':12,'type':'datapath','path':'log'}
+job['data']['log']['location']        = {'node':job['log_id']}
 job['data']['log']['aging']           = {'window':2,'mode':'count'}
 job['data']['log']['archive']         = {'window':7,'mode':'count'}
 job['data']['log']['roots']           = [job['log']]
@@ -41,13 +48,12 @@ job['data']['log']['activeonly']      = True
 
 job['pause_empty'] = 5
 job['qlimit']      = 10000
-job['maxopen']     = 500 
+job['maxopen']     = 500
 
-#job['input_type']   = {'type':'dropzone','dropzone':'/home/jzajic/isatss_data/dropzone','delete_file':False}
 job['input_type']  = {'type':'infofile','node':8,'delete_file':True, 'delete_info':True}
 
-job['cntl_node']     = 9
-job['notifications'] = {'finish':{'node':6,'enabled':False},'ldm':{'node':6,'enabled':True,'fields':['file','node']}}
+job['cntl_node']     = 52
+job['notifications'] = {'ldm':{'node':6,'enabled':True,'fields':['file','node']}}
 job['links']         = {'link1':{'enabled':False}}
 job['dots']          = True
 
@@ -133,14 +139,10 @@ job['inputs']['M2_16'] = {}
 
 job['defaults']['outputs'] = {}
 job['defaults']['outputs']['pathdef'] = []
-job['defaults']['outputs']['pathdef'].append({'src':'globalmeta/output_product_name','fmt':'str','translate':{'Full Disk':'fulldisk','CONUS':'conus','Mesoscale-1':'meso1','Mesoscale-2':'meso2'},'delimiter':'/'})
-chtrans = {'1':'b01_visr','2':'b02_visb','3':'b03_nir_veg','4':'b04_nir_cir','5':'b05_nir_snoice','6':'b06_nir_cldphys'}
-chtrans.update({'7':'b07_nir_sw','8':'b08_wv_hi','9':'b09_wv_mid','10':'b10_wv_lo','11':'b11_ir_cldphase','12':'b12_ir_ozone','13':'b13_ir_clean','14':'b14_ir','15':'b15_ir_dirty','16':'b16_ir_c02'})
 chtrans2 = {'1':'vis_blue','2':'vis_red','3':'nir_veggie','4':'nir_cirrus','5':'nir_snoice','6':'nir_cldphys'}
 chtrans2.update({'7':'swir','8':'wv_high','9':'wv_mid','10':'wv_lo','11':'ir_cldphase','12':'ir_ozone','13':'ir_clean','14':'ir','15':'ir_dirty','16':'ir_c02'})
-job['defaults']['outputs']['pathdef'].append({'src':'globalmeta/channel_id','fmt':'str','translate':chtrans,'delimiter':''})
 job['defaults']['outputs']['namedef'] = []
-job['defaults']['outputs']['namedef'].append({'src':'globalmeta/start_date_time','method':'tstring_reformat','in_tfmt':'%Y%j%H%M%S','tfmt':'%Y%m%d_%H%M','delimiter':'.'})
+job['defaults']['outputs']['namedef'].append({'src':'globalmeta/start_date_time','method':'tstring_reformat','in_tfmt':'%Y%j%H%M%S','tfmt':'%Y%m%d_%H%M','delimiter':'.G16_'})
 job['defaults']['outputs']['namedef'].append({'src':'globalmeta/central_wavelength','fmt':'str','method':'char_replace','oldchar':'.','newchar':'p','delimiter':'_'})
 job['defaults']['outputs']['namedef'].append({'src':'globalmeta/channel_id','fmt':'str','translate':chtrans2,'delimiter':'_'})
 job['defaults']['outputs']['namedef'].append({'src':'globalmeta/output_product_name',      'fmt':'str','translate':{'Full Disk':'FD','CONUS':'CON','Mesoscale-1':'M1','Mesoscale-2':'M2'},'delimiter':''})
@@ -168,7 +170,7 @@ job['defaults']['outputs']['luts']                = {'1':{'type':'area_bt',  'pa
 job['defaults']['outputs']['luts']['1']['parms']['inscale']  = {'src':'variables/Sectorized_CMI/attr/scale_factor','fmt':'float'}
 job['defaults']['outputs']['luts']['1']['parms']['inoffset'] = {'src':'variables/Sectorized_CMI/attr/add_offset','fmt':'float'}
 job['defaults']['outputs']['luts']['1']['parms']['inbits']   = {'src':'globalmeta/bit_depth','fmt':'int'}
-job['defaults']['outputs']['notify'] = ['finish','ldm']
+job['defaults']['outputs']['notify'] = ['ldm']
 job['defaults']['outputs']['link'] = ['link1']
 
 job['outputs'] = {}

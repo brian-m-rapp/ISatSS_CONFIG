@@ -25,25 +25,17 @@ job['class']    = 'Dispatcher'
 job['log']      = 'pda_dispatch_log'
 job['log_node'] = 1
 
-
 job['notifications']   = {}
-job['notifications']['slab']   = {'node':21, 'enabled':True,'fields':['file','node'],'prefix':'h8_slab'}	# Need to modify
+job['notifications']['winds']   = {'node':59, 'enabled':True, 'fields':['file', 'node'], 'prefix':'winds'}
+job['notifications']['ambig']   = {'node':59, 'enabled':True, 'fields':['file', 'node'], 'prefix':'ambig'}
 
 job['data'] = {}	# Need to modify
-job['data']['h8slab']                 = {}
-job['data']['h8slab']['location']       = {'node':43}
-job['data']['h8slab']['aging']          = {'window':3600, 'mode':'creationtime'}
-job['data']['h8slab']['method']         = {'technique':'stage', 'path':'incinerator'}
-job['data']['h8slab']['activeonly']     = True                                                            # check pidfile
-job['data']['h8slab']['schedule']       = {'interval':600}
-
-job['data']['infoslab']                = {}
-job['data']['infoslab']['location']    = {'node':21}
-job['data']['infoslab']['filter']      = {'type':'starts','test':job['notifications']['slab']['prefix']}
-job['data']['infoslab']['aging']       = {'window':3600, 'mode':'creationtime'}
-job['data']['infoslab']['method']      = {'technique':'inplace'}
-job['data']['infoslab']['activeonly']  = True
-job['data']['infoslab']['schedule']    = {'interval':600}
+job['data']['winds']                   = {}
+job['data']['winds']['location']       = {'node':58}
+job['data']['winds']['aging']          = {'window':3600, 'mode':'creationtime'}
+job['data']['winds']['method']         = {'technique':'stage', 'path':'incinerator'}
+job['data']['winds']['activeonly']     = True
+job['data']['winds']['schedule']       = {'interval':600}
 
 job['data']['log']                    = {}
 job['data']['log']['location']        = {'node':job['log_node']}
@@ -54,26 +46,45 @@ job['data']['log']['method']          = {'technique':'inplace'}
 job['data']['log']['schedule']        = {'interval':3600}
 job['data']['log']['activeonly']      = True
 
-job['loglevel']         = 6
+job['loglevel']         = 5
 job['cntl_node']        = 20	# Need to modify
 job['max_sleep']        = 10	# Need to modify
 job['work_time']        = 60	# Need to modify
 
-windsFilter = []
-windsFilter.append({'criteria':'substring', 'requires':{'parms':{'contains':'metopa', 'endswith':'l2_winds-lite'}}})
+'''
+windsNaming    = {'inspec':'', 'outspec':''}
+windsRetriever = {'enabled':True, 'dataitem':'winds', 'notifications':['winds'], 'naming':windsNaming}
+'''
+windsRetriever = {'enabled':True, 'dataitem':'winds', 'notifications':['winds']}
+windsFilter    = []
+windsFilter.append({'filt':'substring', 'target':'name', 'startswith':'ascat', 'name':'startswith ascat'})
+windsFilter.append({'filt':'substring', 'target':'name', 'contains':'metopa', 'name':'contains metopa'})
+windsFilter.append({'filt':'substring', 'target':'name', 'endswith':'l2_winds-lite', 'name':'endswith l2_winds-lite'})
 
-ambigFilter = []
-ambigFilter.append({'criteria':'substring', 'requires':{'parms':{'contains':'metopa', 'contains':'l2_winds-lite_ambiguity'}}})
+'''
+ambigNaming    = {'inspec':'', 'outspec':''}
+ambigRetriever = {'enabled':True, 'dataitem':'winds', 'notifications':['ambig'], 'naming':ambigNaming}
+'''
+ambigRetriever = {'enabled':True, 'dataitem':'winds', 'notifications':['ambig']}
+ambigFilter    = []
+ambigFilter.append({'filt':'substring', 'target':'name', 'startswith':'ascat', 'name':'startswith ascat'})
+ambigFilter.append({'filt':'substring', 'target':'name', 'contains':'metopa', 'name':'contains metopa'})
+ambigFilter.append({'filt':'substring', 'target':'name', 'contains':'l2_winds-lite_ambiguity', 'name':'contains l2_winds-lite_ambiguity'})
 
 job['sources'] = {}
-job['sources']['pda'] = {'protocol':'FTPS', 'host':'masaq', 'authid':1, 'timeout':30, 'paths':{}, 'sessions':1}
-job['sources']['pda']['paths']['ascat'] = {'path':'/data/PDAFileLinks/GLOBAL/ASCAT'}
-
-job['sources']['pda']['paths']['ascat']['files'] = {}
-job['sources']['pda']['paths']['ascat']['files']['winds'] = {'filt':windsFilter}
-job['sources']['pda']['paths']['ascat']['files']['ambig'] = {'filt':ambigFilter}
+job['sources']['pda'] = {'protocol':'FTPS', 'host':'lotus', 'authid':3, 'timeout':30, 'paths':{}, 'sessions':1}
+job['sources']['pda']['paths']['ascat'] = {'path':'/appdata/PDAFileLinks/GLOBAL/ASCAT', 'files':{}}
+job['sources']['pda']['paths']['ascat']['files']['winds'] = {'retrieve':{'winds':windsRetriever}, 'filt':windsFilter}
+job['sources']['pda']['paths']['ascat']['files']['ambig'] = {'retrieve':{'ambig':ambigRetriever}, 'filt':ambigFilter}
 
 """
+job['sources']['ldm']['paths']['dropzone']['files']['grbl1b']  = {'retrieve':{},'filt':grbfiltdef}
+job['sources']['ldm']['paths']['dropzone']['files']['grbl1b']['retrieve']['proc'] = {'enabled':True,'dataitem':'prodgrbl1b','notifications':['grbl1b']}
+job['sources']['ldm']['paths']['dropzone']['files']['grbl1b']['retrieve']['arch'] = {'enabled':True,'dataitem':'prodldmarch','notifications':['ldmarch'],'hardlink':'proc'}
+job['sources']['ldm']['paths']['dropzone']['files']['hcast']  = {'retrieve':{},'filt':hcastfiltdef}
+job['sources']['ldm']['paths']['dropzone']['files']['hcast']['retrieve']['proc'] = {'enabled':True,'dataitem':'prodhcast','notifications':['hcast']}
+job['sources']['ldm']['paths']['dropzone']['files']['hcast']['retrieve']['arch'] = {'enabled':True,'dataitem':'prodldmarch','notifications':['ldmarch'],'hardlink':'proc'}
+
 slabcyclefilt = []	# Need to modify
 slabcyclefilt.append({'criteria':'closeout'})
 slabcyclefilt.append({'criteria':'age','method':'tstring','parms':{'tfmt':'%Y%m%d_%H%M'},'age':3600,'closeout_on_fail':True})

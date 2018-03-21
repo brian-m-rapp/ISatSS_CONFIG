@@ -1,5 +1,3 @@
-# ldm configuration for grb data flow
-
 """
     IDP Satellite Support Subsystem
     Copyright (C) 2016 Joseph K. Zajic (joe.zajic@noaa.gov), Brian M. Rapp (brian.rapp@noaa.gov)
@@ -35,9 +33,24 @@ job['data']['log']['schedule']        = {'interval':3600}
 job['data']['log']['activeonly']      = True
 
 job['loopsleep']                 = 0
-job['loglevel']                  = 5
+job['loglevel']                  = 6
 job['pause_empty']               = 2
-job['actions_per_cycle']         = 10
+job['actions_per_cycle']         = 5
 job['listenport']                = 1337
 job['msgmap']                    = {}
 job['watcher_timeout']           = 1000
+'''
+job['monitor'] = {'agents':{},'mi6':{}}
+job['monitor']['agents']['pmd_admin']                = {'enabled':True, 'module':'im_daemon', 'class':'PMDAdmin', 'args':{'alerts':[27,28], 'telemetry':[26,27,28]}}
+job['monitor']['mi6']['non_isatss']                  = {'enabled':True, 'lockout':1800}
+job['monitor']['mi6']['forward']                     = {'enabled':True, 'types':{}, 'messages':{}}
+job['monitor']['mi6']['forward']['types']['ERROR']   = {'enabled':True, 'lockout':1800, 'alert':{'enabled':True, 'lockout':1800}, 'tm':{'enabled':False}}
+job['monitor']['mi6']['forward']['types']['WARNING'] = {'enabled':True, 'exclude':['1004.3'], 'alert':{'enabled':True, 'lockout':1800}, 'tm':{'enabled':False}}	#or include
+job['monitor']['mi6']['forward']['messages']['2.9']  = {'enabled':True, 'alert':{'enabled':True, 'lockout':1800}} # default alert True/1800, default tm False
+'''
+job['monitor'] = {'agents':{},'mi6':{}}
+job['monitor']['agents']['pmd_admin']                = {'enabled':True, 'module':'im_daemon', 'class':'PMDAdmin', 'args':{'alerts':[27,28], 'telemetry':[26,27,28]}}
+job['monitor']['mi6']['non_isatss']                  = {'enabled':True, 'lockout':1800}
+job['monitor']['mi6']['forward']                     = {'enabled':True, 'types':{}, 'messages':{}}
+job['monitor']['mi6']['forward']['types']['ERROR']   = {'enabled':True, 'alert':{'enabled':True, 'lockout':1800}, 'tm':{'enabled':False}}
+job['monitor']['mi6']['forward']['types']['WARNING'] = {'enabled':True, 'alert':{'enabled':True, 'lockout':1800}, 'tm':{'enabled':False}}   #or include

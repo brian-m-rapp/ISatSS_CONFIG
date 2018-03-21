@@ -21,14 +21,15 @@
 
 
 job = {}
-job['name']  = 'grb_notifier'
-job['cmd']   = 'notifier'
-job['class'] = 'Notifier'
-job['log']   = 'grb_notifier_log'
+job['name']     = 'incinerator'
+job['cmd']      = 'incinerator'
+job['class']    = 'Incinerator'
+job['log']      = 'incinerator_log'
+job['log_node'] = 1
 
 job['data'] = {}
 job['data']['log']                    = {}
-job['data']['log']['location']        = {'node':1,'path':'log'}
+job['data']['log']['location']        = {'node':job['log_node']}
 job['data']['log']['aging']           = {'window':2,'mode':'count'}
 job['data']['log']['archive']         = {'window':7,'mode':'count'}
 job['data']['log']['roots']           = [job['log']]
@@ -36,21 +37,16 @@ job['data']['log']['method']          = {'technique':'inplace'}
 job['data']['log']['schedule']        = {'interval':3600}
 job['data']['log']['activeonly']      = True
 
+job['cntl_node']        = 13
 
-job['input_type']  = {'type':'infofile','node':16,'delete_file':True, 'delete_info':True}
-job['pause_empty'] = 60.0
-job['qlimit']      = 10
+job['targets']    = 'all'
 
-job['vlabs'] = {}
-#job['vlabs']['dev'] = {}
-#job['vlabs']['dev']['urlbase']     = 'https://vlab-dev.ncep.noaa.gov'
-#job['vlabs']['dev']['sslnoverify'] = True
-job['vlabs']['ops'] = {}
-job['vlabs']['ops']['urlbase']     = 'https://vlab.ncep.noaa.gov'
-job['vlabs']['ops']['sslnoverify'] = False
+job['cycle_time'] = 900
+job['shutdown_wait'] = 20     # number of seconds to wait for application to shutdown
 
-job['batch_interval'] = 300
-job['es_index']		  = 'isatss_products'
-job['es_dtype']       = 'product_batch'
-job['site']           = 'CPRK'
-
+job['monitor'] = {'agents':{},'mi6':{}}
+job['monitor']['agents']['pmd_admin']                = {'enabled':True, 'module':'im_daemon', 'class':'PMDAdmin', 'args':{'alerts':[27,28], 'telemetry':[26,27,28]}}
+job['monitor']['mi6']['non_isatss']                  = {'enabled':True, 'lockout':1800}
+job['monitor']['mi6']['forward']                     = {'enabled':True, 'types':{}, 'messages':{}}
+job['monitor']['mi6']['forward']['types']['ERROR']   = {'enabled':True, 'alert':{'enabled':True, 'lockout':1800}, 'tm':{'enabled':False}}
+job['monitor']['mi6']['forward']['types']['WARNING'] = {'enabled':True, 'alert':{'enabled':True, 'lockout':1800}, 'tm':{'enabled':False}}	#or include

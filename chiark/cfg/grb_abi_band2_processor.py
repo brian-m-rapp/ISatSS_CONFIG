@@ -26,26 +26,25 @@ job['cmd']   = 'grber'
 job['class'] = 'GRBProc'
 job['log']   = 'grb_abi_band2_processor_log'
 
-job['inpath']      = '/scratch/isatss_data/incoming/grb_lhcp/abi'
+job['inpath']        = {'node':4,'path':'abi'}
 job['apids']         = {}
 job['apids']['keep'] = ['101','111','141','151','161','171','181','191']	# band 2 FD, M1, M2
+monfields = ['file','node','size','band','scene','sat','mode','ctime','ptime','clat','clon','tileno','tiletot','fault']
 job['notifications'] = {}
-job['notifications']['ldm']   = {'node':6,'enabled':True,'fields':['file','prodid','wmo'],'prefix':'abi_lhcp_ldm'}
-job['notifications']['area']  = {'node':12,'enabled':True,'fields':['file'],'prefix':'abi_lhcp_area'}
-job['notifications']['marea'] = {'node':10,'enabled':True,'fields':['file'],'prefix':'abi_lhcp_marea'}
-job['notifications']['mon']   = {'node':16,'enabled':True,'fields':['file','node','size','band','scene','sat','mode','ctime','ptime','clat','clon','tileno','tiletot','fault'],'prefix':'abi_lhcp_mon','jobinfo':True}
+job['notifications']['ldm']   = {'node':6, 'enabled':True,'fields':['file','prodid','wmo','node'],'prefix':'abi_band2_ldm'}
+job['notifications']['area']  = {'node':12,'enabled':True,'fields':['file','node'],               'prefix':'abi_band2_area'}
+job['notifications']['marea'] = {'node':10,'enabled':True,'fields':['file','node'],               'prefix':'abi_band2_marea'}
+job['notifications']['mon']   = {'node':16,'enabled':True,'fields':monfields,    		          'prefix':'abi_band2_mon','jobinfo':True}
 
 job['read_node']   = 3
 job['satcfg']	   = 'goesr_config'
 job['qlimit']      = 1000
 
-
-
 #TODO: create a data characterization object
 job['data'] = {}
 job['data']['products']               = {}
 job['data']['products']['location']   = {'node':14, 'type':'datapath', 'path':'abi'}
-job['data']['products']['aging']      = {'window':86400, 'mode':'elapsedname', 'fmt':'%Y%m%d%H'}
+job['data']['products']['aging']      = {'window':3600, 'mode':'elapsedname', 'fmt':'%Y%m%d%H'}
 job['data']['products']['method']     = {'technique':'stage', 'path':'incinerator'}
 job['data']['products']['activeonly'] = True															# check pidfile
 job['data']['products']['schedule']   = {'interval':600}
@@ -93,7 +92,7 @@ job['defaults']['products']['center']              = {'lat':0.0,'lon':0.0}
 job['defaults']['products']['class']               = 'image'
 job['defaults']['products']['ins']                 = 'abi'
 job['defaults']['products']['module']			   = 'im_grb_abii'
-job['defaults']['products']['notify']			   = ['area','ldm']
+job['defaults']['products']['notify']			   = ['area','ldm','mon']
 job['defaults']['products']['outroot']             = job['data']['products']['location']
 job['defaults']['products']['prodtype']			   = 'ABII'
 job['defaults']['products']['production_location'] = 'NAPO'

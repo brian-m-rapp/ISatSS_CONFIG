@@ -19,14 +19,14 @@
 """
 
 job = {}
-job['name']  = 'george_goesr_test_tiles_scmirecttiles'
+job['name']  = 'george_goesr_test_meso_tiles_scmirecttiles'
 job['cmd']   = 'george'
 job['class'] = 'GeoRGE'
 job['log']   = 'george_goesr_test_meso_tiles_scmirecttiles_log'
 
 job['notifications'] = {}
-job['notifications']['ncm'] = {'node':10,'enabled':True, 'prefix':'abi_meso_tiles'}
-job['notifications']['mon'] = {'node':11,'enabled':False,'fields':['file'],'prefix':'abi_meso_tiles'}
+job['notifications']['ncm'] = {'node':8,'enabled':True,'fields':['file','node'], 'prefix':'abi_meso_tiles'}
+job['notifications']['mon'] = {'node':16,'enabled':False,'fields':['file'],'prefix':'abi_meso_tiles'}
 
 job['data']  = {}
 job['data']['products'] = {}
