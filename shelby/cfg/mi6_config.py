@@ -52,8 +52,8 @@ job['host_telemetry'] = {'filesystems': {'period': 60,              'aggregate':
 job['hattr'] = {}
 
 job['hattr'][1] = {}
-#job['hattr'][1]['collect']     = ['filesystems', 'cpu', 'memory', 'network']
 job['hattr'][1]['collect']     = []
+job['hattr'][1]['collect']     = ['filesystems', 'cpu', 'memory', 'network']
 job['hattr'][1]['network']     = [('netpref', 'eno')]
 job['hattr'][1]['filesystems'] = []
 job['hattr'][1]['filesystems'].append({'fs': '/'})
@@ -69,7 +69,7 @@ job['hattr'][1]['filesystems'].append({'fs': '/var/log/audit'})
 
 job['hattr'][2] = {}
 job['hattr'][1]['collect']     = []
-#job['hattr'][2]['collect']     = ['filesystems', 'cpu', 'memory', 'network']
+job['hattr'][2]['collect']     = ['filesystems', 'cpu', 'memory', 'network']
 job['hattr'][2]['network']     = [('netpref', 'eno')]
 job['hattr'][2]['filesystems'] = []
 job['hattr'][2]['filesystems'].append({'fs': '/'})
