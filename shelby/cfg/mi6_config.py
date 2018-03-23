@@ -39,7 +39,7 @@ job['data']['log']['activeonly']      = True
 job['cntl_node']                 = 22
 
 job['loopsleep']                 = 1
-job['loglevel']                  = 5
+job['loglevel']                  = 6
 job['handler_pool_size']         = 3
 
 # These are common telemetry classes for every host at this site
