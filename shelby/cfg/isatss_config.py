@@ -246,8 +246,8 @@ The ldm_l1b_processing group generates AWIPS-II compatible reflectance and brigh
 tiles from full scene ABI L1B scene files.
 """
 groups[6]['jobs']     = {}
-groups[6]['jobs'][1]  = {'host':1,'cfg':'g16_george_l1b'}
-groups[6]['jobs'][2]  = {'host':1,'cfg':'g16_tile_replicator'}
+groups[6]['jobs'][1]  = {'host':2,'cfg':'g16_george_l1b'}
+groups[6]['jobs'][2]  = {'host':2,'cfg':'g16_tile_replicator'}
 
 
 
@@ -269,9 +269,9 @@ groups[8]['description'] = """
 The ncp_imagery group translates incoming ABI tiles into NAWIPS compatible McIDAS Area Files
 """
 groups[8]['jobs']     = {}
-groups[8]['jobs'][1]  = {'host':1,'cfg':'g16_george_fdco'}
-groups[8]['jobs'][2]  = {'host':1,'cfg':'g16_george_meso'}
-groups[8]['jobs'][3]  = {'host':1,'cfg':'g16_ncm'}
+groups[8]['jobs'][1]  = {'host':2,'cfg':'g16_george_fdco'}
+groups[8]['jobs'][2]  = {'host':2,'cfg':'g16_george_meso'}
+groups[8]['jobs'][3]  = {'host':2,'cfg':'g16_ncm'}
 
 groups[9] = {}
 groups[9]['name']     = 'pda'
