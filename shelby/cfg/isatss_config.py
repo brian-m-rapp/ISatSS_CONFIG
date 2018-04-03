@@ -19,8 +19,11 @@
 
 """
 Name of the ISatSS Processing facility - MI6 includes this in telemetry, notifications, and alerts
+
+For Redhat and Centos, the default 'sudo -Su' works.
+For openSUSE, use 'sudo -iu'.
 """
-sudocmd = 'sudo -iu'
+sudocmd = 'sudo -iu'	# defaults to 'sudo -Su'
 
 site = 'NAPO'
 
@@ -46,7 +49,7 @@ hosts[2] = {'host':'grb01.nhc.noaa.gov','user':'ldm', 'ext':1336,'cmd':4,'resp':
 """
 hosts = {}
 
-hosts[1] = {'host':'shelby.napo.nws.noaa.gov', 'shortname':'shelby'}
+hosts[1] = {'host':'shelby.napo.nws.noaa.gov', 'shortname':'shelby', 'sudocmd':'sudo -iu'}
 #hosts[2] = {'host':'dev1.napo.nws.noaa.gov',   'shortname':'dev1', 'connecteas':'140.90.141.140', 'resolvenames':False}
 hosts[2] = {'host':'dev1.napo.nws.noaa.gov',   'shortname':'dev1'}
 
@@ -171,6 +174,7 @@ defaults['vlab']            = {}
 defaults['vlab']['url']     = 'https://vlab.ncep.noaa.gov'
 defaults['vlab']['company'] = 10132
 defaults['vlab']['group']   = 1334496		# ISatSS community group ID
+defaults['sudocmd']         = 'sudo -Su'
 
 #groups
 groups = {}
