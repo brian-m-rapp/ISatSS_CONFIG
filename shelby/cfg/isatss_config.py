@@ -49,9 +49,10 @@ hosts[2] = {'host':'grb01.nhc.noaa.gov','user':'ldm', 'ext':1336,'cmd':4,'resp':
 """
 hosts = {}
 
-hosts[1] = {'host':'shelby.napo.nws.noaa.gov', 'shortname':'shelby', 'sudocmd':'sudo -iu'}
+hosts[1] = {'host':'shelby.napo.nws.noaa.gov', 'shortname':'shelby',    'sudocmd':'sudo -iu'}
+hosts[2] = {'host':'shelby.napo.nws.noaa.gov', 'shortname':'shelbyldm', 'sudocmd':'sudo -iu', 'user':'ldm', 'cmd':72, 'resp':73}
 #hosts[2] = {'host':'dev1.napo.nws.noaa.gov',   'shortname':'dev1', 'connecteas':'140.90.141.140', 'resolvenames':False}
-hosts[2] = {'host':'dev1.napo.nws.noaa.gov',   'shortname':'dev1'}
+#hosts[2] = {'host':'dev1.napo.nws.noaa.gov',   'shortname':'dev1'}
 
 hattr = {}
 hattr[1] = {'nics': [('netname', 'eth0')],   'filesystems': []}
@@ -90,6 +91,8 @@ nodes[0]  = {'path':'/scratch/isatss_data/info/default_info',		  'filesystem': '
 nodes[1]  = {'path':'/scratch/isatss_data/log',                           'filesystem': '/scratch', 'ctype':'log', 'stype':'attached','root':'/scratch/isatss_data'}
 nodes[2]  = {'path':'/scratch/isatss_data/info/02_agent86_commands_out',  'filesystem': '/scratch', 'ctype':'cmd', 'stype':'attached','root':'/scratch/isatss_data'}
 nodes[3]  = {'path':'/scratch/isatss_data/info/03_agent86_response',      'filesystem': '/scratch', 'ctype':'resp','stype':'attached','root':'/scratch/isatss_data'}
+nodes[72] = {'path':'/scratch/isatss_data/info/72_agent86_commands_out',  'filesystem': '/scratch', 'ctype':'cmd', 'stype':'attached','root':'/scratch/isatss_data'}
+nodes[73] = {'path':'/scratch/isatss_data/info/73_agent86_response',      'filesystem': '/scratch', 'ctype':'resp','stype':'attached','root':'/scratch/isatss_data'}
 nodes[18] = {'path':'/scratch/isatss_data/work',		          'filesystem': '/scratch', 'ctype':'data','stype':'attached','root':'/scratch/isatss_data'}
 nodes[19] = {'path':'/scratch/isatss_data/fault_cache',                   'filesystem': '/scratch', 'ctype':'data','stype':'attached','root':'/scratch/isatss_data'}
 

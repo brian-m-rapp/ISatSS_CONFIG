@@ -40,14 +40,15 @@ job['loglevel']         = 5
 job['cntl_node']        = 56
 
 job['ldm_monitor']      = {'active':True, 'interval':60, 'restart':True}
-job['ldm_lib']          = '/usr1/ldm/lib'
-job['ldmadmin']         = '/usr1/ldm/bin/ldmadmin'
-job['pqcat']            = '/usr1/ldm/bin/pqcat'
-job['pqcheck']          = '/usr1/ldm/bin/pqcheck'
+job['verbose_ldmd_log'] = False
+job['ldm_lib']          = '/usr/local/ldm/lib64'
+job['ldmadmin']         = '/usr/local/ldm/bin/ldmadmin'
+job['pqcat']            = '/usr/local/ldm/bin/pqcat'
+job['pqcheck']          = '/usr/local/ldm/bin/pqcheck'
 
-job['ldmd_cfg_file']    = '/usr1/ldm/etc/ldmd.conf'
-job['pqact_cfg_file']   = '/usr1/ldm/etc/pqact.conf'
-job['queue_file']       = '/usr1/ldm/var/queues/ldm.pq'
+job['ldmd_cfg_file']    = '/usr/local/ldm/etc/ldmd.conf'
+job['pqact_cfg_file']   = '/usr/local/ldm/etc/pqact.conf'
+job['queue_file']       = '/usr/local/ldm/var/queues/ldm.pq'
 
 job['ldmd_config']      = {}
 job['ldmd_config']['allow'] = []
