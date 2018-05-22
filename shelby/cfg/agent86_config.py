@@ -39,6 +39,8 @@ job['actions_per_cycle']         = 5
 job['listenport']                = 1337
 job['msgmap']                    = {}
 job['watcher_timeout']           = 1000
+job['ignore_from']               = ['lotus.napo.nws.noaa.gov', 'isatss.napo.nws.noaa.gov']
+
 '''
 job['monitor'] = {'agents':{},'mi6':{}}
 job['monitor']['agents']['pmd_admin']                = {'enabled':True, 'module':'im_daemon', 'class':'PMDAdmin', 'args':{'alerts':[27,28], 'telemetry':[26,27,28]}}
