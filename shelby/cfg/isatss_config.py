@@ -288,3 +288,12 @@ PDA product group
 groups[9]['jobs']     = {}
 groups[9]['jobs'][1] = {'host':2,'cfg':'pda_dispatcher'}
 groups[9]['jobs'][2] = {'host':2,'cfg':'pda_replicator'}
+
+# ldm tracker
+groups[16] = {}
+groups[16]['name']     = 'sbn_ldm_tracker'
+groups[16]['description'] = """
+The SBN LDM tracker group collects and classifies data received over SBN 
+"""
+groups[16]['jobs']     = {}
+groups[16]['jobs'][1]  = {'host':1,'cfg':'ldmtracker_config',             'icfg':{'io':{'x':2000,'y':3200}}}
