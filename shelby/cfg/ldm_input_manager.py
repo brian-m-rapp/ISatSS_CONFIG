@@ -46,7 +46,7 @@ job['loglevel']         = 5
 
 job['cntl_node']        = 7
 
-job['ldm_monitor']      = {'active':True, 'interval':60, 'restart':True, 'shutdown_on_exit':True}
+job['ldm_monitor']      = {'active':True, 'interval':60, 'restart':True, 'shutdown_on_exit':True, 'restart_on_startup':True}
 job['ldm_lib']          = '/usr1/ldm/lib'
 job['ldmadmin']         = '/usr1/ldm/bin/ldmadmin'
 job['pqcat']            = '/usr1/ldm/bin/pqcat'

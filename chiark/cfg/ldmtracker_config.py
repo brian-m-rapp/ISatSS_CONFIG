@@ -65,7 +65,7 @@ product_type_map = {
 
 curator_config = {
     'client': {
-        'hosts': '127.0.0.1',
+        'hosts': 'isatss',
         'port': 9200,
 #        'url_prefix': null,
         'use_ssl': False,
@@ -96,32 +96,6 @@ job['tracker_config']['args']['doc_type']         = 'products'
 job['tracker_config']['args']['settings']         = {'number_of_shards':5, 'number_of_replicas':1}
 job['tracker_config']['args']['mapping']          = product_type_map
 job['tracker_config']['args']['curator_config']   = curator_config
-
-curator_actions = {
-	1: {
-		'action': 'delete_snapshots',
-		'description': 'Delete snapshots from sbn_products repository older than 60 days',
-		'options': {
-			'repository': 'sbn_products',
-			'disable_action': True
-		},
-		'filters': [
-			{
-				'filtertype': 'pattern',
-				'kind': 'prefix',
-				'value': 'products-'
-			},
-			{
-				'filtertype': 'age',
-				'source': 'creation_date',
-				'direction': 'older',
-				'unit': 'days',
-				'unit_count': 60
-			}
-		]
-	}
-}
-
 
 job['agents'] = {}
 job['agents']['abi_scmi'] = {'class':'abi_agent', 'format':'nc4', 'keys':['ABI', 'SCMI']}
