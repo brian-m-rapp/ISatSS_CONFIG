@@ -16,6 +16,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
+site = 'ROCK'
 
 hosts = {}
 hosts[1] = {'host':'chiark.dilireum.org', 'shortname':'chiark'}
@@ -162,6 +163,7 @@ groups[1]['cluster_action'] = ['init','shutdown']
 groups[1]['jobs']     = {}
 groups[1]['jobs'][1]  = {'host':1, 'cfg':'agent86_config'}
 groups[1]['jobs'][2]  = {'host':2, 'cfg':'agent86_config'}
+groups[1]['jobs'][3]  = {'host':1, 'cfg':'thread_test_config'}
 
 groups[2] = {}
 groups[2]['name']     = 'incinerators'
@@ -218,7 +220,7 @@ The ldm_l1b_processing group generates AWIPS-II compatible reflectance and brigh
 tiles from full scene ABI L1B scene files.
 """
 groups[6]['jobs']     = {}
-groups[6]['jobs'][1]  = {'host':2,'cfg':'g16_george_l1b'}
+groups[6]['jobs'][1]  = {'host':1,'cfg':'g16_george_l1b'}
 groups[6]['jobs'][2]  = {'host':2,'cfg':'g16_tile_replicator'}
 
 

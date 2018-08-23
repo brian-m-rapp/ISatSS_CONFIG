@@ -26,15 +26,22 @@ job['class'] = 'GeoRGE'
 job['log']   = 'g16_george_l1b_log'
 job['log_node'] = 1
 
-job['notifications']   = {'out':{'node':27,'wmo':True,'enabled':True}}
-
 job['data']  = {}
+job['data']['infotiles']               = {}
+job['data']['infotiles']['location']   = {'node':27}
+job['data']['infotiles']['aging']      = {'window':3600, 'mode':'creationtime'}
+job['data']['infotiles']['method']     = {'technique':'inplace'}
+job['data']['infotiles']['activeonly'] = False
+job['data']['infotiles']['schedule']   = {'interval':600}
+job['data']['infotiles']['cfgorder']   = 0
+
 job['data']['products'] = {}
 job['data']['products']['location']   = {'node':47}
 job['data']['products']['aging']      = {'window':3600, 'mode':'creationtime'}
 job['data']['products']['method']     = {'technique':'inplace'}
 job['data']['products']['activeonly'] = True
 job['data']['products']['schedule']   = {'interval':600}
+
 job['data']['log']                    = {}
 job['data']['log']['location']        = {'node':job['log_node']}
 job['data']['log']['aging']           = {'window':2,'mode':'count'}
@@ -44,17 +51,26 @@ job['data']['log']['method']          = {'technique':'inplace'}
 job['data']['log']['schedule']        = {'interval':3600}
 job['data']['log']['activeonly']      = True
 
+job['notifications']   = {'out':{'node':job['data']['infotiles']['location']['node'],'wmo':True,'enabled':True}}
 
 job['pause_empty'] = 5
 job['qlimit']      = 500
-job['maxopen']     = 500
+job['maxopen']     = 10
 job['cache_life']  = 3600
 job['cache_check'] = 300
 
-job['input_type']   = {'type':'infofile','node':37,'delete_file':True,'delete_info':True}
+job['input_type']   = {'type':'infofile','node':37,'delete_file':True,'delete_info':True, 'noretry':True}
 
 job['cntl_node']     = 23
 
+job['monitor'] = {'agents':{},'mi6':{}}
+#job['monitor']['agents']['grb_tile_summary']         = {'enabled':True,  'module':'agent99_grb', 'class':'GRBTileGen'}
+job['monitor']['agents']['mds_meso_history']         = {'enabled':True,  'module':'goes_meso_history', 'class':'GoesStatusInput'}
+job['monitor']['agents']['pmd_admin']                = {'enabled':True, 'module':'im_daemon', 'class':'PMDAdmin', 'args':{'alerts':[27,28], 'telemetry':[26,27,28]}}
+job['monitor']['mi6']['non_isatss']                  = {'enabled':True,  'lockout':1800}
+job['monitor']['mi6']['forward']                     = {'enabled':True,  'types':{}, 'messages':{}}
+job['monitor']['mi6']['forward']['types']['ERROR']   = {'enabled':True,  'lockout':1800, 'alert':{'enabled':True, 'lockout':1800}, 'tm':{'enabled':False}}
+job['monitor']['mi6']['forward']['types']['WARNING'] = {'enabled':True,  'alert':{'enabled':True, 'lockout':1800}, 'tm':{'enabled':False}}
 
 job['hash_definition'] = []
 job['hash_definition'].append({'parm':'scene',  'meta':{'src':'globalmeta/dataset_name','fmt':'str','find':{'RadF':'FD','RadC':'CO','RadM1':'M1','RadM2':'M2'}},'info':'scene',   'part':'product'})
@@ -73,7 +89,7 @@ job['grid_definition'].append({'parm':'ylen',   'meta':{'src':'dimensions/y','fm
 job['grid_definition'].append({'parm':'ang',    'meta':{'src':'variables/x/attr/scale_factor','fmt':'float'},                   'info':'ang',     'part':'parms'})
 job['grid_definition'].append({'parm':'az_off', 'meta':{'src':'variables/x/attr/add_offset','fmt':'float'},                     'info':'az_off',  'part':'parms'})
 job['grid_definition'].append({'parm':'el_off', 'meta':{'src':'variables/y/attr/add_offset','fmt':'float'},                     'info':'el_off',  'part':'parms'})
-job['grid_definition'].append({'parm':'lon0',   'meta':{'src':'variables/nominal_satellite_subpoint_lon','fmt':'float'},        'info':'lon0',    'part':'parms'})
+job['grid_definition'].append({'parm':'lon0',   'meta':{'src':'variables/goes_imager_projection/attr/longitude_of_projection_origin','fmt':'float'},        'info':'lon0',    'part':'parms'})
 
 
 job['grids']              = {}
@@ -464,15 +480,17 @@ job['defaults']['outputs']['tilemode'] = 'provided'
 job['defaults']['outputs']['tileset']  = 1
 job['defaults']['outputs']['enabled'] = True
 job['defaults']['outputs']['pathdef'] = []
-job['defaults']['outputs']['pathdef'].append({'src':'variables/time_bounds/0','method':'j2000_to_string','tfmt':'%Y%m%d%H','delimiter':'/'})
-job['defaults']['outputs']['pathdef'].append({'src':'variables/band_id/0','fmt':'str','pad':2,'padval':'0','delimiter':''})
+#job['defaults']['outputs']['pathdef'].append({'src':'variables/time_bounds/0','method':'j2000_to_string','tfmt':'%Y%m%d%H','delimiter':'/'})
+#job['defaults']['outputs']['pathdef'].append({'src':'variables/band_id/0','fmt':'str','pad':2,'padval':'0','delimiter':''})
 job['defaults']['outputs']['namedef'] = []
+job['defaults']['outputs']['namedef'].append({'src':'globalmeta/platform_ID','fmt':'str','delimiter':'_'})
+job['defaults']['outputs']['namedef'].append({'src':'globalmeta/timeline_id','fmt':'str','translate':{'ABI Mode 3':'3','ABI Mode 4':'4'},'delimiter':'_'})
 job['defaults']['outputs']['namedef'].append({'src':'globalmeta/dataset_name','fmt':'str','find':{'RadF':'FD','RadC':'CONUS','RadM1':'M1','RadM2':'M2'},'delimiter':'_'})
 job['defaults']['outputs']['namedef'].append({'src':'variables/band_id/0','fmt':'str','pad':2,'padval':'0','delimiter':'_'})
 job['defaults']['outputs']['namedef'].append({'ident':'tileid','pad':2,'padval':'0','delimiter':'_'})
 job['defaults']['outputs']['namedef'].append({'src':'variables/time_bounds/0','method':'j2000_to_string','tfmt':'%Y%m%d%H%M%S','delimiter':'.nc'})
 job['defaults']['outputs']['shortnamedef'] = []
-job['defaults']['outputs']['shortnamedef'].append({'src':'variables/nominal_satellite_subpoint_lon','translate':{-75.0:'E',-89.5:'T'},'delimiter':''})
+job['defaults']['outputs']['shortnamedef'].append({'src':'variables/goes_imager_projection/attr/longitude_of_projection_origin','fmt':'float','translate':{-75.0:'E',-89.5:'T'},'delimiter':''})
 job['defaults']['outputs']['shortnamedef'].append({'src':'globalmeta/dataset_name','fmt':'str','find':{'RadF':'FD','RadC':'CONUS','RadM1':'MESO','RadM2':'MESO'},'delimiter':'-'})
 job['defaults']['outputs']['shortnamedef'].append({'src':'globalmeta/spatial_resolution','translate':{'2km at nadir':'020','0.5km at nadir':'005','1km at nadir':'010'},'delimiter':'-B'})
 job['defaults']['outputs']['shortnamedef'].append({'src':'prod/luts/1/parms/bits','fmt':'str','pad':2,'padval':'0','delimiter':'-M'})
@@ -487,7 +505,7 @@ job['defaults']['outputs']['globalmeta'] = {}
 job['defaults']['outputs']['globalmeta']['title']                      = {'default':'Sectorized Cloud and Moisture Full Disk Imagery'}
 job['defaults']['outputs']['globalmeta']['ICD_version']                = {'default':'SE-08_7034704_GS_AWIPS_Ext_ICD_RevB.3'}
 job['defaults']['outputs']['globalmeta']['Conventions']                = {'default':'CF-1.6'}
-job['defaults']['outputs']['globalmeta']['production_location']        = {'default':'AWC'}
+job['defaults']['outputs']['globalmeta']['production_location']        = {'default':'IDP'}
 job['defaults']['outputs']['globalmeta']['product_name']               = {'default':'junk','special':'create_name','nametype':'shortnamedef'}
 job['defaults']['outputs']['globalmeta']['channel_id']                 = {'default':1,		'src':'variables/band_id/0'}
 job['defaults']['outputs']['globalmeta']['central_wavelength']         = {'default':0.47,	'src':'variables/band_wavelength/0'}
@@ -513,9 +531,11 @@ job['defaults']['outputs']['globalmeta']['pixel_x_size']               = {'defau
 job['defaults']['outputs']['globalmeta']['pixel_y_size']               = {'default':2.0,        'src':'globalmeta/spatial_resolution', 'translate':{'2km at nadir':2.0,'0.5km at nadir':0.5,'1km at nadir':1.0}}
 job['defaults']['outputs']['globalmeta']['tile_row_offset']            = {'default':0,          'src':'tile/j0'}
 job['defaults']['outputs']['globalmeta']['tile_column_offset']         = {'default':0,          'src':'tile/i0'}
-job['defaults']['outputs']['globalmeta']['satellite_latitude']         = {'default':0.0,	'src':'variables/nominal_satellite_subpoint_lat'}
-job['defaults']['outputs']['globalmeta']['satellite_longitude']        = {'default':-137.0,     'src':'variables/nominal_satellite_subpoint_lon'}
+job['defaults']['outputs']['globalmeta']['satellite_latitude']         = {'default':0.0,	'src':'variables/goes_imager_projection/attr/latitude_of_projection_origin','fmt':'float'}
+job['defaults']['outputs']['globalmeta']['satellite_longitude']        = {'default':-137.0,     'src':'variables/goes_imager_projection/attr/longitude_of_projection_origin','fmt':'float'}
 job['defaults']['outputs']['globalmeta']['satellite_altitude']         = {'default':35786023,   'src':'variables/nominal_satellite_height','method':'calc','stack':[1000,'*']}
+
+job['defaults']['outputs']['logmeta'] = {'product_center_latitude':'clat','product_center_longitude':'clon'}
 
 job['defaults']['outputs']['variables']  = {}
 job['defaults']['outputs']['variables']['x']  = {}
@@ -562,8 +582,8 @@ job['defaults']['outputs']['variables']['fixedgrid_projection']['fmt']          
 job['defaults']['outputs']['variables']['fixedgrid_projection']['shape']                                   = {'default':[]}
 job['defaults']['outputs']['variables']['fixedgrid_projection']['attrs'] = {}
 job['defaults']['outputs']['variables']['fixedgrid_projection']['attrs']['grid_mapping_name']              = {'default':'geostationary'}
-job['defaults']['outputs']['variables']['fixedgrid_projection']['attrs']['latitude_of_projection_origin']  = {'default':0.0,           'src':'variables/nominal_satellite_subpoint_lat'}
-job['defaults']['outputs']['variables']['fixedgrid_projection']['attrs']['longitude_of_projection_origin'] = {'default':-75.0,         'src':'variables/nominal_satellite_subpoint_lon'}
+job['defaults']['outputs']['variables']['fixedgrid_projection']['attrs']['latitude_of_projection_origin']  = {'default':0.0,           'src':'variables/goes_imager_projection/attr/latitude_of_projection_origin'}
+job['defaults']['outputs']['variables']['fixedgrid_projection']['attrs']['longitude_of_projection_origin'] = {'default':-75.0,         'src':'variables/goes_imager_projection/attr/longitude_of_projection_origin'}
 job['defaults']['outputs']['variables']['fixedgrid_projection']['attrs']['semi_major']                     = {'default':6378137,       'src':'variables/goes_imager_projection/attr/semi_major_axis', 'fmt':'float'}
 job['defaults']['outputs']['variables']['fixedgrid_projection']['attrs']['semi_minor']                     = {'default':6356752.31414, 'src':'variables/goes_imager_projection/attr/semi_minor_axis', 'fmt':'float'}
 job['defaults']['outputs']['variables']['fixedgrid_projection']['attrs']['perspective_point_height']       = {'default':35786023,	   'src':'variables/goes_imager_projection/attr/perspective_point_height', 'fmt':'float'}
