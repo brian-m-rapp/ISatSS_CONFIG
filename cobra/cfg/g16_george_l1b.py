@@ -55,6 +55,14 @@ job['input_type']   = {'type':'infofile','node':37,'delete_file':True,'delete_in
 
 job['cntl_node']     = 23
 
+job['monitor'] = {'agents':{},'mi6':{}}
+#job['monitor']['agents']['grb_tile_summary']         = {'enabled':True,  'module':'agent99_grb', 'class':'GRBTileGen'}
+job['monitor']['agents']['mds_meso_history']         = {'enabled':True,  'module':'goes_meso_history', 'class':'GoesStatusInput'}
+job['monitor']['agents']['pmd_admin']                = {'enabled':True,  'module':'im_daemon', 'class':'PMDAdmin', 'args':{'alerts':[27,28], 'telemetry':[26,27,28]}}
+job['monitor']['mi6']['non_isatss']                  = {'enabled':True,  'lockout':1800}
+job['monitor']['mi6']['forward']                     = {'enabled':True,  'types':{}, 'messages':{}}
+job['monitor']['mi6']['forward']['types']['ERROR']   = {'enabled':True,  'lockout':1800, 'alert':{'enabled':True, 'lockout':1800}, 'tm':{'enabled':False}}
+job['monitor']['mi6']['forward']['types']['WARNING'] = {'enabled':True,  'alert':{'enabled':True, 'lockout':1800}, 'tm':{'enabled':False}}
 
 job['hash_definition'] = []
 job['hash_definition'].append({'parm':'scene',  'meta':{'src':'globalmeta/dataset_name','fmt':'str','find':{'RadF':'FD','RadC':'CO','RadM1':'M1','RadM2':'M2'}},'info':'scene',   'part':'product'})

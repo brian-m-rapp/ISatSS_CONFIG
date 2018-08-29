@@ -109,10 +109,11 @@ job['publishers']['notification'][0]['defaults'] = {}
 
 # Define products
 job['intel'] = {}
-job['intel']['pmd_telemetry']  = {'enabled':True,'module':'im_daemon',   'class':'PMDTelemetry'}
-job['intel']['abi_summary']    = {'enabled':True,'module':'agent99_grb', 'class':'ABISummary'}
-job['intel']['host_telemetry'] = {'enabled':True,'module':'mi6',         'class':'HostTelemetry'}
-job['intel']['big_brother']    = {'enabled':True,'module':'bbmon',       'class':'BBMon', 'args':{'excluded_jobs':{3:[11]}}}
+job['intel']['pmd_telemetry']  = {'enabled':True,  'module':'im_daemon',         'class':'PMDTelemetry'}
+job['intel']['abi_summary']    = {'enabled':True,  'module':'agent99_grb',       'class':'ABISummary'}
+job['intel']['host_telemetry'] = {'enabled':True,  'module':'mi6',               'class':'HostTelemetry'}
+job['intel']['meso_history']   = {'enabled':True,  'module':'goes_meso_history', 'class':'GoesStatusOutput','args':{}}
+job['intel']['big_brother']    = {'enabled':False, 'module':'bbmon',             'class':'BBMon', 'args':{'excluded_jobs':{3:[11]}}}
 
 job['monitor'] = {'agents':{},'mi6':{}}
 job['monitor']['agents']['pmd_admin']                = {'enabled':True, 'module':'im_daemon', 'class':'PMDAdmin', 'args':{'alerts':[27,28], 'telemetry':[26,27,28]}}

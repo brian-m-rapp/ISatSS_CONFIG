@@ -253,7 +253,7 @@ The ldm_l1b_processing group generates AWIPS-II compatible reflectance and brigh
 tiles from full scene ABI L1B scene files.
 """
 groups[6]['jobs']     = {}
-groups[6]['jobs'][1]  = {'host':2,'cfg':'g16_george_l1b'}
+groups[6]['jobs'][1]  = {'host':1,'cfg':'g16_george_l1b'}
 groups[6]['jobs'][2]  = {'host':2,'cfg':'g16_tile_replicator'}
 
 

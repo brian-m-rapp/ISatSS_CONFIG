@@ -109,10 +109,11 @@ job['publishers']['notification'][0]['defaults'] = {}
 
 # Define products
 job['intel'] = {}
-job['intel']['pmd_telemetry']  = {'enabled':True,  'module':'im_daemon',   'class':'PMDTelemetry'}
-job['intel']['abi_summary']    = {'enabled':True,  'module':'agent99_grb', 'class':'ABISummary'}
-job['intel']['host_telemetry'] = {'enabled':True,  'module':'mi6',         'class':'HostTelemetry'}
-job['intel']['big_brother']    = {'enabled':False, 'module':'bbmon',       'class':'BBMon','args':{}}
+job['intel']['pmd_telemetry']  = {'enabled':True,  'module':'im_daemon',         'class':'PMDTelemetry'}
+job['intel']['abi_summary']    = {'enabled':True,  'module':'agent99_grb',       'class':'ABISummary'}
+job['intel']['host_telemetry'] = {'enabled':True,  'module':'mi6',               'class':'HostTelemetry'}
+job['intel']['big_brother']    = {'enabled':False, 'module':'bbmon',             'class':'BBMon','args':{}}
+job['intel']['meso_history']   = {'enabled':True,  'module':'goes_meso_history', 'class':'GoesStatusOutput','args':{}}
 job['intel']['big_brother']['args']['excluded_jobs']      = {3:[11]}
 job['intel']['big_brother']['args']['job_thresholds']     = {'latency_yellow':120,'latency_red':240,'restart_yellow':4,'restart_red':8}
 job['intel']['big_brother']['args']['input_thresholds']   = {'last_received_yellow':330,'last_received_red':660}
