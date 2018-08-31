@@ -67,7 +67,7 @@ job['publishers']['telemetry'] = {}
 
 job['publishers']['telemetry'][0] = {}
 job['publishers']['telemetry'][0]['provider'] = 'vlabesearch'
-job['publishers']['telemetry'][0]['enabled']  = False
+job['publishers']['telemetry'][0]['enabled']  = True
 job['publishers']['telemetry'][0]['parms']    = {'url':'https://vlab-dev.ncep.noaa.gov', 'company':10132, 'sslnoverify':True}
 job['publishers']['telemetry'][0]['exclude']  = ['BB_Monitor'] 
 
@@ -81,13 +81,13 @@ job['publishers']['telemetry'][2] = {}
 job['publishers']['telemetry'][2]['provider'] = 'file'
 job['publishers']['telemetry'][2]['enabled']  = True
 job['publishers']['telemetry'][2]['parms']    = {'node':job['monitor_node'], 'rootname':'system_tm', 'mode':'daily'}
-job['publishers']['telemetry'][2]['exclude']  = ['BB_Monitor'] 
+job['publishers']['telemetry'][2]['exclude']  = ['BB_Monitor', 'GOES_Scene_Change', 'GOES_Status_Update'] 
 
 job['publishers']['telemetry'][3] = {}
 job['publishers']['telemetry'][3]['provider'] = 'file'
 job['publishers']['telemetry'][3]['enabled']  = True
 job['publishers']['telemetry'][3]['parms']    = {'node':job['monitor_node'], 'rootname':'isatss_system_status', 'mode':'daily'}
-job['publishers']['telemetry'][3]['include']  = ['BB_Monitor'] 
+job['publishers']['telemetry'][3]['include']  = ['BB_Monitor', 'GOES_Scene_Change', 'GOES_Status_Update'] 
 
 job['publishers']['alert'] = {}
 job['publishers']['alert'][0] = {}
