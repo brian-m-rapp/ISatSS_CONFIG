@@ -67,7 +67,7 @@ job['publishers']['telemetry'] = {}
 
 job['publishers']['telemetry'][0] = {}
 job['publishers']['telemetry'][0]['provider'] = 'vlabesearch'
-job['publishers']['telemetry'][0]['enabled']  = True
+job['publishers']['telemetry'][0]['enabled']  = False
 job['publishers']['telemetry'][0]['parms']    = {'url':'https://vlab-dev.ncep.noaa.gov', 'company':10132, 'sslnoverify':True}
 job['publishers']['telemetry'][0]['exclude']  = ['BB_Monitor'] 
 
@@ -81,11 +81,12 @@ job['publishers']['telemetry'][2] = {}
 job['publishers']['telemetry'][2]['provider'] = 'file'
 job['publishers']['telemetry'][2]['enabled']  = True
 job['publishers']['telemetry'][2]['parms']    = {'node':job['monitor_node'], 'rootname':'system_tm', 'mode':'daily'}
+#job['publishers']['telemetry'][2]['exclude']  = ['BB_Monitor', 'GOES_Scene_Change', 'GOES_Status_Update'] 
 job['publishers']['telemetry'][2]['exclude']  = ['BB_Monitor'] 
 
 job['publishers']['telemetry'][3] = {}
 job['publishers']['telemetry'][3]['provider'] = 'file'
-job['publishers']['telemetry'][3]['enabled']  = True
+job['publishers']['telemetry'][3]['enabled']  = False
 job['publishers']['telemetry'][3]['parms']    = {'node':job['monitor_node'], 'rootname':'isatss_system_status', 'mode':'daily'}
 job['publishers']['telemetry'][3]['include']  = ['BB_Monitor'] 
 
@@ -109,11 +110,11 @@ job['publishers']['notification'][0]['defaults'] = {}
 
 # Define products
 job['intel'] = {}
-job['intel']['pmd_telemetry']  = {'enabled':True,  'module':'im_daemon',         'class':'PMDTelemetry'}
-job['intel']['abi_summary']    = {'enabled':True,  'module':'agent99_grb',       'class':'ABISummary'}
-job['intel']['host_telemetry'] = {'enabled':True,  'module':'mi6',               'class':'HostTelemetry'}
-job['intel']['meso_history']   = {'enabled':True,  'module':'goes_meso_history', 'class':'GoesStatusOutput','args':{}}
-job['intel']['big_brother']    = {'enabled':False, 'module':'bbmon',             'class':'BBMon', 'args':{'excluded_jobs':{3:[11]}}}
+job['intel']['pmd_telemetry']  = {'enabled':True,  'module':'im_daemon',      'class':'PMDTelemetry'}
+job['intel']['abi_summary']    = {'enabled':True,  'module':'agent99_grb',    'class':'ABISummary'}
+job['intel']['host_telemetry'] = {'enabled':True,  'module':'mi6',            'class':'HostTelemetry'}
+job['intel']['goes_telemetry'] = {'enabled':True,  'module':'goes_telemetry', 'class':'GoesStatusOutput','args':{}}
+job['intel']['big_brother']    = {'enabled':False, 'module':'bbmon',          'class':'BBMon', 'args':{'excluded_jobs':{3:[11]}}}
 
 job['monitor'] = {'agents':{},'mi6':{}}
 job['monitor']['agents']['pmd_admin']                = {'enabled':True, 'module':'im_daemon', 'class':'PMDAdmin', 'args':{'alerts':[27,28], 'telemetry':[26,27,28]}}

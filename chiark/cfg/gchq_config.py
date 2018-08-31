@@ -109,17 +109,16 @@ job['publishers']['notification'][0]['defaults'] = {}
 
 # Define products
 job['intel'] = {}
-job['intel']['pmd_telemetry']  = {'enabled':True,  'module':'im_daemon',         'class':'PMDTelemetry'}
-job['intel']['abi_summary']    = {'enabled':True,  'module':'agent99_grb',       'class':'ABISummary'}
-job['intel']['host_telemetry'] = {'enabled':True,  'module':'mi6',               'class':'HostTelemetry'}
-job['intel']['big_brother']    = {'enabled':False, 'module':'bbmon',             'class':'BBMon','args':{}}
-job['intel']['meso_history']   = {'enabled':True,  'module':'goes_meso_history', 'class':'GoesStatusOutput','args':{}}
+job['intel']['pmd_telemetry']  = {'enabled':True,  'module':'im_daemon',      'class':'PMDTelemetry'}
+job['intel']['abi_summary']    = {'enabled':True,  'module':'agent99_grb',    'class':'ABISummary'}
+job['intel']['host_telemetry'] = {'enabled':True,  'module':'mi6',            'class':'HostTelemetry'}
+job['intel']['big_brother']    = {'enabled':False, 'module':'bbmon',          'class':'BBMon','args':{}}
 job['intel']['big_brother']['args']['excluded_jobs']      = {3:[11]}
 job['intel']['big_brother']['args']['job_thresholds']     = {'latency_yellow':120,'latency_red':240,'restart_yellow':4,'restart_red':8}
 job['intel']['big_brother']['args']['input_thresholds']   = {'last_received_yellow':330,'last_received_red':660}
 job['intel']['big_brother']['args']['output_thresholds']  = {'last_sent_yellow':330,'last_sent_red':660}
 job['intel']['big_brother']['args']['missing_thresholds'] = {'area_count_yellow':283,'area_count_red':566,'in_count_yellow':283,'in_count_red':566,'tile_count_yellow':952,'tile_count_red':1904,'window_start':1200,'window_length':3600}
-job['intel']['goes_history']   = {'enabled':True, 'module':'goes_meso_history', 'class':'GoesStatusOutput', 'args':{}}
+job['intel']['goes_telemetry'] = {'enabled':True, 'module':'goes_telemetry', 'class':'GoesStatusOutput', 'args':{}}
 
 job['monitor'] = {'agents':{},'mi6':{}}
 job['monitor']['agents']['pmd_admin']                = {'enabled':True, 'module':'im_daemon', 'class':'PMDAdmin', 'args':{'alerts':[27,28], 'telemetry':[26,27,28]}}
