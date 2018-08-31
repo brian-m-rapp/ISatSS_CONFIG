@@ -87,7 +87,7 @@ job['publishers']['telemetry'][3] = {}
 job['publishers']['telemetry'][3]['provider'] = 'file'
 job['publishers']['telemetry'][3]['enabled']  = True
 job['publishers']['telemetry'][3]['parms']    = {'node':job['monitor_node'], 'rootname':'isatss_system_status', 'mode':'daily'}
-job['publishers']['telemetry'][3]['include']  = ['BB_Monitor', 'GOES_Scene_Change', 'GOES_Status_Update'] 
+job['publishers']['telemetry'][3]['include']  = ['BB_Monitor'] 
 
 job['publishers']['alert'] = {}
 job['publishers']['alert'][0] = {}
