@@ -232,20 +232,24 @@ The pkt_l1b_processing group generates AWIPS-II compatible reflectance and brigh
 tiles from incoming GRB CCSDS packets.
 """
 groups[7]['jobs']     = {}
-groups[7]['jobs'][1]  = {'host':2,'cfg':'gpacket_config'}
-groups[7]['jobs'][2]  = {'host':2,'cfg':'grb_abi_lhcp_processor'}
-groups[7]['jobs'][3]  = {'host':2,'cfg':'grb_abi_rhcp_processor'}
-groups[7]['jobs'][4]  = {'host':2,'cfg':'grb_abi_band2_processor'}
+groups[7]['jobs'][1]  = {'host':1,'cfg':'gpacket_config'}
+groups[7]['jobs'][2]  = {'host':1,'cfg':'grb_abi_lhcp_processor'}
+groups[7]['jobs'][3]  = {'host':1,'cfg':'grb_abi_rhcp_processor'}
+groups[7]['jobs'][4]  = {'host':1,'cfg':'grb_abi_band2_processor'}
 
+# g17_packets
 groups[8] = {}
-groups[8]['name']     = 'goes-16_grb_nawips_imagery'
+groups[8]['name']     = 'goes-17_grb_pkt_l1b_processing'
 groups[8]['description'] = """
-The ncp_imagery group translates incoming ABI tiles into NAWIPS compatible McIDAS Area Files
+The pkt_l1b_processing group generates AWIPS-II compatible reflectance and brightness temperature
+tiles from incoming GRB CCSDS packets.
 """
 groups[8]['jobs']     = {}
-groups[8]['jobs'][1]  = {'host':2,'cfg':'g16_george_fdco'}
-groups[8]['jobs'][2]  = {'host':2,'cfg':'g16_george_meso'}
-groups[8]['jobs'][3]  = {'host':2,'cfg':'g16_ncm'}
+groups[8]['jobs'][1]  = {'host':1,'cfg':'g17_gpacket_config',        'icfg':{'io':{'x':200,'y':1200}}}
+groups[8]['jobs'][2]  = {'host':1,'cfg':'g17_grb_abi_lhcp_proc',     'icfg':{'io':{'x':1400,'y':600}}}
+groups[8]['jobs'][3]  = {'host':1,'cfg':'g17_grb_abi_rhcp_proc',     'icfg':{'io':{'x':1400,'y':200}}}
+groups[8]['jobs'][4]  = {'host':1,'cfg':'g17_grb_abi_bnd2_proc',     'icfg':{'io':{'x':1400,'y':1000}}}
+groups[8]['jobs'][5]  = {'host':1,'cfg':'g17_grb_glm_proc',          'icfg':{'io':{'x':1400,'y':1800}}}
 
 groups[9] = {}
 groups[9]['name']     = 'pda'

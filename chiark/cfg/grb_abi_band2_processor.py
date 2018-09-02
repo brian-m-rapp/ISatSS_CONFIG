@@ -21,69 +21,74 @@
 
 
 job = {}
-job['name']  = 'grb_abi_band2_processor'
-job['cmd']   = 'grber'
-job['class'] = 'GRBProc'
-job['log']   = 'grb_abi_band2_processor_log'
+job['name']          = 'grb_abi_band2_processor'
+job['cmd']           = 'grber'
+job['class']         = 'GRBProc'
+job['log']           = 'grb_abi_band2_processor_log'
+job['log_node']      = 1
 
-job['inpath']        = {'node':4,'path':'abi'}
+job['inpath']        = {'node':41,'path':'abi'}
 job['apids']         = {}
-job['apids']['keep'] = ['101','111','141','151','161','171','181','191']	# band 2 FD, M1, M2
-monfields = ['file','node','size','band','scene','sat','mode','ctime','ptime','clat','clon','tileno','tiletot','fault']
+job['apids']['keep'] = ['101','111','141','151','161','171','181','191']        # band 2 FD, M1, M2
 job['notifications'] = {}
-job['notifications']['ldm']   = {'node':6, 'enabled':True,'fields':['file','prodid','wmo','node'],'prefix':'abi_band2_ldm'}
-job['notifications']['area']  = {'node':12,'enabled':True,'fields':['file','node'],               'prefix':'abi_band2_area'}
-job['notifications']['marea'] = {'node':10,'enabled':True,'fields':['file','node'],               'prefix':'abi_band2_marea'}
-job['notifications']['mon']   = {'node':16,'enabled':True,'fields':monfields,    		          'prefix':'abi_band2_mon','jobinfo':True}
+job['notifications']['ldm']   = {'node':6,'enabled':False,'fields':['file','prodid','wmo'],'prefix':'abi_lhcp_ldm'}
+job['notifications']['area']  = {'node':10,'enabled':True, 'fields':['file'],'prefix':'abi_lhcp_area'}
+job['notifications']['marea'] = {'node':12,'enabled':True,'fields':['file'],'prefix':'abi_lhcp_marea'}
+job['read_node']     = 40
+job['satcfg']	     = 'goesr_config'
+job['qlimit']        = 1000
 
-job['read_node']   = 3
-job['satcfg']	   = 'goesr_config'
-job['qlimit']      = 1000
+# Agent99 customization
+job['agent99_modules']      = ['grber-a99-mds_updates', 'grber-a99-tile_prod_stats']
+job['load_default_agent99'] = True
+
+job['monitor'] = {'agents':{},'mi6':{}}
+job['monitor']['agents']['grb_telemetry']            = {'enabled':True,  'module':'goes_direct_grb_telemetry', 'class':'GoesDirectGrbTelemetry'}
+job['monitor']['agents']['pmd_admin']                = {'enabled':True, 'module':'im_daemon', 'class':'PMDAdmin', 'args':{'alerts':[27,28], 'telemetry':[26,27,28]}}
+job['monitor']['mi6']['non_isatss']                  = {'enabled':True,  'lockout':1800}
+job['monitor']['mi6']['forward']                     = {'enabled':True,  'types':{}, 'messages':{}}
+job['monitor']['mi6']['forward']['types']['ERROR']   = {'enabled':True,  'lockout':1800, 'alert':{'enabled':True, 'lockout':1800}, 'tm':{'enabled':False}}
+job['monitor']['mi6']['forward']['types']['WARNING'] = {'enabled':True,  'alert':{'enabled':True, 'lockout':1800}, 'tm':{'enabled':False}}
 
 #TODO: create a data characterization object
 job['data'] = {}
 job['data']['products']               = {}
-job['data']['products']['location']   = {'node':14, 'type':'datapath', 'path':'abi'}
-job['data']['products']['aging']      = {'window':3600, 'mode':'elapsedname', 'fmt':'%Y%m%d%H'}
-job['data']['products']['method']     = {'technique':'stage', 'path':'incinerator'}
-job['data']['products']['activeonly'] = True															# check pidfile
+job['data']['products']['location']   = {'node':17,'path':'abi'}
+job['data']['products']['mode']       = 'datehour'
+job['data']['products']['aging']      = {'window':86400, 'mode':'elapsedname','fmt':'%Y%m%d%H'}
+job['data']['products']['method']     = {'technique':'stage', 'path':'isatss_incinerator'}
+job['data']['products']['activeonly'] = True                                                                                                                    # check pidfile
 job['data']['products']['schedule']   = {'interval':600}
 job['data']['infoldm']                = {}
-job['data']['infoldm']['location']    = {'node':6,'type':'infopath'}
+job['data']['infoldm']['location']    = {'node':6}
 job['data']['infoldm']['filter']      = {'type':'starts','test':job['notifications']['ldm']['prefix']}
 job['data']['infoldm']['aging']       = {'window':3600, 'mode':'creationtime'}
 job['data']['infoldm']['method']      = {'technique':'inplace'}
 job['data']['infoldm']['activeonly']  = True
 job['data']['infoldm']['schedule']    = {'interval':600}
-job['data']['infoarea']                = {}
-job['data']['infoarea']['location']    = {'node':12,'type':'infopath'}
-job['data']['infoarea']['filter']      = {'type':'starts','test':job['notifications']['area']['prefix']}
-job['data']['infoarea']['aging']       = {'window':3600, 'mode':'creationtime'}
-job['data']['infoarea']['method']      = {'technique':'inplace'}
-job['data']['infoarea']['activeonly']  = True
-job['data']['infoarea']['schedule']    = {'interval':600}
-job['data']['infomarea']               = {}
-job['data']['infomarea']['location']   = {'node':10,'type':'infopath'}
-job['data']['infomarea']['filter']     = {'type':'starts','test':job['notifications']['marea']['prefix']}
-job['data']['infomarea']['aging']      = {'window':3600, 'mode':'creationtime'}
-job['data']['infomarea']['method']     = {'technique':'inplace'}
-job['data']['infomarea']['activeonly'] = True
-job['data']['infomarea']['schedule']   = {'interval':600}
-job['data']['infomon']                 = {}
-job['data']['infomon']['location']     = {'node':16,'type':'infopath'}
-job['data']['infomon']['filter']       = {'type':'starts','test':job['notifications']['mon']['prefix']}
-job['data']['infomon']['aging']        = {'window':3600, 'mode':'creationtime'}
-job['data']['infomon']['method']       = {'technique':'inplace'}
-job['data']['infomon']['activeonly']   = True
-job['data']['infomon']['schedule']     = {'interval':600}
-job['data']['log']                     = {}
-job['data']['log']['location']		   = {'node':1,'type':'datapath', 'path':'log'}
-job['data']['log']['aging']            = {'window':2,'mode':'count'}
-job['data']['log']['archive']          = {'window':7,'mode':'count'}
-job['data']['log']['roots']            = [job['log']]
-job['data']['log']['method']           = {'technique':'inplace'}
-job['data']['log']['schedule']         = {'interval':3600}
-job['data']['log']['activeonly']       = True
+job['data']['infoarea']               = {}
+job['data']['infoarea']['location']   = {'node':10}
+job['data']['infoarea']['filter']     = {'type':'starts','test':job['notifications']['area']['prefix']}
+job['data']['infoarea']['aging']      = {'window':3600, 'mode':'creationtime'}
+job['data']['infoarea']['method']     = {'technique':'inplace'}
+job['data']['infoarea']['activeonly'] = True
+job['data']['infoarea']['schedule']   = {'interval':600}
+job['data']['infomarea']              = {}
+job['data']['infomarea']['location']  = {'node':12}
+job['data']['infomarea']['filter']    = {'type':'starts','test':job['notifications']['marea']['prefix']}
+job['data']['infomarea']['aging']     = {'window':3600, 'mode':'creationtime'}
+job['data']['infomarea']['method']    = {'technique':'inplace'}
+job['data']['infomarea']['activeonly']= True
+job['data']['infomarea']['schedule']  = {'interval':600}
+job['data']['log']                    = {}
+#job['data']['log']['location']        = {'node':job['log_node'],'type':'datapath','path':'log'}
+job['data']['log']['location']        = {'node':job['log_node']}
+job['data']['log']['aging']           = {'window':2,'mode':'count'}
+job['data']['log']['archive']         = {'window':7,'mode':'count'}
+job['data']['log']['roots']           = [job['log']]
+job['data']['log']['method']          = {'technique':'inplace'}
+job['data']['log']['schedule']        = {'interval':3600}
+job['data']['log']['activeonly']      = True
 
 job['defaults'] = {}
 job['defaults']['products'] = {}
@@ -91,12 +96,12 @@ job['defaults']['products']['bands']               = [4,6,7,8,9,10,11,12,13,14,1
 job['defaults']['products']['center']              = {'lat':0.0,'lon':0.0}
 job['defaults']['products']['class']               = 'image'
 job['defaults']['products']['ins']                 = 'abi'
-job['defaults']['products']['module']			   = 'im_grb_abii'
-job['defaults']['products']['notify']			   = ['area','ldm','mon']
+job['defaults']['products']['module']		   = 'im_grb_abii'
+job['defaults']['products']['notify']	           = ['area','ldm']
 job['defaults']['products']['outroot']             = job['data']['products']['location']
-job['defaults']['products']['prodtype']			   = 'ABII'
-job['defaults']['products']['production_location'] = 'NAPO'
-job['defaults']['products']['satellite']           = 'Test'
+job['defaults']['products']['prodtype']		   = 'ABII'
+job['defaults']['products']['production_location'] = 'ANNEX'
+job['defaults']['products']['satellite']           = 'East'
 job['defaults']['products']['scene']               = 'FD'
 job['defaults']['products']['shape']               = {'y':506,'x':904}
 job['defaults']['products']['spec']                = 'abi_scmi_tile'
@@ -331,18 +336,16 @@ job['products'][212] = {'scene':'CO','tile':8,'blocks':[28,29,34,35],'map':{'y':
 
 # 2km Mesos
 job['products'][213] = {'scene':'M1','tile':0,'blocks':[0,1,2,3],    'map':{'y':0,   'x':0},   'shape':{'y':500, 'x':500},'tiles':1}
-job['products'][213]['notify'] = ['marea','ldm','mon']
+job['products'][213]['notify'] = ['marea','ldm']
 job['products'][214] = {'scene':'M2','tile':0,'blocks':[0,1,2,3],    'map':{'y':0,   'x':0},   'shape':{'y':500, 'x':500},'tiles':1}
-job['products'][214]['notify'] = ['marea','ldm','mon']
+job['products'][214]['notify'] = ['marea','ldm']
 # 1km Mesos
 job['products'][215] = {'scene':'M1','tile':0,'blocks':[0,1,2,3],    'map':{'y':0,   'x':0},   'shape':{'y':1000,'x':1000}, 'bands':[1,3,5],'tiles':1}
-job['products'][215]['notify'] = ['marea','ldm','mon']
+job['products'][215]['notify'] = ['marea','ldm']
 job['products'][216] = {'scene':'M2','tile':0,'blocks':[0,1,2,3],    'map':{'y':0,   'x':0},   'shape':{'y':1000,'x':1000}, 'bands':[1,3,5],'tiles':1}
-job['products'][216]['notify'] = ['marea','ldm','mon']
+job['products'][216]['notify'] = ['marea','ldm']
 # 0.5km Mesos
 job['products'][217] = {'scene':'M1','tile':0,'blocks':[0,1,2,3],    'map':{'y':0,   'x':0},   'shape':{'y':2000,'x':2000}, 'bands':[2],'tiles':1}
-job['products'][217]['notify'] = ['marea','ldm','mon']
+job['products'][217]['notify'] = ['marea','ldm']
 job['products'][218] = {'scene':'M2','tile':0,'blocks':[0,1,2,3],    'map':{'y':0,   'x':0},   'shape':{'y':2000,'x':2000}, 'bands':[2],'tiles':1}
-job['products'][218]['notify'] = ['marea','ldm','mon']
-
-
+job['products'][218]['notify'] = ['marea','ldm']
