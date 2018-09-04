@@ -38,6 +38,14 @@ job['read_node']   = 3
 job['satcfg']	   = 'goesr_config'
 job['qlimit']      = 1000
 
+job['monitor'] = {'agents':{},'mi6':{}}
+job['monitor']['agents']['grb_telemetry']            = {'enabled':True,  'module':'goes_direct_grb_telemetry', 'class':'GoesDirectGrbTelemetry'}
+job['monitor']['agents']['pmd_admin']                = {'enabled':True,  'module':'im_daemon', 'class':'PMDAdmin', 'args':{'alerts':[27,28], 'telemetry':[26,27,28]}}
+job['monitor']['mi6']['non_isatss']                  = {'enabled':True,  'lockout':1800}
+job['monitor']['mi6']['forward']                     = {'enabled':True,  'types':{}, 'messages':{}}
+job['monitor']['mi6']['forward']['types']['ERROR']   = {'enabled':True,  'lockout':1800, 'alert':{'enabled':True, 'lockout':1800}, 'tm':{'enabled':False}}
+job['monitor']['mi6']['forward']['types']['WARNING'] = {'enabled':True,  'alert':{'enabled':True, 'lockout':1800}, 'tm':{'enabled':False}}
+
 #TODO: create a data characterization object
 job['data'] = {}
 job['data']['products']               = {}
