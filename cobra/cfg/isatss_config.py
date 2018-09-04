@@ -265,10 +265,10 @@ The pkt_l1b_processing group generates AWIPS-II compatible reflectance and brigh
 tiles from incoming GRB CCSDS packets.
 """
 groups[7]['jobs']     = {}
-groups[7]['jobs'][1]  = {'host':2,'cfg':'gpacket_config'}
-groups[7]['jobs'][2]  = {'host':2,'cfg':'grb_abi_lhcp_processor'}
-groups[7]['jobs'][3]  = {'host':2,'cfg':'grb_abi_rhcp_processor'}
-groups[7]['jobs'][4]  = {'host':2,'cfg':'grb_abi_band2_processor'}
+groups[7]['jobs'][1]  = {'host':1,'cfg':'gpacket_config'}
+groups[7]['jobs'][2]  = {'host':1,'cfg':'grb_abi_lhcp_processor'}
+groups[7]['jobs'][3]  = {'host':1,'cfg':'grb_abi_rhcp_processor'}
+groups[7]['jobs'][4]  = {'host':1,'cfg':'grb_abi_band2_processor'}
 
 groups[8] = {}
 groups[8]['name']     = 'goes-16_grb_nawips_imagery'
