@@ -289,6 +289,18 @@ groups[9]['jobs']     = {}
 groups[9]['jobs'][1] = {'host':2,'cfg':'pda_dispatcher'}
 groups[9]['jobs'][2] = {'host':2,'cfg':'pda_replicator'}
 
+# g17_packets
+groups[10] = {}
+groups[10]['name']     = 'goes-17_grb_pkt_l1b_processing'
+groups[10]['description'] = """
+The pkt_l1b_processing group generates AWIPS-II compatible reflectance and brightness temperature
+tiles from incoming GRB CCSDS packets.
+"""
+groups[10]['jobs']     = {}
+groups[10]['jobs'][1]  = {'host':1,'cfg':'g17_grb_abi_lhcp_proc',     'icfg':{'io':{'x':1400,'y':600}}}
+groups[10]['jobs'][2]  = {'host':1,'cfg':'g17_grb_abi_rhcp_proc',     'icfg':{'io':{'x':1400,'y':200}}}
+groups[10]['jobs'][3]  = {'host':1,'cfg':'g17_grb_abi_bnd2_proc',     'icfg':{'io':{'x':1400,'y':1000}}}
+
 # ldm tracker
 groups[16] = {}
 groups[16]['name']     = 'sbn_ldm_tracker'

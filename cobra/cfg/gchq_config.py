@@ -56,7 +56,7 @@ job['data']['log']['activeonly']      = True
 job['loopsleep']                    = 1
 job['loglevel']                     = 6
 job['pause_empty']                  = 2
-job['handler_pool_size']            = 5
+job['handler_pool_size']            = 1
 job['watcher_timeout']              = 1000
 job['queue_timeout']                = 2
 job['telemetry_aggregation_period'] = 60
@@ -69,13 +69,13 @@ job['publishers']['telemetry'][0] = {}
 job['publishers']['telemetry'][0]['provider'] = 'vlabesearch'
 job['publishers']['telemetry'][0]['enabled']  = True
 job['publishers']['telemetry'][0]['parms']    = {'url':'https://vlab-dev.ncep.noaa.gov', 'company':10132, 'group':67059, 'sslnoverify':True}
-job['publishers']['telemetry'][0]['exclude']  = ['BB_Monitor'] 
+job['publishers']['telemetry'][0]['include']  = ['GOES_Scene_Change']
 
 job['publishers']['telemetry'][1] = {}
 job['publishers']['telemetry'][1]['provider'] = 'vlabesearch'
 job['publishers']['telemetry'][1]['enabled']  = False
 job['publishers']['telemetry'][1]['parms']    = {'url':'https://vlab.ncep.noaa.gov', 'company':10132, 'group':67059, 'sslnoverify':False}
-job['publishers']['telemetry'][1]['exclude']  = ['BB_Monitor'] 
+job['publishers']['telemetry'][1]['include']  = ['GOES_Scene_Change']
 
 job['publishers']['telemetry'][2] = {}
 job['publishers']['telemetry'][2]['provider'] = 'file'
