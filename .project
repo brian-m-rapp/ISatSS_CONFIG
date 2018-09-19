@@ -3,6 +3,7 @@
 	<name>ISatSS_CONFIG</name>
 	<comment></comment>
 	<projects>
+		<project>ISatSS</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
