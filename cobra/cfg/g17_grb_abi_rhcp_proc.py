@@ -36,9 +36,13 @@ job['cntl_node']     = 582
 job['satcfg']	     = 'goesr_config'
 job['qlimit']        = 1000
 
+# Agent99 customization
+job['agent99_modules']      = ['a99-mds_updates', 'a99-tile_prod_stats']
+job['load_default_agent99'] = True
+
 job['monitor'] = {'agents':{},'mi6':{}}
-job['monitor']['agents']['grb_telemetry']            = {'enabled':True,  'module':'goes_direct_grb_telemetry', 'class':'GoesDirectGrbTelemetry'}
-job['monitor']['agents']['pmd_admin']                = {'enabled':True, 'module':'im_daemon', 'class':'PMDAdmin', 'args':{'alerts':[27,28], 'telemetry':[26,27,28]}}
+job['monitor']['agents']['radiance_analysis']        = {'enabled':True,  'module':'g17_radiance_analysis', 'class':'RadianceAnalysis'}
+job['monitor']['agents']['pmd_admin']                = {'enabled':True,  'module':'im_daemon', 'class':'PMDAdmin', 'args':{'alerts':[27,28], 'telemetry':[26,27,28]}}
 job['monitor']['mi6']['non_isatss']                  = {'enabled':True,  'lockout':1800}
 job['monitor']['mi6']['forward']                     = {'enabled':True,  'types':{}, 'messages':{}}
 job['monitor']['mi6']['forward']['types']['ERROR']   = {'enabled':True,  'lockout':1800, 'alert':{'enabled':True, 'lockout':1800}, 'tm':{'enabled':False}}
