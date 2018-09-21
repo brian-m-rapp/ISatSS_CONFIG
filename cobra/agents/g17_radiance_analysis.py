@@ -23,7 +23,9 @@ imports.append({'module':'time',            'as':'time',            'src':'basel
 imports.append({'module':'datetime',        'as':'datetime',        'src':'baseline'})
 imports.append({'module':'calendar',        'as':'calendar',        'src':'baseline'})
 imports.append({'module':'im_agent99',      'as':'im_agent99',      'src':'isatss'})
+imports.append({'module':'im_agent13',      'as':'im_agent13',      'src':'isatss'})
 imports.append({'module':'im_exceptions',   'as':'ime',             'src':'isatss'})
+
 import isatss_init
 from turtledemo import fractalcurves
 isatss_init.load_imports(__name__,imports)
@@ -58,6 +60,10 @@ class RadianceAnalysis(im_agent99.Agent99):
 
 		self.args      = args
 		self.scenes    = {}
+		if args != None and 'sat_id' in args:
+			self.sat_id = args['sat_id']
+		else:
+			self.sat_id = 'G17'
 
 
 	def update(self, msg):
@@ -98,6 +104,7 @@ class RadianceAnalysis(im_agent99.Agent99):
 					inrec = {}
 					inrec['site']       = isc.site
 					inrec['host_id']    = self.host_id
+					inrec['sat_id']     = self.sat_id
 					inrec['scene']      = s
 					inrec['band']       = b
 					inrec['scene_time'] = int(self.scenes[s][b]['t']*1000)
@@ -115,3 +122,25 @@ class RadianceAnalysis(im_agent99.Agent99):
 			self.scenes[s][b]['nt'] += 1
 			self.scenes[s][b]['nel'] += int(ldict['nel'])
 			self.scenes[s][b]['avgv'] += 1.0*int(ldict['tv'])/int(ldict['nz'])
+
+
+class RadianceAggregator(im_agent13.Agent13):
+	defs = {}
+	defs['GOES_Radiance_Monitor']  = {}
+
+	def __init__(self, logger, publishQ, args=None):
+		super().__init__(logger, publishQ, args)
+		self.registered_messages['GOES_Scene_Change']  = {}
+
+
+	def update(self, msg):
+		if msg['msg'] not in self.registered_messages:
+			return
+
+		if msg['msg'] == 'GOES_Radiance_Monitor':
+			content = {}
+			content['type']    = 'telemetry'
+			content['msg']     = 'GOES_Radiance_Values'
+			content['payload'] = msg['payload']
+			self.publish(content)
+
