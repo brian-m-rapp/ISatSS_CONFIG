@@ -33,6 +33,9 @@ isc = isatss_init.import_config()
 #globals
 fid = isatss_init.get_fid(__file__)
 
+logger_items = {}
+logger_items[1]  = {'class':'RadianceAnalysis','method':'update','level':'info'}
+
 class RadianceAnalysis(im_agent99.Agent99):
 	"""
 	"""
@@ -60,7 +63,7 @@ class RadianceAnalysis(im_agent99.Agent99):
 
 		self.args      = args
 		self.scenes    = {}
-		if args != None and 'sat_id' in args:
+		if args != None and 'sat_id' in args and args['sat_id'] != None:
 			self.sat_id = args['sat_id']
 		else:
 			self.sat_id = 'G17'
@@ -111,7 +114,7 @@ class RadianceAnalysis(im_agent99.Agent99):
 					inrec['frac']       = frac
 					inrec['avg']        = avg
 					self.makeDeadDrop('telemetry', 'GOES_Radiance_Monitor', inrec)
-					self.logger.info('GOES-17 new scene {} scene_time {} band {}'.format(s, inrec['scene_time'], b))
+					self.logger.info('GOES-17 new scene {} scene_time {} band {}'.format(s, inrec['scene_time'], b),fid=fid,lid=1)
 					#logargs: 
 
 				self.scenes[s][b] = {'nz':0,'nel':0,'avgv':0.0,'nt':0}
@@ -130,7 +133,7 @@ class RadianceAggregator(im_agent13.Agent13):
 
 	def __init__(self, logger, publishQ, args=None):
 		super().__init__(logger, publishQ, args)
-		self.registered_messages['GOES_Scene_Change']  = {}
+		self.registered_messages['GOES_Radiance_Monitor']  = {}
 
 
 	def update(self, msg):
@@ -140,7 +143,23 @@ class RadianceAggregator(im_agent13.Agent13):
 		if msg['msg'] == 'GOES_Radiance_Monitor':
 			content = {}
 			content['type']    = 'telemetry'
-			content['msg']     = 'GOES_Radiance_Values'
-			content['payload'] = msg['payload']
+			content['msg']     = msg['msg']
+			inpay = msg['payload']
+			
+			payload = {}
+			payload['site']    = inpay['site']
+			if inpay['host_id'] in isc.hosts:
+				payload['host'] = isc.hosts[inpay['host_id']]['host']
+			else:
+				payload['host'] = 'unknown_host_id_'+inpay['host_id']
+
+			payload['sat_id']     = inpay['sat_id']
+			payload['scene']      = inpay['scene']
+			payload['band']       = inpay['band']
+			payload['scene_time'] = inpay['scene_time']
+			payload['frac']       = inpay['frac']
+			payload['avg']        = inpay['avg']
+
+			content['payload'] = payload
 			self.publish(content)
 
