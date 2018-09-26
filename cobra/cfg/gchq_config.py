@@ -164,10 +164,10 @@ additional processing on specific messages.  Each key is a unique convenience na
 						submit the results to the publisher at the appropriate point.
 """
 job['intel'] = {}
-job['intel']['pmd_telemetry']       = {'enabled':True,  'module':'im_daemon',             'class':'PMDTelemetry'}
-job['intel']['abi_summary']         = {'enabled':True,  'module':'agent99_grb',           'class':'ABISummary'}
-job['intel']['host_telemetry']      = {'enabled':True,  'module':'mi6',                   'class':'HostTelemetry'}
-job['intel']['goes_telemetry']      = {'enabled':True,  'module':'goes_telemetry',        'class':'GoesStatusOutput','args':{}}
+job['intel']['pmd_telemetry']       = {'enabled':False, 'module':'im_daemon',             'class':'PMDTelemetry'}
+job['intel']['abi_summary']         = {'enabled':False, 'module':'agent99_grb',           'class':'ABISummary'}
+job['intel']['host_telemetry']      = {'enabled':False, 'module':'mi6',                   'class':'HostTelemetry'}
+job['intel']['goes_telemetry']      = {'enabled':False, 'module':'goes_telemetry',        'class':'GoesStatusOutput','args':{}}
 job['intel']['radiance_aggregator'] = {'enabled':True,  'module':'g17_radiance_analysis', 'class':'RadianceAggregator'}
 job['intel']['big_brother']         = {'enabled':False, 'module':'bbmon',                 'class':'BBMon', 'args':{'excluded_jobs':{3:[11]}}}
 
