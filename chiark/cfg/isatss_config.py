@@ -159,7 +159,7 @@ groups[1]['cluster_action'] = ['init','shutdown']
 groups[1]['jobs']     = {}
 groups[1]['jobs'][1]  = {'host':1, 'cfg':'agent86_config'}
 groups[1]['jobs'][2]  = {'host':2, 'cfg':'agent86_config'}
-groups[1]['jobs'][3]  = {'host':1, 'cfg':'thread_test_config'}
+#groups[1]['jobs'][3]  = {'host':1, 'cfg':'thread_test_config'}
 
 groups[2] = {}
 groups[2]['name']     = 'incinerators'
