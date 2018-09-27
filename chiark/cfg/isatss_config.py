@@ -22,10 +22,6 @@ hosts = {}
 hosts[1] = {'host':'chiark.dilireum.org', 'shortname':'chiark'}
 hosts[2] = {'host':'masaq.dilireum.org',  'shortname':'masaq'}
 
-hattr = {}
-hattr[1] = {'nics': [('netname', 'eth0')],   'filesystems': []}
-hattr[2] = {'nics': [('netname', 'eth0')],   'filesystems': []}
-
 """
 The nodes dictionary defines all filesystem locations that are accessed (read, write, delete) by ISatSS applications.  For clustered configurations, it is assumed
 that all hosts are configured with identical local file systems, and the same access to shared filesystems.  isatss_config.nodes is used in conjunction with the
@@ -245,11 +241,13 @@ The pkt_l1b_processing group generates AWIPS-II compatible reflectance and brigh
 tiles from incoming GRB CCSDS packets.
 """
 groups[8]['jobs']     = {}
+"""
 groups[8]['jobs'][1]  = {'host':1,'cfg':'g17_gpacket_config',        'icfg':{'io':{'x':200,'y':1200}}}
 groups[8]['jobs'][2]  = {'host':1,'cfg':'g17_grb_abi_lhcp_proc',     'icfg':{'io':{'x':1400,'y':600}}}
 groups[8]['jobs'][3]  = {'host':1,'cfg':'g17_grb_abi_rhcp_proc',     'icfg':{'io':{'x':1400,'y':200}}}
 groups[8]['jobs'][4]  = {'host':1,'cfg':'g17_grb_abi_bnd2_proc',     'icfg':{'io':{'x':1400,'y':1000}}}
 groups[8]['jobs'][5]  = {'host':1,'cfg':'g17_grb_glm_proc',          'icfg':{'io':{'x':1400,'y':1800}}}
+"""
 
 groups[9] = {}
 groups[9]['name']     = 'pda'
