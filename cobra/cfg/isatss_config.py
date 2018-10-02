@@ -300,6 +300,7 @@ groups[10]['jobs']     = {}
 groups[10]['jobs'][1]  = {'host':1,'cfg':'g17_grb_abi_lhcp_proc',     'icfg':{'io':{'x':1400,'y':600}}}
 groups[10]['jobs'][2]  = {'host':1,'cfg':'g17_grb_abi_rhcp_proc',     'icfg':{'io':{'x':1400,'y':200}}}
 groups[10]['jobs'][3]  = {'host':1,'cfg':'g17_grb_abi_bnd2_proc',     'icfg':{'io':{'x':1400,'y':1000}}}
+groups[10]['jobs'][4]  = {'host':1,'cfg':'gpacket_config'}
 
 # ldm tracker
 groups[16] = {}
