@@ -158,6 +158,7 @@ nodes[59] = {'path':'/dev/shm/isatss_data/59_pda_replicator_in',          'files
 nodes[60] = {'path':'/mnt/ldm2/decoders',                                 'filesystem': '/mnt/ldm2', 'ctype':'data','stype':'network', 'root':'/mnt/ldm2', 'incinerator':{'gid':2,'jid':1}} 
 
 
+
 # system defaults
 defaults = {}
 defaults['log']             = 'isatss_log'	  			# default log file name
