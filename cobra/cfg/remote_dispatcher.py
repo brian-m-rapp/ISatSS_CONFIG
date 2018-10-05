@@ -27,30 +27,22 @@ job['log_node'] = 1
 
 
 job['notifications']   = {}
-job['notifications']['slab']   = {'node':71, 'enabled':True,'fields':['file','node'],'prefix':'h8_slab'}
+job['notifications']['ascat']   = {'node':54, 'enabled':True, 'fields':['file', 'node'], 'prefix':'ascat'}
 
 job['data'] = {}
-job['data']['h8slab']                 = {}
-job['data']['h8slab']['location']       = {'node':72}
-job['data']['h8slab']['aging']          = {'window':3600, 'mode':'creationtime'}
-job['data']['h8slab']['method']         = {'technique':'stage', 'path':'incinerator'}
-job['data']['h8slab']['activeonly']     = True                                                            # check pidfile
-job['data']['h8slab']['schedule']       = {'interval':600}
+job['data']['afiles']                 = {}
+job['data']['afiles']['location']       = {'node':82}
+job['data']['afiles']['aging']          = {'window':3600, 'mode':'creationtime'}
+job['data']['afiles']['method']         = {'technique':'stage', 'path':'incinerator'}
+job['data']['afiles']['activeonly']     = True                                                            # check pidfile
+job['data']['afiles']['schedule']       = {'interval':600}
 
-job['data']['infoslab']                = {}
-job['data']['infoslab']['location']    = {'node':71}
-job['data']['infoslab']['filter']      = {'type':'starts','test':job['notifications']['slab']['prefix']}
-job['data']['infoslab']['aging']       = {'window':3600, 'mode':'creationtime'}
-job['data']['infoslab']['method']      = {'technique':'inplace'}
-job['data']['infoslab']['activeonly']  = True
-job['data']['infoslab']['schedule']    = {'interval':600}
-
-job['data']['slabledger']                = {}
-job['data']['slabledger']['location']    = {'node':73}
-job['data']['slabledger']['aging']       = {'window':86400*10, 'mode':'creationtime'}
-job['data']['slabledger']['method']      = {'technique':'inplace'}
-job['data']['slabledger']['activeonly']  = True
-job['data']['slabledger']['schedule']    = {'interval':600}
+job['data']['aledger']                = {}
+job['data']['aledger']['location']    = {'node':83}
+job['data']['aledger']['aging']       = {'window':86400*10, 'mode':'creationtime'}
+job['data']['aledger']['method']      = {'technique':'inplace'}
+job['data']['aledger']['activeonly']  = True
+job['data']['aledger']['schedule']    = {'interval':600}
 
 job['data']['log']                    = {}
 job['data']['log']['location']        = {'node':1}
@@ -67,21 +59,20 @@ job['max_sleep']        = 10
 job['work_time']        = 60
 
 job['sources'] = {}
-job['sources']['star'] = {'protocol':'AFTP', 'host':'ftp.star.nesdis.noaa.gov', 'authid':3, 'timeout':10, 'retry':10,'paths':{},'sessions':1}
-ahiargs = {'window':3600,'scenes':['FLDK'],'bands':['B03','B07','B08','B09','B10','B13','B14'],'cyclecount':70}
-ahiargs['target'] = {'data':job['data']['h8slab'],'notifications':job['notifications']}
-ahiargs['ledger'] = {'node':job['data']['slabledger']['location']['node'],'name':'star_status'}
-job['sources']['star']['paths']['ahi'] = {'path':'AHI','dirs':{},'special':{'module':'starserver','class':'AHIPuller','args':ahiargs}}
+job['sources']['nhc'] =  {'protocol':'SCP', 'host':'lotus.napo.nws.noaa.gov', 'authid':1, 'timeout':10, 'retry':10,'paths':{},'sessions':1}
+#job['sources']['nhc'] =  {'protocol':'SCP', 'host':'grb01.nhc.noaa.gov', 'authid':0, 'timeout':10, 'retry':10,'paths':{},'sessions':1}
+#'pull_along_path' = False	# If true, pull all files from every directory of the root (inclusive) to the 'depth' directories
+#'depth' = 1		# 0 = pull from this dir; 1 = pull from all subdirectories of the root; -1 = recursively pull from all subdirectories
 
-job['sources']['nhc'] =  {'protocol':'SCP', 'host':'grb01.nhc.noaa.gov', 'authid':3, 'timeout':10, 'retry':10,'paths':{},'sessions':1}
-ThisIsTheDir = '/home/pda/data/pullFromPDA/Global/ASCAT' # Must be able to pull files from subdirectories of this data root
-'along_path' = False	# If true, pull all files from every directory of the root (inclusive) to the 'depth' directories
-'depth' = 1		# 0 = pull from this dir; 1 = pull from all subdirectories of the root; -1 = recursively pull from all subdirectories
-
-ascatargs = {'window':3600,'scenes':['FLDK'],'bands':['B03','B07','B08','B09','B10','B13','B14'],'cyclecount':70}
-ascatargs['target'] = {'data':job['data']['h8slab'],'notifications':job['notifications']}
-ascatargs['ledger'] = {'node':job['data']['slabledger']['location']['node'],'name':'star_status'}
-job['sources']['nhc']['paths']['ahi'] = {'path':'AHI','dirs':{},'special':{'module':'starserver','class':'AHIPuller','args':ascatargs}}
+ascat_args = {'window':3600, 'cyclecount':70}
+ascat_args['target'] = {'data':job['data']['afiles'], 'notifications':job['notifications']}
+ascat_args['ledger'] = {'node':job['data']['aledger']['location']['node'],'name':'ascat_status'}
+#job['sources']['nhc']['paths']['ascata'] = {'path':'/home/pda/data/pullFromPDA/Global/ASCAT/metopa', 'dirs':{}, 'special':{}}
+#job['sources']['nhc']['paths']['ascata']['special'] = {'module':'remote_puller','class':'FilePuller','args':ascat_args}
+#job['sources']['nhc']['paths']['ascatb'] = {'path':'/home/pda/data/pullFromPDA/Global/ASCAT/metopb', 'dirs':{}, 'special':{}}
+#job['sources']['nhc']['paths']['ascatb']['special'] = {'module':'remote_puller','class':'FilePuller','args':ascat_args}
+job['sources']['nhc']['paths']['ascata'] = {'path':'/appdata/goes-r/20181005/13', 'dirs':{}, 'special':{}}
+job['sources']['nhc']['paths']['ascata']['special'] = {'module':'remote_puller','class':'FilePuller','args':ascat_args}
 
 
 job['monitor'] = {'agents':{},'mi6':{}}
