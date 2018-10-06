@@ -119,6 +119,10 @@ nodes[58] = {'path':'/dev/shm/isatss_data/58_pda',                        'files
 nodes[59] = {'path':'/dev/shm/isatss_data/59_pda_replicator_in',          'filesystem': '/dev/shm',  'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[60] = {'path':'/mnt/ldm2/decoders',                                 'filesystem': '/mnt/ldm2', 'ctype':'data','stype':'network', 'root':'/mnt/ldm2', 'incinerator':{'gid':2,'jid':1}} 
 
+nodes[80] = {'path':'/dev/shm/isatss_data/info/80_remote_dispatcher_cntl','filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[81] = {'path':'/dev/shm/isatss_data/info/81_ascat_info',            'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[82] = {'path':'/dev/shm/isatss_data/data/82_ascat_data',            'filesystem':'/dev/shm','ctype':'data','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[83] = {'path':'/scratch/isatss_data/data/83_ascat_ledger',          'filesystem':'/scratch','ctype':'data','stype':'attached','root':'/scratch/isatss_data'}
 
 # system defaults
 defaults = {}
@@ -257,3 +261,12 @@ PDA product group
 groups[9]['jobs']     = {}
 groups[9]['jobs'][1] = {'host':2,'cfg':'pda_dispatcher'}
 groups[9]['jobs'][2] = {'host':2,'cfg':'pda_replicator'}
+
+
+groups[10] = {}
+groups[10]['name']     = 'misc_retrieval'
+groups[10]['description'] = """
+Miscellaneous remote retrieval jobs
+"""
+groups[10]['jobs']     = {}
+groups[10]['jobs'][1] = {'host':1,'cfg':'remote_dispatcher'}

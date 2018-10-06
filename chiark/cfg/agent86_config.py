@@ -33,7 +33,7 @@ job['data']['log']['schedule']        = {'interval':3600}
 job['data']['log']['activeonly']      = True
 
 job['loopsleep']                 = 0
-job['loglevel']                  = 5
+job['loglevel']                  = 6
 job['pause_empty']               = 2
 job['actions_per_cycle']         = 5
 job['listenport']                = 1337
