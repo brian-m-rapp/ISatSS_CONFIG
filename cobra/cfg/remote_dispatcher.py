@@ -1,4 +1,4 @@
-# dispatcher configuration for h8 data flow
+# dispatcher configuration for remote ASCAT file retrieval from NHC 
 
 """
     IDP Satellite Support Subsystem
