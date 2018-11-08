@@ -119,6 +119,12 @@ nodes[58] = {'path':'/dev/shm/isatss_data/58_pda',                        'files
 nodes[59] = {'path':'/dev/shm/isatss_data/59_pda_replicator_in',          'filesystem': '/dev/shm',  'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[60] = {'path':'/mnt/ldm2/decoders',                                 'filesystem': '/mnt/ldm2', 'ctype':'data','stype':'network', 'root':'/mnt/ldm2', 'incinerator':{'gid':2,'jid':1}} 
 
+nodes[70] = {'path':'/dev/shm/isatss_data/info/70_gcom_cntl',             'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[71] = {'path':'/dev/shm/isatss_data/info/71_gcom_info',             'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[72] = {'path':'/dev/shm/isatss_data/data/72_gcom_data',             'filesystem':'/dev/shm','ctype':'data','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[73] = {'path':'/scratch/isatss_data/data/73_gcom_ledger',           'filesystem':'/scratch','ctype':'data','stype':'attached','root':'/scratch/isatss_data'}
+
+
 nodes[80] = {'path':'/dev/shm/isatss_data/info/80_remote_dispatcher_cntl','filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[81] = {'path':'/dev/shm/isatss_data/info/81_ascat_info',            'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[82] = {'path':'/dev/shm/isatss_data/data/82_ascat_data',            'filesystem':'/dev/shm','ctype':'data','stype':'attached','root':'/dev/shm/isatss_data'}
@@ -200,6 +206,7 @@ ISatSS LDM Output Group
 groups[4]['jobs']     = {}
 groups[4]['jobs'][1]  = {'host':2,'cfg':'ldm_output_replicator'}
 groups[4]['jobs'][2]  = {'host':2,'cfg':'ldm_output_manager'}
+groups[4]['jobs'][3]  = {'host':1,'cfg':'gcom_puller'}
 
 groups[5] = {}
 groups[5]['name']     = 'ldmin'

@@ -1,4 +1,3 @@
-# dispatcher configuration for h8 data flow
 
 """
     IDP Satellite Support Subsystem
