@@ -59,15 +59,15 @@ job['max_sleep']        = 10
 job['work_time']        = 60
 
 job['sources'] = {}
-job['sources']['satepsanone'] =  {'protocol':'HTTPS', 'host':'satepsanone.nesdis.noaa.gov', 'authid':0, 'timeout':10, 'retry':10,'paths':{},'sessions':1}
+job['sources']['satepsanone'] =  {'protocol':'HTTPS', 'host':'satepsanone.nesdis.noaa.gov', 'authid':0, 'timeout':10, 'retry':10, 'paths':{}, 'sessions':1}
 
 gcom_args = {'window':86400, 'cyclecount':100}
 gcom_args['target'] = {'data':job['data']['gfiles'], 'notifications':job['notifications']}
-gcom_args['ledger'] = {'node':job['data']['gledger']['location']['node'],'name':'gcom.ledger'}
-gcom_args['filter'] = {'filt':'substring','target':'name','startswith':'AMSR2-OCEAN','name':'AMSR2 Ocean Test'}
+gcom_args['ledger'] = {'node':job['data']['gledger']['location']['node'], 'name':'gcom.ledger'}
+gcom_args['filter'] = {'filt':'substring', 'target':'name', 'startswith':'AMSR2-OCEAN', 'name':'AMSR2 Ocean Test'}
 
 job['sources']['satepsanone']['paths']['gcom'] = {'path':'/pub/product/nde/amsr2/L2', 'dirs':{}, 'special':{}}
-job['sources']['satepsanone']['paths']['gcom']['special'] = {'module':'satepsanone_puller','class':'GcomPuller','args':gcom_args}
+job['sources']['satepsanone']['paths']['gcom']['special'] = {'module':'satepsanone_puller', 'class':'GcomPuller', 'args':gcom_args}
 
 job['monitor'] = {'agents':{},'mi6':{}}
 job['monitor']['agents']['pmd_admin']                = {'enabled':True, 'module':'im_daemon', 'class':'PMDAdmin', 'args':{'alerts':[27,28], 'telemetry':[26,27,28]}}
