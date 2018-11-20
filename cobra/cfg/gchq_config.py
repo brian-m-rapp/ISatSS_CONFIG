@@ -34,14 +34,14 @@ reformat as necessary for that writer
 '''
 
 job = {}
-job['name']         = 'gchq'
-job['cmd']          = 'gchq'
-job['class']        = 'GCHQ'
-job['log']          = 'gchq_log'
-job['log_node']     = 1
-job['monitor_node'] = 32
-
-job['input_type']   = {'type':'infofile', 'node':31}
+job['name']          = 'gchq'
+job['cmd']           = 'gchq'
+job['class']         = 'GCHQ'
+job['log']           = 'gchq_log'
+job['log_node']      = 1
+job['monitor_node']  = 32
+job['esearch_cache'] = 61
+job['input_type']    = {'type':'infofile', 'node':31}
 
 job['data'] = {}
 job['data']['log']                    = {}
@@ -90,7 +90,7 @@ job['publishers']['telemetry'] = {}
 
 job['publishers']['telemetry'][0] = {}
 job['publishers']['telemetry'][0]['provider'] = 'vlabesearch'
-job['publishers']['telemetry'][0]['enabled']  = True
+job['publishers']['telemetry'][0]['enabled']  = False
 job['publishers']['telemetry'][0]['parms']    = {'url':'https://vlab-dev.ncep.noaa.gov', 'company':10132, 'group':67059, 'sslnoverify':True}
 job['publishers']['telemetry'][0]['exclude']  = ['BB_Monitor', 'GOES_Radiance_Monitor'] 
 
@@ -131,8 +131,9 @@ job['publishers']['telemetry'][4] = {}
 job['publishers']['telemetry'][4]['provider']            = 'esearch'
 job['publishers']['telemetry'][4]['enabled']             = True
 job['publishers']['telemetry'][4]['parms']               = {}
-job['publishers']['telemetry'][4]['parms']['connection'] = [{'host':'isatss', 'port':9200, 'use_ssl': False}]
+job['publishers']['telemetry'][4]['parms']['connection'] = [{'host':'lotus', 'port':9200, 'use_ssl': False}]
 job['publishers']['telemetry'][4]['parms']['indexes']    = indexes
+job['publishers']['telemetry'][4]['parms']['caching']    = {'node': job['esearch_cache'], 'fails_before_cache': 5, 'rootname': 'lotus'}
 job['publishers']['telemetry'][4]['include']             = ['GOES_Radiance_Monitor']
 
 job['publishers']['alert'] = {}
@@ -167,8 +168,8 @@ job['intel'] = {}
 job['intel']['pmd_telemetry']       = {'enabled':False, 'module':'im_daemon',             'class':'PMDTelemetry'}
 job['intel']['abi_summary']         = {'enabled':False, 'module':'agent99_grb',           'class':'ABISummary'}
 job['intel']['host_telemetry']      = {'enabled':False, 'module':'mi6',                   'class':'HostTelemetry'}
-job['intel']['goes_telemetry']      = {'enabled':False, 'module':'goes_telemetry',        'class':'GoesStatusOutput','args':{}}
-job['intel']['radiance_aggregator'] = {'enabled':True,  'module':'g17_radiance_analysis', 'class':'RadianceAggregator'}
+job['intel']['goes_telemetry']      = {'enabled':True,  'module':'goes_telemetry',        'class':'GoesStatusOutput','args':{}}
+job['intel']['radiance_aggregator'] = {'enabled':False, 'module':'g17_radiance_analysis', 'class':'RadianceAggregator'}
 job['intel']['big_brother']         = {'enabled':False, 'module':'bbmon',                 'class':'BBMon', 'args':{'excluded_jobs':{3:[11]}}}
 
 job['monitor'] = {'agents':{},'mi6':{}}
