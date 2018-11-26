@@ -38,7 +38,7 @@ job['data']['gfiles']['activeonly']     = True                                  
 job['data']['gfiles']['schedule']       = {'interval':600}
 
 job['data']['gledger']                = {}
-job['data']['gledger']['location']    = {'node':73}
+job['data']['gledger']['location']    = {'node':61}
 job['data']['gledger']['aging']       = {'window':86400*2, 'mode':'creationtime'}
 job['data']['gledger']['method']      = {'technique':'inplace'}
 job['data']['gledger']['activeonly']  = True

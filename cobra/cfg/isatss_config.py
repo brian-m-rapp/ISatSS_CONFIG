@@ -87,19 +87,19 @@ Regardless of configuration, nodes are required for the following system default
 
 
 nodes = {}
-nodes[0]  = {'path':'/scratch/isatss_data/info/default_info',		  'filesystem': '/scratch', 'ctype':'info','stype':'attached','root':'/scratch/isatss_data'}
+nodes[0]  = {'path':'/scratch/isatss_data/info/default_info',		      'filesystem': '/scratch', 'ctype':'info','stype':'attached','root':'/scratch/isatss_data'}
 nodes[1]  = {'path':'/scratch/isatss_data/log',                           'filesystem': '/scratch', 'ctype':'log', 'stype':'attached','root':'/scratch/isatss_data'}
 nodes[2]  = {'path':'/scratch/isatss_data/info/02_agent86_commands_out',  'filesystem': '/scratch', 'ctype':'cmd', 'stype':'attached','root':'/scratch/isatss_data'}
 nodes[3]  = {'path':'/scratch/isatss_data/info/03_agent86_response',      'filesystem': '/scratch', 'ctype':'resp','stype':'attached','root':'/scratch/isatss_data'}
 nodes[72] = {'path':'/scratch/isatss_data/info/72_agent86_commands_out',  'filesystem': '/scratch', 'ctype':'cmd', 'stype':'attached','root':'/scratch/isatss_data'}
 nodes[73] = {'path':'/scratch/isatss_data/info/73_agent86_response',      'filesystem': '/scratch', 'ctype':'resp','stype':'attached','root':'/scratch/isatss_data'}
-nodes[18] = {'path':'/scratch/isatss_data/work',		          'filesystem': '/scratch', 'ctype':'data','stype':'attached','root':'/scratch/isatss_data'}
+nodes[18] = {'path':'/scratch/isatss_data/work',		                  'filesystem': '/scratch', 'ctype':'data','stype':'attached','root':'/scratch/isatss_data'}
 nodes[19] = {'path':'/scratch/isatss_data/fault_cache',                   'filesystem': '/scratch', 'ctype':'data','stype':'attached','root':'/scratch/isatss_data'}
 
 nodes[4]  = {'path':'/dev/shm/isatss_data/data/04_incoming/grb_lhcp',     'filesystem': '/dev/shm', 'ctype':'data','stype':'attached','root':'/scratch/isatss_data'}
 nodes[5]  = {'path':'/dev/shm/isatss_data/data/05_incoming/grb_rhcp',     'filesystem': '/dev/shm', 'ctype':'data','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[15] = {'path':'/dev/shm/isatss_data/data/15_grb_l1b_data_in',       'filesystem': '/dev/shm', 'ctype':'data','stype':'attached','root':'/dev/shm/isatss_data'} #
-nodes[16] = {'path':'/scratch/isatss_data/status',		          'filesystem': '/scratch', 'ctype':'data','stype':'attached','root':'/scratch/isatss_data'}
+nodes[16] = {'path':'/scratch/isatss_data/status',		                  'filesystem': '/scratch', 'ctype':'data','stype':'attached','root':'/scratch/isatss_data'}
 nodes[17] = {'path':'/dev/shm/isatss_data/data/17_hcast_data_in',         'filesystem': '/dev/shm', 'ctype':'data','stype':'attached','root':'/dev/shm/isatss_data'} #
 nodes[25] = {'path':'/dev/shm/isatss_data/data/25_ldm_out_replicate_in',  'filesystem': '/dev/shm', 'ctype':'data','stype':'attached','root':'/dev/shm/isatss_data'} #
 nodes[32] = {'path':'/scratch/isatss_data/monitor_output',                'filesystem': '/scratch', 'ctype':'data','stype':'attached','root':'/scratch/isatss_data'} #
@@ -116,11 +116,12 @@ nodes[50] = {'path':'/dev/shm/isatss_data/data/50_h8_mgrg_data_in',       'files
 nodes[51] = {'path':'/dev/shm/isatss_data/data/51_g16_ncm_data_in',       'filesystem': '/dev/shm', 'ctype':'data','stype':'attached','root':'/dev/shm/isatss_data'} #
 nodes[53] = {'path':'/dev/shm/isatss_data/data/53_ldm_out_data_in',       'filesystem': '/dev/shm', 'ctype':'data','stype':'attached','root':'/dev/shm/isatss_data'} #
 
-nodes[14] = {'path':'/data/isatss_data/incoming',		          'filesystem': '/data',    'ctype':'data','stype':'network', 'root':'/data/isatss_data','incinerator':{'gid':2,'jid':10}} #
-nodes[24] = {'path':'/data/isatss_data/products/h8_tiles',		  'filesystem': '/data',    'ctype':'data','stype':'network', 'root':'/data/isatss_data','incinerator':{'gid':2,'jid':2}}  #
-nodes[30] = {'path':'/data/isatss_data/products/h8_slabs',		  'filesystem': '/data',    'ctype':'data','stype':'network', 'root':'/data/isatss_data','incinerator':{'gid':2,'jid':2}}  #
-nodes[39] = {'path':'/data/isatss_data/products/g16_area',	      'filesystem': '/data',    'ctype':'data','stype':'network', 'root':'/data/isatss_data','incinerator':{'gid':2,'jid':9}}  #
-nodes[40] = {'path':'/data/isatss_data/products/g16_tiles',		  'filesystem': '/data',    'ctype':'data','stype':'network', 'root':'/data/isatss_data','incinerator':{'gid':2,'jid':1}}  #
+nodes[14] = {'path':'/data/isatss_data/incoming',		                  'filesystem': '/data',    'ctype':'data','stype':'attached', 'root':'/data/isatss_data'} #
+nodes[24] = {'path':'/data/isatss_data/products/h8_tiles',		          'filesystem': '/data',    'ctype':'data','stype':'attached', 'root':'/data/isatss_data'}  #
+nodes[30] = {'path':'/data/isatss_data/products/h8_slabs',		          'filesystem': '/data',    'ctype':'data','stype':'attached', 'root':'/data/isatss_data'}  #
+nodes[39] = {'path':'/data/isatss_data/products/g16_area',	              'filesystem': '/data',    'ctype':'data','stype':'attached', 'root':'/data/isatss_data'}  #
+nodes[40] = {'path':'/data/isatss_data/products/g16_tiles',		          'filesystem': '/data',    'ctype':'data','stype':'attached', 'root':'/data/isatss_data'}  #
+nodes[61] = {'path':'/data/isatss_data/gchq_esearch_cache',		          'filesystem': '/data',    'ctype':'data','stype':'attached', 'root':'/data/isatss_data'}  #
 
 nodes[7]  = {'path':'/dev/shm/isatss_data/info/07_ldmer_in_cntl',         'filesystem': '/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[9]  = {'path':'/dev/shm/isatss_data/info/09_ldm_in_dispatch_cntl',  'filesystem': '/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
@@ -156,16 +157,19 @@ nodes[54] = {'path':'/dev/shm/isatss_data/info/54_ldm_out_input',         'files
 nodes[58] = {'path':'/dev/shm/isatss_data/58_pda',                        'filesystem': '/dev/shm',  'ctype':'data','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[59] = {'path':'/dev/shm/isatss_data/59_pda_replicator_in',          'filesystem': '/dev/shm',  'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[60] = {'path':'/mnt/ldm2/decoders',                                 'filesystem': '/mnt/ldm2', 'ctype':'data','stype':'network', 'root':'/mnt/ldm2', 'incinerator':{'gid':2,'jid':1}} 
+nodes[61] = {'path':'/scratch/isatss_data/data/61_ledgers',               'filesystem':'/scratch','ctype':'data','stype':'attached','root':'/scratch/isatss_data'}
 
 nodes[70] = {'path':'/dev/shm/isatss_data/info/70_gcom_cntl',             'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[71] = {'path':'/dev/shm/isatss_data/info/71_gcom_info',             'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[72] = {'path':'/dev/shm/isatss_data/data/72_gcom_data',             'filesystem':'/dev/shm','ctype':'data','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[73] = {'path':'/scratch/isatss_data/data/73_gcom_ledger',           'filesystem':'/scratch','ctype':'data','stype':'attached','root':'/scratch/isatss_data'}
 
 nodes[80] = {'path':'/dev/shm/isatss_data/info/80_remote_dispatcher_cntl','filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[81] = {'path':'/dev/shm/isatss_data/info/81_ascat_info',            'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[82] = {'path':'/dev/shm/isatss_data/data/82_ascat_data',            'filesystem':'/dev/shm','ctype':'data','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[83] = {'path':'/dev/shm/isatss_data/data/83_ascat_ledger',          'filesystem':'/dev/shm','ctype':'data','stype':'attached','root':'/dev/shm/isatss_data'}
+
+nodes[85] = {'path':'/dev/shm/isatss_data/info/85_fls_puller_cntl',   'filesystem':'/dev/shm', 'ctype':'cntl', 'stype':'attached', 'root':'/dev/shm/isatss_data', 'incinerator':{'gid':2,'jid':1}}
+nodes[86] = {'path':'/dev/shm/isatss_data/data/86_fls_data',          'filesystem':'/dev/shm', 'ctype':'data', 'stype':'attached', 'root':'/dev/shm/isatss_data', 'incinerator':{'gid':2,'jid':1}}
 
 # system defaults
 defaults = {}
@@ -319,6 +323,7 @@ Contains miscellaneous data retrieval jobs
 """
 groups[11]['jobs'] = {}
 groups[11]['jobs'][1] = {'host':1, 'cfg':'remote_dispatcher'}
+groups[11]['jobs'][2] = {'host':1, 'cfg':'fls_puller'}
 
 # ldm tracker
 groups[16] = {}
