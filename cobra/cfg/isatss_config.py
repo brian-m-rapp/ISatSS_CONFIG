@@ -121,7 +121,7 @@ nodes[24] = {'path':'/data/isatss_data/products/h8_tiles',		          'filesyste
 nodes[30] = {'path':'/data/isatss_data/products/h8_slabs',		          'filesystem': '/data',    'ctype':'data','stype':'attached', 'root':'/data/isatss_data'}  #
 nodes[39] = {'path':'/data/isatss_data/products/g16_area',	              'filesystem': '/data',    'ctype':'data','stype':'attached', 'root':'/data/isatss_data'}  #
 nodes[40] = {'path':'/data/isatss_data/products/g16_tiles',		          'filesystem': '/data',    'ctype':'data','stype':'attached', 'root':'/data/isatss_data'}  #
-nodes[61] = {'path':'/data/isatss_data/gchq_esearch_cache',		          'filesystem': '/data',    'ctype':'data','stype':'attached', 'root':'/data/isatss_data'}  #
+nodes[62] = {'path':'/data/isatss_data/esearch_cache',		              'filesystem': '/data',    'ctype':'data','stype':'attached', 'root':'/data/isatss_data'}  #
 
 nodes[7]  = {'path':'/dev/shm/isatss_data/info/07_ldmer_in_cntl',         'filesystem': '/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[9]  = {'path':'/dev/shm/isatss_data/info/09_ldm_in_dispatch_cntl',  'filesystem': '/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}

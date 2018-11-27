@@ -34,14 +34,14 @@ reformat as necessary for that writer
 '''
 
 job = {}
-job['name']          = 'gchq'
-job['cmd']           = 'gchq'
-job['class']         = 'GCHQ'
-job['log']           = 'gchq_log'
-job['log_node']      = 1
-job['monitor_node']  = 32
-job['esearch_cache'] = 61
-job['input_type']    = {'type':'infofile', 'node':31}
+job['name']         = 'gchq'
+job['cmd']          = 'gchq'
+job['class']        = 'GCHQ'
+job['log']          = 'gchq_log'
+job['log_node']     = 1
+job['monitor_node'] = 32
+job['cache_node']   = 62
+job['input_type']   = {'type':'infofile', 'node':31}
 
 job['data'] = {}
 job['data']['log']                    = {}
@@ -133,7 +133,7 @@ job['publishers']['telemetry'][4]['enabled']             = True
 job['publishers']['telemetry'][4]['parms']               = {}
 job['publishers']['telemetry'][4]['parms']['connection'] = [{'host':'lotus', 'port':9200, 'use_ssl': False}]
 job['publishers']['telemetry'][4]['parms']['indexes']    = indexes
-job['publishers']['telemetry'][4]['parms']['caching']    = {'node': job['esearch_cache'], 'fails_before_cache': 5, 'rootname': 'lotus'}
+job['publishers']['telemetry'][4]['parms']['cache']      = {'node': job['cache_node'], 'rootname': 'lotus', 'batch_size':100} # Filename = <node>/<rootname>_<index>.cache
 job['publishers']['telemetry'][4]['include']             = ['GOES_Radiance_Monitor']
 
 job['publishers']['alert'] = {}
