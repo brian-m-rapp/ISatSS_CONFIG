@@ -53,7 +53,7 @@ job['hattr'] = {}
 
 job['hattr'][1] = {}
 job['hattr'][1]['collect']     = []
-#job['hattr'][1]['collect']     = ['filesystems', 'cpu', 'memory', 'network']
+job['hattr'][1]['collect']     = ['filesystems', 'cpu', 'memory', 'network']
 job['hattr'][1]['network']     = [('netname', 'eth0')]
 job['hattr'][1]['filesystems'] = []
 job['hattr'][1]['filesystems'].append({'fs': '/'})

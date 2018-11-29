@@ -171,6 +171,13 @@ nodes[83] = {'path':'/dev/shm/isatss_data/data/83_ascat_ledger',          'files
 nodes[85] = {'path':'/dev/shm/isatss_data/info/85_fls_puller_cntl',   'filesystem':'/dev/shm', 'ctype':'cntl', 'stype':'attached', 'root':'/dev/shm/isatss_data', 'incinerator':{'gid':2,'jid':1}}
 nodes[86] = {'path':'/dev/shm/isatss_data/data/86_fls_data',          'filesystem':'/dev/shm', 'ctype':'data', 'stype':'attached', 'root':'/dev/shm/isatss_data', 'incinerator':{'gid':2,'jid':1}}
 
+nodes[700] = {'path':'/dev/shm/isatss_data/info/700_ssmi_con_cntl',     'filesystem':'/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[701] = {'path':'/dev/shm/isatss_data/data/701_ssmi_con_data_in',  'filesystem':'/dev/shm', 'ctype':'data','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[702] = {'path':'/dev/shm/isatss_data/info/702_ssmicon_input',     'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[703] = {'path':'/dev/shm/isatss_data/data/703_ssmi_con_data_out', 'filesystem':'/dev/shm', 'ctype':'data','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[704] = {'path':'/dev/shm/isatss_data/info/704_ssmicon_output',    'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+
+
 # system defaults
 defaults = {}
 defaults['log']             = 'isatss_log'	  			# default log file name
@@ -324,6 +331,7 @@ Contains miscellaneous data retrieval jobs
 groups[11]['jobs'] = {}
 groups[11]['jobs'][1] = {'host':1, 'cfg':'remote_dispatcher'}
 groups[11]['jobs'][2] = {'host':1, 'cfg':'fls_puller'}
+groups[11]['jobs'][3] = {'host':1, 'cfg':'ssmi_cutter_config'}
 
 # ldm tracker
 groups[16] = {}
