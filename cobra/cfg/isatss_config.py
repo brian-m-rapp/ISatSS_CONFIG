@@ -168,14 +168,13 @@ nodes[81] = {'path':'/dev/shm/isatss_data/info/81_ascat_info',            'files
 nodes[82] = {'path':'/dev/shm/isatss_data/data/82_ascat_data',            'filesystem':'/dev/shm','ctype':'data','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[83] = {'path':'/dev/shm/isatss_data/data/83_ascat_ledger',          'filesystem':'/dev/shm','ctype':'data','stype':'attached','root':'/dev/shm/isatss_data'}
 
-nodes[85] = {'path':'/dev/shm/isatss_data/info/85_fls_puller_cntl',   'filesystem':'/dev/shm', 'ctype':'cntl', 'stype':'attached', 'root':'/dev/shm/isatss_data', 'incinerator':{'gid':2,'jid':1}}
-nodes[86] = {'path':'/dev/shm/isatss_data/data/86_fls_data',          'filesystem':'/dev/shm', 'ctype':'data', 'stype':'attached', 'root':'/dev/shm/isatss_data', 'incinerator':{'gid':2,'jid':1}}
+nodes[85] = {'path':'/dev/shm/isatss_data/info/85_fls_puller_cntl',       'filesystem':'/dev/shm', 'ctype':'cntl', 'stype':'attached', 'root':'/dev/shm/isatss_data', 'incinerator':{'gid':2,'jid':1}}
+nodes[86] = {'path':'/dev/shm/isatss_data/data/86_fls_data',              'filesystem':'/dev/shm', 'ctype':'data', 'stype':'attached', 'root':'/dev/shm/isatss_data', 'incinerator':{'gid':2,'jid':1}}
 
-nodes[700] = {'path':'/dev/shm/isatss_data/info/700_ssmi_con_cntl',     'filesystem':'/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[701] = {'path':'/dev/shm/isatss_data/data/701_ssmi_con_data_in',  'filesystem':'/dev/shm', 'ctype':'data','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[702] = {'path':'/dev/shm/isatss_data/info/702_ssmicon_input',     'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[703] = {'path':'/dev/shm/isatss_data/data/703_ssmi_con_data_out', 'filesystem':'/dev/shm', 'ctype':'data','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[704] = {'path':'/dev/shm/isatss_data/info/704_ssmicon_output',    'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[700] = {'path':'/dev/shm/isatss_data/info/700_ssmi_cut_cntl',       'filesystem':'/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[702] = {'path':'/dev/shm/isatss_data/info/702_ssmi_cut_input',      'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[703] = {'path':'/dev/shm/isatss_data/data/703_ssmi_cut_data',       'filesystem':'/dev/shm', 'ctype':'data','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[704] = {'path':'/dev/shm/isatss_data/info/704_ssmi_cut_info_out',   'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
 
 
 # system defaults

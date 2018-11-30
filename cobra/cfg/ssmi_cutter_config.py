@@ -63,9 +63,6 @@ ncspec = {}
 ncspec['destination'] = job['data']['output']
 ncspec['namedef']     = []
 ncspec['namedef'].append({'src':'filename'})
-#ncspec['namedef'].append({'src':'ncfs/02/globalmeta/satellite_id','translate':{'GOES-16':'G16'},'delimiter':'_proxyvis_'})
-#ncspec['namedef'].append({'src':'tileno','fmt':'str','pad':{'len':2,'val':'0','just':'r'},'delimiter':'_'})
-#ncspec['namedef'].append({'src':'stamp','delimiter':'.nc'})
 
 ncspec['dimensions'] = {}
 ncspec['dimensions']['nscans_hires'] = {'src':'nscans/hires'}
