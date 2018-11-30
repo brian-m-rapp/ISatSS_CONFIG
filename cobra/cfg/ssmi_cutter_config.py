@@ -68,10 +68,12 @@ ncspec['namedef'].append({'src':'filename'})
 #ncspec['namedef'].append({'src':'stamp','delimiter':'.nc'})
 
 ncspec['dimensions'] = {}
-ncspec['dimensions']['nscans_hires']       = {'src':'nscans/hires'}
-ncspec['dimensions']['nscans_lores']       = {'src':'nscans/lores'}
+ncspec['dimensions']['nscans_hires'] = {'src':'nscans/hires'}
+ncspec['dimensions']['nscans_lores'] = {'src':'nscans/lores'}
 ncspec['dimensions']['npixel_hires'] = {'default':128}
 ncspec['dimensions']['npixel_lores'] = {'default':64}
+ncspec['dimensions']['points_hires'] = {'src':'points/hires'}
+ncspec['dimensions']['points_lores'] = {'src':'points/lores'}
 
 ncspec['globalmeta'] = {}
 ncspec['globalmeta']['instrument_name']            = {'default':'SSMI'}
@@ -93,7 +95,8 @@ ncspec['variables']   = {}
 
 ncspec['variables']['Time_hires']   = {}
 ncspec['variables']['Time_hires']['fmt']                    = {'default':'f'}
-ncspec['variables']['Time_hires']['shape']                  = {'default':['nscans_hires','npixel_hires']}
+#ncspec['variables']['Time_hires']['shape']                  = {'default':['nscans_hires','npixel_hires']}
+ncspec['variables']['Time_hires']['shape']                  = {'default':['points_hires']}
 ncspec['variables']['Time_hires']['fill_value']             = {'default':-9999.}
 ncspec['variables']['Time_hires']['zlib']                   = {'default':True}
 ncspec['variables']['Time_hires']['complevel']              = {'default':1}
@@ -106,7 +109,8 @@ ncspec['variables']['Time_hires']['attrs']['units']         = {'default':'second
 
 ncspec['variables']['Time_lores']   = {}
 ncspec['variables']['Time_lores']['fmt']                    = {'default':'f'}
-ncspec['variables']['Time_lores']['shape']                  = {'default':['nscans_lores','npixel_lores']}
+#ncspec['variables']['Time_lores']['shape']                  = {'default':['nscans_lores','npixel_lores']}
+ncspec['variables']['Time_lores']['shape']                  = {'default':['points_lores']}
 ncspec['variables']['Time_lores']['fill_value']             = {'default':-9999.}
 ncspec['variables']['Time_lores']['zlib']                   = {'default':True}
 ncspec['variables']['Time_lores']['complevel']              = {'default':1}
@@ -119,7 +123,8 @@ ncspec['variables']['Time_lores']['attrs']['units']         = {'default':'second
 
 ncspec['variables']['Latitude_hires']   = {}
 ncspec['variables']['Latitude_hires']['fmt']                    = {'default':'f'}
-ncspec['variables']['Latitude_hires']['shape']                  = {'default':['nscans_hires','npixel_hires']}
+#ncspec['variables']['Latitude_hires']['shape']                  = {'default':['nscans_hires','npixel_hires']}
+ncspec['variables']['Latitude_hires']['shape']                  = {'default':['points_hires']}
 ncspec['variables']['Latitude_hires']['fill_value']             = {'default':-9999.}
 ncspec['variables']['Latitude_hires']['zlib']                   = {'default':True}
 ncspec['variables']['Latitude_hires']['complevel']              = {'default':1}
@@ -132,7 +137,8 @@ ncspec['variables']['Latitude_hires']['attrs']['units']         = {'default':'de
 
 ncspec['variables']['Longitude_hires']   = {}
 ncspec['variables']['Longitude_hires']['fmt']                    = {'default':'f'}
-ncspec['variables']['Longitude_hires']['shape']                  = {'default':['nscans_hires','npixel_hires']}
+#ncspec['variables']['Longitude_hires']['shape']                  = {'default':['nscans_hires','npixel_hires']}
+ncspec['variables']['Longitude_hires']['shape']                  = {'default':['points_hires']}
 ncspec['variables']['Longitude_hires']['fill_value']             = {'default':-9999.}
 ncspec['variables']['Longitude_hires']['zlib']                   = {'default':True}
 ncspec['variables']['Longitude_hires']['complevel']              = {'default':1}
@@ -145,7 +151,8 @@ ncspec['variables']['Longitude_hires']['attrs']['units']         = {'default':'d
 
 ncspec['variables']['Latitude_lores']   = {}
 ncspec['variables']['Latitude_lores']['fmt']                    = {'default':'f'}
-ncspec['variables']['Latitude_lores']['shape']                  = {'default':['nscans_lores','npixel_lores']}
+#ncspec['variables']['Latitude_lores']['shape']                  = {'default':['nscans_lores','npixel_lores']}
+ncspec['variables']['Latitude_lores']['shape']                  = {'default':['points_lores']}
 ncspec['variables']['Latitude_lores']['fill_value']             = {'default':-9999.}
 ncspec['variables']['Latitude_lores']['zlib']                   = {'default':True}
 ncspec['variables']['Latitude_lores']['complevel']              = {'default':1}
@@ -158,7 +165,8 @@ ncspec['variables']['Latitude_lores']['attrs']['units']         = {'default':'de
 
 ncspec['variables']['Longitude_lores']   = {}
 ncspec['variables']['Longitude_lores']['fmt']                    = {'default':'f'}
-ncspec['variables']['Longitude_lores']['shape']                  = {'default':['nscans_lores','npixel_lores']}
+#ncspec['variables']['Longitude_lores']['shape']                  = {'default':['nscans_lores','npixel_lores']}
+ncspec['variables']['Longitude_lores']['shape']                  = {'default':['points_lores']}
 ncspec['variables']['Longitude_lores']['fill_value']             = {'default':-9999.}
 ncspec['variables']['Longitude_lores']['zlib']                   = {'default':True}
 ncspec['variables']['Longitude_lores']['complevel']              = {'default':1}
@@ -171,7 +179,8 @@ ncspec['variables']['Longitude_lores']['attrs']['units']         = {'default':'d
 
 ncspec['variables']['Temp_37GHz_V']   = {}
 ncspec['variables']['Temp_37GHz_V']['fmt']                    = {'default':'f'}
-ncspec['variables']['Temp_37GHz_V']['shape']                  = {'default':['nscans_lores','npixel_lores']}
+#ncspec['variables']['Temp_37GHz_V']['shape']                  = {'default':['nscans_lores','npixel_lores']}
+ncspec['variables']['Temp_37GHz_V']['shape']                  = {'default':['points_lores']}
 ncspec['variables']['Temp_37GHz_V']['fill_value']             = {'default':-9999.}
 ncspec['variables']['Temp_37GHz_V']['zlib']                   = {'default':True}
 ncspec['variables']['Temp_37GHz_V']['complevel']              = {'default':1}
@@ -185,7 +194,8 @@ ncspec['variables']['Temp_37GHz_V']['attrs']['units']         = {'default':'K'}
 
 ncspec['variables']['Temp_37GHz_H']   = {}
 ncspec['variables']['Temp_37GHz_H']['fmt']                    = {'default':'f'}
-ncspec['variables']['Temp_37GHz_H']['shape']                  = {'default':['nscans_lores','npixel_lores']}
+#ncspec['variables']['Temp_37GHz_H']['shape']                  = {'default':['nscans_lores','npixel_lores']}
+ncspec['variables']['Temp_37GHz_H']['shape']                  = {'default':['points_lores']}
 ncspec['variables']['Temp_37GHz_H']['fill_value']             = {'default':-9999.}
 ncspec['variables']['Temp_37GHz_H']['zlib']                   = {'default':True}
 ncspec['variables']['Temp_37GHz_H']['complevel']              = {'default':1}
@@ -199,7 +209,8 @@ ncspec['variables']['Temp_37GHz_H']['attrs']['units']         = {'default':'K'}
 
 ncspec['variables']['Temp_85GHz_V']   = {}
 ncspec['variables']['Temp_85GHz_V']['fmt']                    = {'default':'f'}
-ncspec['variables']['Temp_85GHz_V']['shape']                  = {'default':['nscans_hires','npixel_hires']}
+#ncspec['variables']['Temp_85GHz_V']['shape']                  = {'default':['nscans_hires','npixel_hires']}
+ncspec['variables']['Temp_85GHz_V']['shape']                  = {'default':['points_hires']}
 ncspec['variables']['Temp_85GHz_V']['fill_value']             = {'default':-9999.}
 ncspec['variables']['Temp_85GHz_V']['zlib']                   = {'default':True}
 ncspec['variables']['Temp_85GHz_V']['complevel']              = {'default':1}
@@ -213,7 +224,8 @@ ncspec['variables']['Temp_85GHz_V']['attrs']['units']         = {'default':'K'}
 
 ncspec['variables']['Temp_85GHz_H']   = {}
 ncspec['variables']['Temp_85GHz_H']['fmt']                    = {'default':'f'}
-ncspec['variables']['Temp_85GHz_H']['shape']                  = {'default':['nscans_hires','npixel_hires']}
+#ncspec['variables']['Temp_85GHz_H']['shape']                  = {'default':['nscans_hires','npixel_hires']}
+ncspec['variables']['Temp_85GHz_H']['shape']                  = {'default':['points_hires']}
 ncspec['variables']['Temp_85GHz_H']['fill_value']             = {'default':-9999.}
 ncspec['variables']['Temp_85GHz_H']['zlib']                   = {'default':True}
 ncspec['variables']['Temp_85GHz_H']['complevel']              = {'default':1}
