@@ -50,7 +50,7 @@ job['data']['log']['method']       = {'technique':'inplace'}
 job['data']['log']['schedule']     = {'interval':3600}
 job['data']['log']['activeonly']   = True
 
-job['loglevel']             = 6
+job['loglevel']             = 5
 
 job['cntl_node']            = 700
 
@@ -228,5 +228,5 @@ ncspec['variables']['Temp_85GHz_H']['attrs']['units']         = {'default':'K'}
 ncspec['notifications'] = {'fields':{},'targets':{}}
 ncspec['notifications']['targets']['orbits']  = {'node':job['data']['info']['location']['node'], 'enabled':True, 'prefix':'ssmi_points', 'fields':['file','node']}
 
-job['modclass'] = {'module':'ssmicutter','class':'SSMI2NC','args':{'ncspec':ncspec, 'regions':[-60.0, -30.0, 30.0, 60.0], 'overlap':5}}
+job['modclass'] = {'module':'ssmicutter','class':'SSMI2NC','args':{'ncspec':ncspec, 'boundaries':[-60.0, -30.0, 30.0, 60.0], 'overlap':5}}
 
