@@ -68,13 +68,13 @@ job['publishers']['telemetry'] = {}
 job['publishers']['telemetry'][0] = {}
 job['publishers']['telemetry'][0]['provider'] = 'vlabesearch'
 job['publishers']['telemetry'][0]['enabled']  = True
-job['publishers']['telemetry'][0]['parms']    = {'url':'https://vlab-dev.ncep.noaa.gov', 'company':10132, 'group':67059, 'sslnoverify':True}
+job['publishers']['telemetry'][0]['parms']    = {'url':'https://vlab-dev.ncep.noaa.gov', 'company':10132, 'group':67059, 'sslnoverify':True, 'credid':0}
 job['publishers']['telemetry'][0]['exclude']  = ['BB_Monitor', 'GOES_Radiance_Monitor'] 
 
 job['publishers']['telemetry'][1] = {}
 job['publishers']['telemetry'][1]['provider'] = 'vlabesearch'
 job['publishers']['telemetry'][1]['enabled']  = False
-job['publishers']['telemetry'][1]['parms']    = {'url':'https://vlab.ncep.noaa.gov', 'company':10132, 'group':67059, 'sslnoverify':False}
+job['publishers']['telemetry'][1]['parms']    = {'url':'https://vlab.ncep.noaa.gov', 'company':10132, 'group':67059, 'sslnoverify':False, 'credid':0}
 job['publishers']['telemetry'][1]['exclude']  = ['BB_Monitor', 'GOES_Radiance_Monitor'] 
 
 job['publishers']['telemetry'][2] = {}
