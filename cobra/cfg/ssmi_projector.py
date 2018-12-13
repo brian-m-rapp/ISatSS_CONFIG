@@ -56,9 +56,9 @@ job['cntl_node']            = 705
 
 job['input_type']           = {'type':'infofile','node':706,'delete_file':True, 'delete_info':True}
 
-projStereo = {'proj':'stere','lat_0':None,'lon_0':None,'lat_ts':None, 'a':6371200, 'b':6371200}
-projLambCC = {'proj':'lcc','lat_0':None,'lon_0':None,'lat_1':None,'lat_2':None, 'a':6371200, 'b':6371200}
-projMerc   = {'proj':'merc','lon_0':None, 'a':6371200, 'b':6371200}
+projStereo = {'proj':'stere', 'a':6371200, 'b':6371200, 'lat_0':None, 'lon_0':None, 'lat_ts':None}
+projLambCC = {'proj':'lcc',   'a':6371200, 'b':6371200, 'lat_0':None, 'lon_0':None, 'lat_1':None, 'lat_2':None}
+projMerc   = {'proj':'merc',  'a':6371200, 'b':6371200, 'lon_0':None}
 
 proj_spec = {}
 
@@ -67,7 +67,7 @@ proj_spec['lambert_projection']['fmt']                                     = {'d
 proj_spec['lambert_projection']['shape']                                   = {'default':[]}
 proj_spec['lambert_projection']['attrs'] = {}
 proj_spec['lambert_projection']['attrs']['grid_mapping_name']              = {'default':'lambert_conformal_conic'}
-proj_spec['lambert_projection']['attrs']['standard_parallel']              = {'default':0.}
+proj_spec['lambert_projection']['attrs']['standard_parallel']              = {'src':'parms/std_par'}
 proj_spec['lambert_projection']['attrs']['longitude_of_central_meridian']  = {'src':'parms/center_lon'}
 proj_spec['lambert_projection']['attrs']['latitude_of_projection_origin']  = {'src':'parms/center_lat'}
 proj_spec['lambert_projection']['attrs']['false_easting']                  = {'default':0}
@@ -102,11 +102,11 @@ proj_spec['polar_projection']['attrs']['semi_minor']                            
 
 projdict = {}
 #None means to use the (lat or lon) center derived from the data
-projdict['southpolar'] = {'minlat':-100, 'maxlat':-60, 'roi': 15000, 'projdef':projStereo, 'projspec':'polar_projection'}
-projdict['southlamb']  = {'minlat':-60,  'maxlat':-30, 'roi': 15000, 'projdef':projLambCC, 'projspec':'lambert_projection'}
-projdict['merc']       = {'minlat':-30,  'maxlat':30,  'roi': 15000, 'projdef':projMerc, 'projspec':'mercator_projection'}
-projdict['northlamb']  = {'minlat':30,   'maxlat':60,  'roi': 15000, 'projdef':projLambCC, 'projspec':'lambert_projection'}
-projdict['northpolar'] = {'minlat':60,   'maxlat':100, 'roi': 15000, 'projdef':projStereo, 'projspec':'polar_projection'}
+projdict['southpolar'] = {'minlat':-100, 'maxlat':-60, 'projdef':projStereo, 'projspec':'polar_projection'}
+projdict['southlamb']  = {'minlat':-60,  'maxlat':-30, 'projdef':projLambCC, 'projspec':'lambert_projection'}
+projdict['merc']       = {'minlat':-30,  'maxlat':30,  'projdef':projMerc,   'projspec':'mercator_projection'}
+projdict['northlamb']  = {'minlat':30,   'maxlat':60,  'projdef':projLambCC, 'projspec':'lambert_projection'}
+projdict['northpolar'] = {'minlat':60,   'maxlat':100, 'projdef':projStereo, 'projspec':'polar_projection'}
 
 # projected fields
 pfields = {}
@@ -114,7 +114,7 @@ pfields['image'] = {}
 pfields['image']['lats']        = 'Latitude_hires'
 pfields['image']['lons']        = 'Longitude_hires'
 pfields['image']['proj']        =  projdict
-pfields['image']['pixperpoint'] = 4
+pfields['image']['pixperpoint'] = 4          # Pixels per data point
 
 pimages = {}
 pimages['v85'] = {}
@@ -122,25 +122,25 @@ pimages['v85']['pfield'] = 'image'
 pimages['v85']['lats']   = 'Latitude_hires'
 pimages['v85']['lons']   = 'Longitude_hires'
 pimages['v85']['vals']   = 'Temp_85GHz_V'
-pimages['v85']['roi']    = 15000
+pimages['v85']['roi']    = 10000             # Radius of Influence (in meters)
 pimages['h85'] = {}
 pimages['h85']['pfield'] = 'image'
 pimages['h85']['lats']   = 'Latitude_hires'
 pimages['h85']['lons']   = 'Longitude_hires'
 pimages['h85']['vals']   = 'Temp_85GHz_H'
-pimages['h85']['roi']    = 15000
+pimages['h85']['roi']    = 10000			 # Radius of Influence (in meters)
 pimages['v37'] = {}
 pimages['v37']['pfield'] = 'image'
 pimages['v37']['lats']   = 'Latitude_lores'
 pimages['v37']['lons']   = 'Longitude_lores'
 pimages['v37']['vals']   = 'Temp_37GHz_V'
-pimages['v37']['roi']    = 30000
+pimages['v37']['roi']    = 20000			 # Radius of Influence (in meters)
 pimages['h37'] = {}
 pimages['h37']['pfield'] = 'image'
 pimages['h37']['lats']   = 'Latitude_lores'
 pimages['h37']['lons']   = 'Longitude_lores'
 pimages['h37']['vals']   = 'Temp_37GHz_H'
-pimages['h37']['roi']    = 30000
+pimages['h37']['roi']    = 20000			 # Radius of Influence (in meters)
 
 """
 odata
@@ -166,6 +166,7 @@ ncspec['globalmeta']['time_coverage_start']        = {'src':'meta/time_coverage_
 ncspec['globalmeta']['time_coverage_end']          = {'src':'meta/time_coverage_end'}
 ncspec['globalmeta']['production_site']            = {'src':'meta/production_site'}
 ncspec['globalmeta']['Metadata_Conventions']       = {'src':'meta/Metadata_Conventions'}
+ncspec['globalmeta']['pixels_per_point']           = {'src':'parms/pixperpoint'}
 
 ncspec['variables'] = {}
 ncspec['variables']['x'] = {}
@@ -191,58 +192,62 @@ ncspec['variables']['y']['attrs']['add_offset']    = {'src':'parms/y_offset'}
 ncspec['variables']['y']['attrs']['scale_factor']  = {'src':'parms/y_scale'}
 
 ncspec['variables']['Temp_85GHz_V'] = {}
-ncspec['variables']['Temp_85GHz_V']['fmt']                    = {'default':'u2'}
-ncspec['variables']['Temp_85GHz_V']['shape']                  = {'default':['y','x']}
-ncspec['variables']['Temp_85GHz_V']['fill_value']             = {'default':-9999}
-ncspec['variables']['Temp_85GHz_V']['zlib']                   = {'default':True}
-ncspec['variables']['Temp_85GHz_V']['complevel']              = {'default':1}
-ncspec['variables']['Temp_85GHz_V']['shuffle']                = {'default':True}
-ncspec['variables']['Temp_85GHz_V']['data']                   = {'src':'data/Temp_85GHz_V'}
+ncspec['variables']['Temp_85GHz_V']['fmt']                     = {'default':'u2'}
+ncspec['variables']['Temp_85GHz_V']['shape']                   = {'default':['y','x']}
+ncspec['variables']['Temp_85GHz_V']['fill_value']              = {'default':-9999}
+ncspec['variables']['Temp_85GHz_V']['zlib']                    = {'default':True}
+ncspec['variables']['Temp_85GHz_V']['complevel']               = {'default':1}
+ncspec['variables']['Temp_85GHz_V']['shuffle']                 = {'default':True}
+ncspec['variables']['Temp_85GHz_V']['data']                    = {'src':'data/Temp_85GHz_V'}
 ncspec['variables']['Temp_85GHz_V']['attrs'] = {}
-ncspec['variables']['Temp_85GHz_V']['attrs']['standard_name'] = {'default':'85 GHz V Brightness Temperature'}
-ncspec['variables']['Temp_85GHz_V']['attrs']['units']         = {'default':'K'}
-ncspec['variables']['Temp_85GHz_V']['attrs']['grid_mapping']  = {}
+ncspec['variables']['Temp_85GHz_V']['attrs']['standard_name']  = {'default':'85 GHz V Brightness Temperature'}
+ncspec['variables']['Temp_85GHz_V']['attrs']['units']          = {'default':'K'}
+ncspec['variables']['Temp_85GHz_V']['attrs']['radius_of_infl'] = {'src':'parms/rad_of_infl/v85'}
+ncspec['variables']['Temp_85GHz_V']['attrs']['grid_mapping']   = {}
 
 ncspec['variables']['Temp_85GHz_H'] = {}
-ncspec['variables']['Temp_85GHz_H']['fmt']                    = {'default':'u2'}
-ncspec['variables']['Temp_85GHz_H']['shape']                  = {'default':['y','x']}
-ncspec['variables']['Temp_85GHz_H']['fill_value']             = {'default':-9999}
-ncspec['variables']['Temp_85GHz_H']['zlib']                   = {'default':True}
-ncspec['variables']['Temp_85GHz_H']['complevel']              = {'default':1}
-ncspec['variables']['Temp_85GHz_H']['shuffle']                = {'default':True}
-ncspec['variables']['Temp_85GHz_H']['data']                   = {'src':'data/Temp_85GHz_H'}
+ncspec['variables']['Temp_85GHz_H']['fmt']                     = {'default':'u2'}
+ncspec['variables']['Temp_85GHz_H']['shape']                   = {'default':['y','x']}
+ncspec['variables']['Temp_85GHz_H']['fill_value']              = {'default':-9999}
+ncspec['variables']['Temp_85GHz_H']['zlib']                    = {'default':True}
+ncspec['variables']['Temp_85GHz_H']['complevel']               = {'default':1}
+ncspec['variables']['Temp_85GHz_H']['shuffle']                 = {'default':True}
+ncspec['variables']['Temp_85GHz_H']['data']                    = {'src':'data/Temp_85GHz_H'}
 ncspec['variables']['Temp_85GHz_H']['attrs'] = {}
-ncspec['variables']['Temp_85GHz_H']['attrs']['standard_name'] = {'default':'85 GHz H Brightness Temperature'}
-ncspec['variables']['Temp_85GHz_H']['attrs']['units']         = {'default':'K'}
-ncspec['variables']['Temp_85GHz_H']['attrs']['grid_mapping']  = {}
+ncspec['variables']['Temp_85GHz_H']['attrs']['standard_name']  = {'default':'85 GHz H Brightness Temperature'}
+ncspec['variables']['Temp_85GHz_H']['attrs']['units']          = {'default':'K'}
+ncspec['variables']['Temp_85GHz_H']['attrs']['radius_of_infl'] = {'src':'parms/rad_of_infl/h85'}
+ncspec['variables']['Temp_85GHz_H']['attrs']['grid_mapping']   = {}
 
 ncspec['variables']['Temp_37GHz_V'] = {}
-ncspec['variables']['Temp_37GHz_V']['fmt']                    = {'default':'u2'}
-ncspec['variables']['Temp_37GHz_V']['shape']                  = {'default':['y','x']}
-ncspec['variables']['Temp_37GHz_V']['fill_value']             = {'default':-9999}
-ncspec['variables']['Temp_37GHz_V']['zlib']                   = {'default':True}
-ncspec['variables']['Temp_37GHz_V']['complevel']              = {'default':1}
-ncspec['variables']['Temp_37GHz_V']['shuffle']                = {'default':True}
-ncspec['variables']['Temp_37GHz_V']['data']                   = {'src':'data/Temp_37GHz_V'}
+ncspec['variables']['Temp_37GHz_V']['fmt']                     = {'default':'u2'}
+ncspec['variables']['Temp_37GHz_V']['shape']                   = {'default':['y','x']}
+ncspec['variables']['Temp_37GHz_V']['fill_value']              = {'default':-9999}
+ncspec['variables']['Temp_37GHz_V']['zlib']                    = {'default':True}
+ncspec['variables']['Temp_37GHz_V']['complevel']               = {'default':1}
+ncspec['variables']['Temp_37GHz_V']['shuffle']                 = {'default':True}
+ncspec['variables']['Temp_37GHz_V']['data']                    = {'src':'data/Temp_37GHz_V'}
 ncspec['variables']['Temp_37GHz_V']['attrs'] = {}
-ncspec['variables']['Temp_37GHz_V']['attrs']['standard_name'] = {'default':'37 GHz V Brightness Temperature'}
-ncspec['variables']['Temp_37GHz_V']['attrs']['units']         = {'default':'K'}
-ncspec['variables']['Temp_37GHz_V']['attrs']['grid_mapping']  = {}
+ncspec['variables']['Temp_37GHz_V']['attrs']['standard_name']  = {'default':'37 GHz V Brightness Temperature'}
+ncspec['variables']['Temp_37GHz_V']['attrs']['units']          = {'default':'K'}
+ncspec['variables']['Temp_37GHz_V']['attrs']['radius_of_infl'] = {'src':'parms/rad_of_infl/v37'}
+ncspec['variables']['Temp_37GHz_V']['attrs']['grid_mapping']   = {}
 
 ncspec['variables']['Temp_37GHz_H'] = {}
-ncspec['variables']['Temp_37GHz_H']['fmt']                    = {'default':'u2'}
-ncspec['variables']['Temp_37GHz_H']['shape']                  = {'default':['y','x']}
-ncspec['variables']['Temp_37GHz_H']['fill_value']             = {'default':-9999}
-ncspec['variables']['Temp_37GHz_H']['zlib']                   = {'default':True}
-ncspec['variables']['Temp_37GHz_H']['complevel']              = {'default':1}
-ncspec['variables']['Temp_37GHz_H']['shuffle']                = {'default':True}
-ncspec['variables']['Temp_37GHz_H']['data']                   = {'src':'data/Temp_37GHz_H'}
+ncspec['variables']['Temp_37GHz_H']['fmt']                     = {'default':'u2'}
+ncspec['variables']['Temp_37GHz_H']['shape']                   = {'default':['y','x']}
+ncspec['variables']['Temp_37GHz_H']['fill_value']              = {'default':-9999}
+ncspec['variables']['Temp_37GHz_H']['zlib']                    = {'default':True}
+ncspec['variables']['Temp_37GHz_H']['complevel']               = {'default':1}
+ncspec['variables']['Temp_37GHz_H']['shuffle']                 = {'default':True}
+ncspec['variables']['Temp_37GHz_H']['data']                    = {'src':'data/Temp_37GHz_H'}
 ncspec['variables']['Temp_37GHz_H']['attrs'] = {}
-ncspec['variables']['Temp_37GHz_H']['attrs']['standard_name'] = {'default':'37 GHz H Brightness Temperature'}
-ncspec['variables']['Temp_37GHz_H']['attrs']['units']         = {'default':'K'}
-ncspec['variables']['Temp_37GHz_H']['attrs']['grid_mapping']  = {}
+ncspec['variables']['Temp_37GHz_H']['attrs']['standard_name']  = {'default':'37 GHz H Brightness Temperature'}
+ncspec['variables']['Temp_37GHz_H']['attrs']['units']          = {'default':'K'}
+ncspec['variables']['Temp_37GHz_H']['attrs']['radius_of_infl'] = {'src':'parms/rad_of_infl/h37'}
+ncspec['variables']['Temp_37GHz_H']['attrs']['grid_mapping']   = {}
 
 ncspec['notifications'] = {'fields':{},'targets':{}}
 ncspec['notifications']['targets']['orbits']  = {'node':job['data']['info']['location']['node'], 'enabled':True, 'prefix':'reproject_points', 'fields':['file','node']}
 
-job['modclass'] = {'module':'swathbuckler','class':'GeoRGE','args':{'pfields':pfields,'pimages':pimages,'ncspec':ncspec, 'projections':proj_spec}}
+job['modclass'] = {'module':'swathbuckler', 'class':'GeoRGE', 'args':{'pfields':pfields,'pimages':pimages,'ncspec':ncspec, 'projections':proj_spec}}
