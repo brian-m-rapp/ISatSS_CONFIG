@@ -56,9 +56,10 @@ job['cntl_node']            = 705
 
 job['input_type']           = {'type':'infofile','node':706,'delete_file':True, 'delete_info':True}
 
-projStereo = {'proj':'stere', 'a':6371200, 'b':6371200, 'lat_0':None, 'lon_0':None, 'lat_ts':None}
-projLambCC = {'proj':'lcc',   'a':6371200, 'b':6371200, 'lat_0':None, 'lon_0':None, 'lat_1':None, 'lat_2':None}
-projMerc   = {'proj':'merc',  'a':6371200, 'b':6371200, 'lon_0':None}
+projStereoN = {'proj':'stere', 'a':6371200, 'b':6371200, 'lat_0':90.0,  'lon_0':0.0, 'lat_ts':None}
+projStereoS = {'proj':'stere', 'a':6371200, 'b':6371200, 'lat_0':-90.0, 'lon_0':0.0, 'lat_ts':None}
+projLambCC  = {'proj':'lcc',   'a':6371200, 'b':6371200, 'lat_0':None,  'lon_0':None, 'lat_1':None, 'lat_2':None}
+projMerc    = {'proj':'merc',  'a':6371200, 'b':6371200, 'lon_0':None}
 
 proj_spec = {}
 
@@ -93,8 +94,8 @@ proj_spec['polar_projection']['shape']                                          
 proj_spec['polar_projection']['attrs'] = {}
 proj_spec['polar_projection']['attrs']['grid_mapping_name']                     = {'default':'polar_stereographic'}
 proj_spec['polar_projection']['attrs']['standard_parallel']                     = {'default':0.}
-proj_spec['polar_projection']['attrs']['straight_vertical_longitude_from_pole'] = {'src':'parms/center_lon'}
-proj_spec['polar_projection']['attrs']['latitude_of_projection_origin']         = {'src':'parms/center_lat'}
+proj_spec['polar_projection']['attrs']['straight_vertical_longitude_from_pole'] = {'src':'parms/lon_0'}
+proj_spec['polar_projection']['attrs']['latitude_of_projection_origin']         = {'src':'parms/lat_0'}
 proj_spec['polar_projection']['attrs']['false_easting']                         = {'default':0}
 proj_spec['polar_projection']['attrs']['false_northing']                        = {'default':0}
 proj_spec['polar_projection']['attrs']['semi_major']                            = {'default':6371200}
@@ -102,11 +103,11 @@ proj_spec['polar_projection']['attrs']['semi_minor']                            
 
 projdict = {}
 #None means to use the (lat or lon) center derived from the data
-projdict['southpolar'] = {'minlat':-100, 'maxlat':-60, 'projdef':projStereo, 'projspec':'polar_projection'}
+projdict['southpolar'] = {'minlat':-100, 'maxlat':-60, 'projdef':projStereoS, 'projspec':'polar_projection'}
 projdict['southlamb']  = {'minlat':-60,  'maxlat':-30, 'projdef':projLambCC, 'projspec':'lambert_projection'}
 projdict['merc']       = {'minlat':-30,  'maxlat':30,  'projdef':projMerc,   'projspec':'mercator_projection'}
 projdict['northlamb']  = {'minlat':30,   'maxlat':60,  'projdef':projLambCC, 'projspec':'lambert_projection'}
-projdict['northpolar'] = {'minlat':60,   'maxlat':100, 'projdef':projStereo, 'projspec':'polar_projection'}
+projdict['northpolar'] = {'minlat':60,   'maxlat':100, 'projdef':projStereoN, 'projspec':'polar_projection'}
 
 # projected fields
 pfields = {}
