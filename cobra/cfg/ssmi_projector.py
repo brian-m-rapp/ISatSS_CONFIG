@@ -51,15 +51,16 @@ job['data']['log']['schedule']     = {'interval':3600}
 job['data']['log']['activeonly']   = True
 
 job['loglevel']             = 6
-
 job['cntl_node']            = 705
-
 job['input_type']           = {'type':'infofile','node':706,'delete_file':True, 'delete_info':True}
 
-projStereoN = {'proj':'stere', 'a':6371200, 'b':6371200, 'lat_0':None,  'lon_0':None, 'lat_ts':None}
-projStereoS = {'proj':'stere', 'a':6371200, 'b':6371200, 'lat_0':None,  'lon_0':None, 'lat_ts':None}
-projLambCC  = {'proj':'lcc',   'a':6371200, 'b':6371200, 'lat_0':None,  'lon_0':None, 'lat_1':None, 'lat_2':None}
-projMerc    = {'proj':'merc',  'a':6371200, 'b':6371200, 'lon_0':None}
+semi_major_radius = 6371200
+semi_minor_radius = 6371200
+
+projStereoN = {'proj':'stere', 'a':semi_major_radius, 'b':semi_minor_radius, 'lat_0':None,  'lon_0':None, 'lat_ts':None}
+projStereoS = {'proj':'stere', 'a':semi_major_radius, 'b':semi_minor_radius, 'lat_0':None,  'lon_0':None, 'lat_ts':None}
+projLambCC  = {'proj':'lcc',   'a':semi_major_radius, 'b':semi_minor_radius, 'lat_0':None,  'lon_0':None, 'lat_1':None, 'lat_2':None}
+projMerc    = {'proj':'merc',  'a':semi_major_radius, 'b':semi_minor_radius, 'lon_0':None}
 
 proj_spec = {}
 
@@ -73,8 +74,8 @@ proj_spec['lambert_projection']['attrs']['longitude_of_central_meridian']  = {'s
 proj_spec['lambert_projection']['attrs']['latitude_of_projection_origin']  = {'src':'parms/center_lat'}
 proj_spec['lambert_projection']['attrs']['false_easting']                  = {'default':0}
 proj_spec['lambert_projection']['attrs']['false_northing']                 = {'default':0}
-proj_spec['lambert_projection']['attrs']['semi_major']                     = {'default':6371200}
-proj_spec['lambert_projection']['attrs']['semi_minor']                     = {'default':6371200}
+proj_spec['lambert_projection']['attrs']['semi_major']                     = {'default':semi_major_radius}
+proj_spec['lambert_projection']['attrs']['semi_minor']                     = {'default':semi_minor_radius}
 
 proj_spec['mercator_projection'] = {}
 proj_spec['mercator_projection']['fmt']                                     = {'default':'i'}
@@ -85,8 +86,8 @@ proj_spec['mercator_projection']['attrs']['standard_parallel']              = {'
 proj_spec['mercator_projection']['attrs']['longitude_of_projection_origin'] = {'src':'parms/center_lon'}
 proj_spec['mercator_projection']['attrs']['false_easting']                  = {'default':0}
 proj_spec['mercator_projection']['attrs']['false_northing']                 = {'default':0}
-proj_spec['mercator_projection']['attrs']['semi_major']                     = {'default':6371200}
-proj_spec['mercator_projection']['attrs']['semi_minor']                     = {'default':6371200}
+proj_spec['mercator_projection']['attrs']['semi_major']                     = {'default':semi_major_radius}
+proj_spec['mercator_projection']['attrs']['semi_minor']                     = {'default':semi_minor_radius}
 
 proj_spec['polar_projection'] = {}
 proj_spec['polar_projection']['fmt']                                            = {'default':'i'}
@@ -98,16 +99,23 @@ proj_spec['polar_projection']['attrs']['straight_vertical_longitude_from_pole'] 
 proj_spec['polar_projection']['attrs']['latitude_of_projection_origin']         = {'src':'parms/lat_0'}
 proj_spec['polar_projection']['attrs']['false_easting']                         = {'default':0}
 proj_spec['polar_projection']['attrs']['false_northing']                        = {'default':0}
-proj_spec['polar_projection']['attrs']['semi_major']                            = {'default':6371200}
-proj_spec['polar_projection']['attrs']['semi_minor']                            = {'default':6371200}
+proj_spec['polar_projection']['attrs']['semi_major']                            = {'default':semi_major_radius}
+proj_spec['polar_projection']['attrs']['semi_minor']                            = {'default':semi_minor_radius}
 
 projdict = {}
 #None means to use the (lat or lon) center derived from the data
-projdict['southpolar'] = {'ignore': True,  'minlat':-100, 'maxlat':-60, 'projdef':projStereoS, 'projspec':'polar_projection'}
+'''
+projdict['southpolar'] = {'ignore': False, 'minlat':-100, 'maxlat':-60, 'projdef':projStereoS, 'projspec':'polar_projection'}
 projdict['southlamb']  = {'ignore': False, 'minlat':-60,  'maxlat':-30, 'projdef':projLambCC,  'projspec':'lambert_projection'}
 projdict['merc']       = {'ignore': False, 'minlat':-30,  'maxlat':30,  'projdef':projMerc,    'projspec':'mercator_projection'}
 projdict['northlamb']  = {'ignore': False, 'minlat':30,   'maxlat':60,  'projdef':projLambCC,  'projspec':'lambert_projection'}
-projdict['northpolar'] = {'ignore': True,  'minlat':60,   'maxlat':100, 'projdef':projStereoN, 'projspec':'polar_projection'}
+projdict['northpolar'] = {'ignore': False, 'minlat':60,   'maxlat':100, 'projdef':projStereoN, 'projspec':'polar_projection'}
+'''
+projdict['southpolar'] = {'ignore': True,  'minlat':-100, 'maxlat':-60, 'projdef':projLambCC,  'projspec':'lambert_projection'}
+projdict['southlamb']  = {'ignore': False, 'minlat':-60,  'maxlat':-30, 'projdef':projLambCC,  'projspec':'lambert_projection'}
+projdict['merc']       = {'ignore': False, 'minlat':-30,  'maxlat':30,  'projdef':projMerc,    'projspec':'mercator_projection'}
+projdict['northlamb']  = {'ignore': False, 'minlat':30,   'maxlat':60,  'projdef':projLambCC,  'projspec':'lambert_projection'}
+projdict['northpolar'] = {'ignore': False, 'minlat':60,   'maxlat':100, 'projdef':projLambCC,  'projspec':'lambert_projection'}
 
 # projected fields
 pfields = {}
@@ -115,7 +123,7 @@ pfields['image'] = {}
 pfields['image']['lats']        = 'Latitude_hires'
 pfields['image']['lons']        = 'Longitude_hires'
 pfields['image']['proj']        =  projdict
-pfields['image']['pixperpoint'] = 4          # Pixels per data point
+pfields['image']['pixperpoint'] = 1          # Pixels per data point
 
 pimages = {}
 pimages['v85'] = {}
