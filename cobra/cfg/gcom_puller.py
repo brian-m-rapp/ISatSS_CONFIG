@@ -64,7 +64,7 @@ job['sources']['satepsanone']['decompress'] = 'byext'
 
 gcom_args = {'window':86400, 'cyclecount':100}
 gcom_args['target'] = {'data':job['data']['gfiles'], 'notifications':job['notifications']}
-gcom_args['ledger'] = {'node':job['data']['gledger']['location']['node'],'name':'gcom.ledger'}
+gcom_args['ledger'] = {'node':job['data']['gledger']['location']['node'],'name':job['name']+'.ledger'}
 gcom_args['filter'] = {'filt':'substring','target':'name','startswith':'AMSR2-OCEAN','name':'AMSR2 Ocean Test'}
 
 job['sources']['satepsanone']['paths']['gcom'] = {'path':'/pub/product/nde/amsr2/L2', 'dirs':{}, 'special':{}}

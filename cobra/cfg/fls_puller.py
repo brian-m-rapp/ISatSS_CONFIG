@@ -66,7 +66,7 @@ job['sources']['star'] =  {'protocol':'FTP', 'host':'ftp.star.nesdis.noaa.gov', 
 #fls_args = {'window':3600, 'cyclecount':10}
 fls_args = {'window':2*86400, 'cyclecount':5}
 fls_args['target'] = {'data':job['data']['flsfiles'], 'notifications':job['notifications']}
-fls_args['ledger'] = {'node':job['data']['flsledger']['location']['node'],'name':'fls_status'}
+fls_args['ledger'] = {'node':job['data']['flsledger']['location']['node'],'name':job['name']+'.ledger'}
 job['sources']['star']['paths']['fls'] = {'path':'/pub/smcd/spb/kurtis.pinkney/goes16_fls/CONUS', 'dirs':{}, 'special':{}}
 job['sources']['star']['paths']['fls']['special'] = {'module':'remote_puller','class':'FilePuller','args':fls_args}
 
