@@ -201,6 +201,7 @@ defaults['vlab']['url']     = 'https://vlab.ncep.noaa.gov'
 defaults['vlab']['company'] = 10132
 defaults['vlab']['group']   = 1334496		# ISatSS community group ID
 defaults['sudocmd']         = 'sudo -Su'
+defaults['cluster_log']     = False
 
 #groups
 groups = {}
