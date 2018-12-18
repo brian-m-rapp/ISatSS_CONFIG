@@ -333,7 +333,7 @@ groups[11]['description'] = """
 Contains miscellaneous data retrieval jobs
 """
 groups[11]['jobs'] = {}
-groups[11]['jobs'][1] = {'host':1, 'cfg':'remote_dispatcher'}
+groups[11]['jobs'][1] = {'host':1, 'cfg':'ascat_dispatcher'}
 groups[11]['jobs'][2] = {'host':1, 'cfg':'fls_puller'}
 groups[11]['jobs'][3] = {'host':1, 'cfg':'ssmi_cutter_config'}
 

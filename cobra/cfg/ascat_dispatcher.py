@@ -19,10 +19,10 @@
 """
 
 job = {}
-job['name']     = 'remote_dispatcher'
+job['name']     = 'ascat_dispatcher'
 job['cmd']      = 'dispatcher'
 job['class']    = 'Dispatcher'
-job['log']      = 'remote_dispatch_log'
+job['log']      = 'ascat_dispatch_log'
 job['log_node'] = 1
 
 
@@ -38,7 +38,7 @@ job['data']['afiles']['activeonly']     = True                                  
 job['data']['afiles']['schedule']       = {'interval':600}
 
 job['data']['aledger']                = {}
-job['data']['aledger']['location']    = {'node':83}
+job['data']['aledger']['location']    = {'node':61}
 job['data']['aledger']['aging']       = {'window':86400*10, 'mode':'creationtime'}
 job['data']['aledger']['method']      = {'technique':'inplace'}
 job['data']['aledger']['activeonly']  = True
@@ -66,12 +66,12 @@ job['sources']['nhc'] =  {'protocol':'SCP', 'host':'lotus.napo.nws.noaa.gov', 'a
 
 ascat_args = {'window':3600, 'cyclecount':70}
 ascat_args['target'] = {'data':job['data']['afiles'], 'notifications':job['notifications']}
-ascat_args['ledger'] = {'node':job['data']['aledger']['location']['node'],'name':'ascat_status'}
+ascat_args['ledger'] = {'node':job['data']['aledger']['location']['node'],'name':job['name']+'.ledger'}
 #job['sources']['nhc']['paths']['ascata'] = {'path':'/home/pda/data/pullFromPDA/Global/ASCAT/metopa', 'dirs':{}, 'special':{}}
 #job['sources']['nhc']['paths']['ascata']['special'] = {'module':'remote_puller','class':'FilePuller','args':ascat_args}
 #job['sources']['nhc']['paths']['ascatb'] = {'path':'/home/pda/data/pullFromPDA/Global/ASCAT/metopb', 'dirs':{}, 'special':{}}
 #job['sources']['nhc']['paths']['ascatb']['special'] = {'module':'remote_puller','class':'FilePuller','args':ascat_args}
-job['sources']['nhc']['paths']['ascata'] = {'path':'/appdata/goes-r/20181005/13', 'dirs':{}, 'special':{}}
+job['sources']['nhc']['paths']['ascata'] = {'path':'/appdata/ascat', 'dirs':{}, 'special':{}}
 job['sources']['nhc']['paths']['ascata']['special'] = {'module':'remote_puller','class':'FilePuller','args':ascat_args}
 
 
