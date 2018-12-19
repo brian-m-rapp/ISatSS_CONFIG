@@ -163,6 +163,10 @@ nodes[70] = {'path':'/dev/shm/isatss_data/info/70_gcom_cntl',             'files
 nodes[71] = {'path':'/dev/shm/isatss_data/info/71_gcom_info',             'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[72] = {'path':'/dev/shm/isatss_data/data/72_gcom_data',             'filesystem':'/dev/shm','ctype':'data','stype':'attached','root':'/dev/shm/isatss_data'}
 
+nodes[75] = {'path':'/dev/shm/isatss_data/info/75_h8_dispatch_cntl',      'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[76] = {'path':'/dev/shm/isatss_data/info/76_h8_dispatch_info',      'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[77] = {'path':'/data/isatss_data/data/77_h8_dispatch_data',         'filesystem':'/ddata',  'ctype':'data','stype':'attached','root':'/data/isatss_data'}
+
 nodes[80] = {'path':'/dev/shm/isatss_data/info/80_remote_dispatcher_cntl','filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[81] = {'path':'/dev/shm/isatss_data/info/81_ascat_info',            'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[82] = {'path':'/dev/shm/isatss_data/data/82_ascat_data',            'filesystem':'/dev/shm','ctype':'data','stype':'attached','root':'/dev/shm/isatss_data'}
@@ -180,6 +184,7 @@ nodes[705] = {'path':'/dev/shm/isatss_data/info/705_reproject_cntl',      'files
 nodes[706] = {'path':'/dev/shm/isatss_data/info/706_reproject_input',     'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[707] = {'path':'/data/isatss_data/data/707_reproject_data',         'filesystem':'/data',    'ctype':'data','stype':'attached','root':'/data/isatss_data'}
 nodes[708] = {'path':'/dev/shm/isatss_data/info/708_reproject_info_out',  'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+
 
 # system defaults
 defaults = {}
@@ -336,6 +341,7 @@ groups[11]['jobs'] = {}
 groups[11]['jobs'][1] = {'host':1, 'cfg':'ascat_dispatcher'}
 groups[11]['jobs'][2] = {'host':1, 'cfg':'fls_puller'}
 groups[11]['jobs'][3] = {'host':1, 'cfg':'ssmi_cutter_config'}
+groups[11]['jobs'][4] = {'host':1, 'cfg':'star_dispatcher'}
 
 # ldm tracker
 groups[16] = {}
