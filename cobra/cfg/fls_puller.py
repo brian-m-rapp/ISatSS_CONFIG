@@ -28,7 +28,7 @@ job['log']      = 'fls_puller_log'
 job['log_node'] = 1
 
 job['notifications']   = {}
-job['notifications']['fls']   = {'node':54, 'enabled':True, 'fields':['file', 'node'], 'prefix':'fls'}
+job['notifications']['fls']   = {'node':87, 'enabled':True, 'fields':['file', 'node'], 'prefix':'fls'}
 
 job['data'] = {}
 job['data']['flsfiles']                = {}
@@ -60,10 +60,8 @@ job['max_sleep']        = 10
 job['work_time']        = 60
 
 job['sources'] = {}
-#job['sources']['star'] =  {'protocol':'FTP', 'host':'ftp.star.nesdis.noaa.gov', 'authid':0, 'timeout':10, 'retry':10,'paths':{},'sessions':1}
 job['sources']['star'] =  {'protocol':'FTP', 'host':'ftp.star.nesdis.noaa.gov', 'authid':2, 'timeout':10, 'retry':10,'paths':{},'sessions':1}
 
-#fls_args = {'window':3600, 'cyclecount':10}
 fls_args = {'window':2*86400, 'cyclecount':5}
 fls_args['target'] = {'data':job['data']['flsfiles'], 'notifications':job['notifications']}
 fls_args['ledger'] = {'node':job['data']['flsledger']['location']['node'],'name':job['name']+'.ledger'}
