@@ -67,7 +67,7 @@ gcom_args['ledger'] = {'node':job['data']['gledger']['location']['node'], 'name'
 gcom_args['filter'] = {'filt':'substring', 'target':'name', 'startswith':'AMSR2-OCEAN', 'name':'AMSR2 Ocean Test'}
 
 job['sources']['satepsanone']['paths']['gcom'] = {'path':'/pub/product/nde/amsr2/L2', 'dirs':{}, 'special':{}}
-job['sources']['satepsanone']['paths']['gcom']['special'] = {'module':'satepsanone_puller', 'class':'GcomPuller', 'args':gcom_args}
+job['sources']['satepsanone']['paths']['gcom']['special'] = {'module':'satepsanone_puller', 'class':'FilePuller', 'args':gcom_args}
 
 job['monitor'] = {'agents':{},'mi6':{}}
 job['monitor']['agents']['pmd_admin']                = {'enabled':True, 'module':'im_daemon', 'class':'PMDAdmin', 'args':{'alerts':[27,28], 'telemetry':[26,27,28]}}
