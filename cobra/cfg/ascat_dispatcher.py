@@ -64,13 +64,10 @@ job['sources']['nhc'] =  {'protocol':'SCP', 'host':'lotus.napo.nws.noaa.gov', 'a
 #'pull_along_path' = False	# If true, pull all files from every directory of the root (inclusive) to the 'depth' directories
 #'depth' = 1		# 0 = pull from this dir; 1 = pull from all subdirectories of the root; -1 = recursively pull from all subdirectories
 
-ascat_args = {'window':3600, 'cyclecount':70}
+ascat_args = {'window':3600, 'cyclecount':None}
 ascat_args['target'] = {'data':job['data']['afiles'], 'notifications':job['notifications']}
 ascat_args['ledger'] = {'node':job['data']['aledger']['location']['node'],'name':job['name']+'.ledger'}
-#job['sources']['nhc']['paths']['ascata'] = {'path':'/home/pda/data/pullFromPDA/Global/ASCAT/metopa', 'dirs':{}, 'special':{}}
-#job['sources']['nhc']['paths']['ascata']['special'] = {'module':'remote_puller','class':'FilePuller','args':ascat_args}
-#job['sources']['nhc']['paths']['ascatb'] = {'path':'/home/pda/data/pullFromPDA/Global/ASCAT/metopb', 'dirs':{}, 'special':{}}
-#job['sources']['nhc']['paths']['ascatb']['special'] = {'module':'remote_puller','class':'FilePuller','args':ascat_args}
+
 job['sources']['nhc']['paths']['ascata'] = {'path':'/appdata/ascat', 'dirs':{}, 'special':{}}
 job['sources']['nhc']['paths']['ascata']['special'] = {'module':'remote_puller','class':'FilePuller','args':ascat_args}
 
