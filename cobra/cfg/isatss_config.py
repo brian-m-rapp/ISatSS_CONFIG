@@ -157,7 +157,7 @@ nodes[54] = {'path':'/dev/shm/isatss_data/info/54_ldm_out_input',         'files
 nodes[58] = {'path':'/dev/shm/isatss_data/58_pda',                        'filesystem': '/dev/shm',  'ctype':'data','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[59] = {'path':'/dev/shm/isatss_data/59_pda_replicator_in',          'filesystem': '/dev/shm',  'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[60] = {'path':'/mnt/ldm2/decoders',                                 'filesystem': '/mnt/ldm2', 'ctype':'data','stype':'network', 'root':'/mnt/ldm2', 'incinerator':{'gid':2,'jid':1}} 
-nodes[61] = {'path':'/scratch/isatss_data/data/61_ledgers',               'filesystem':'/scratch','ctype':'data','stype':'attached','root':'/scratch/isatss_data'}
+nodes[61] = {'path':'/data/isatss_data/ledgers',                          'filesystem':' /data',     'ctype':'data','stype':'attached','root':'/data/isatss_data'}
 
 nodes[70] = {'path':'/dev/shm/isatss_data/info/70_gcom_cntl',             'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[71] = {'path':'/dev/shm/isatss_data/info/71_gcom_info',             'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
@@ -179,6 +179,13 @@ nodes[88] = {'path':'/dev/shm/isatss_data/info/88_fls_proc_cntl',         'files
 
 nodes[91] = {'path':'/dev/shm/isatss_data/info/041_ldm_out_info',         'filesystem':'/dev/shm', 'ctype':'info', 'stype':'attached', 'root':'/dev/shm/isatss_data', 'incinerator':{'gid':2,'jid':1}}
 nodes[92] = {'path':'/data/isatss_data/data/042_ldm_out_data',            'filesystem':'/data',    'ctype':'data', 'stype':'attached', 'root':'/data/isatss_data', 'incinerator':{'gid':2,'jid':1}}
+
+nodes[95] = {'path':'/dev/shm/isatss_data/info/95_jason_disp_cntl',     'filesystem':'/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[96] = {'path':'/data/isatss_data/data/96_jason_disp_data',        'filesystem':'/data',    'ctype':'data','stype':'attached','root':'/data/isatss_data'}
+nodes[97] = {'path':'/dev/shm/isatss_data/info/97_jason_disp_info',     'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+
+nodes[93] = {'path':'/dev/shm/isatss_data/info/93_jason_proc_cntl',     'filesystem':'/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+
 
 nodes[700] = {'path':'/dev/shm/isatss_data/info/700_ssmi_cut_cntl',       'filesystem':'/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[702] = {'path':'/dev/shm/isatss_data/info/702_ssmi_cut_input',      'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
@@ -347,7 +354,7 @@ groups[11]['jobs'][1] = {'host':1, 'cfg':'ascat_dispatcher'}
 groups[11]['jobs'][2] = {'host':1, 'cfg':'fls_puller'}
 groups[11]['jobs'][3] = {'host':1, 'cfg':'ssmi_cutter_config'}
 groups[11]['jobs'][4] = {'host':1, 'cfg':'star_dispatcher'}
-
+groups[11]['jobs'][5] = {'host':1, 'cfg':'jason_dispatcher'}
 
 groups[12] = {}
 groups[12]['name']        = 'misc procssing jobs'
