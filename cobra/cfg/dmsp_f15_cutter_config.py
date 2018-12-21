@@ -19,10 +19,10 @@
 """
 
 job = {}
-job['name']     = 'ssmicutter'
+job['name']     = 'dmsp_f15_cutter'
 job['cmd']      = 'mojo'
 job['class']    = 'MOJO'
-job['log']      = 'ssmicutter_log'
+job['log']      = 'dmsp_f15_cutter_log'
 job['log_node'] = 1
 
 job['data'] = {}
@@ -223,6 +223,6 @@ ncspec['variables']['Temp_85GHz_H']['attrs']['long_name']     = {'default':'85 G
 ncspec['variables']['Temp_85GHz_H']['attrs']['units']         = {'default':'K'}
 
 ncspec['notifications'] = {'fields':{},'targets':{}}
-ncspec['notifications']['targets']['orbits']  = {'node':job['data']['info']['location']['node'], 'enabled':True, 'prefix':'ssmi_points', 'fields':['file','node']}
+ncspec['notifications']['targets']['orbits']  = {'node':job['data']['info']['location']['node'], 'enabled':True, 'prefix':'dmsp_f15_points', 'fields':['file','node']}
 
-job['modclass'] = {'module':'ssmicutter','class':'SSMI2NC','args':{'ncspec':ncspec, 'boundaries':[-60.0, -30.0, 30.0, 60.0], 'overlap':5}}
+job['modclass'] = {'module':'dmsp_f15_cutter','class':'DmspF15_2NC','args':{'ncspec':ncspec, 'boundaries':[-60.0, -30.0, 30.0, 60.0], 'overlap':5}}

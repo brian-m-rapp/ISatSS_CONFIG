@@ -187,10 +187,10 @@ nodes[97] = {'path':'/dev/shm/isatss_data/info/97_jason_disp_info',     'filesys
 nodes[93] = {'path':'/dev/shm/isatss_data/info/93_jason_proc_cntl',     'filesystem':'/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
 
 
-nodes[700] = {'path':'/dev/shm/isatss_data/info/700_ssmi_cut_cntl',       'filesystem':'/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[702] = {'path':'/dev/shm/isatss_data/info/702_ssmi_cut_input',      'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[703] = {'path':'/data/isatss_data/data/703_ssmi_cut_data',          'filesystem':'/data',    'ctype':'data','stype':'attached','root':'/data/isatss_data'}
-nodes[704] = {'path':'/dev/shm/isatss_data/info/704_ssmi_cut_info_out',   'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[700] = {'path':'/dev/shm/isatss_data/info/700_dmsp_f15_cut_cntl',     'filesystem':'/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[702] = {'path':'/dev/shm/isatss_data/info/702_dmsp_f15_cut_input',    'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[703] = {'path':'/data/isatss_data/data/703_dmsp_f15_cut_data',        'filesystem':'/data',    'ctype':'data','stype':'attached','root':'/data/isatss_data'}
+nodes[704] = {'path':'/dev/shm/isatss_data/info/704_dmsp_f15_cut_info_out', 'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
 
 nodes[705] = {'path':'/dev/shm/isatss_data/info/705_reproject_cntl',      'filesystem':'/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[706] = {'path':'/dev/shm/isatss_data/info/706_reproject_input',     'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
@@ -352,7 +352,7 @@ Contains miscellaneous data retrieval jobs
 groups[11]['jobs'] = {}
 groups[11]['jobs'][1] = {'host':1, 'cfg':'ascat_dispatcher'}
 groups[11]['jobs'][2] = {'host':1, 'cfg':'fls_puller'}
-groups[11]['jobs'][3] = {'host':1, 'cfg':'ssmi_cutter_config'}
+groups[11]['jobs'][3] = {'host':1, 'cfg':'dmsp_f15_cutter_config'}
 groups[11]['jobs'][4] = {'host':1, 'cfg':'star_dispatcher'}
 groups[11]['jobs'][5] = {'host':1, 'cfg':'jason_dispatcher'}
 
