@@ -159,9 +159,13 @@ nodes[59] = {'path':'/dev/shm/isatss_data/59_pda_replicator_in',          'files
 nodes[60] = {'path':'/mnt/ldm2/decoders',                                 'filesystem': '/mnt/ldm2', 'ctype':'data','stype':'network', 'root':'/mnt/ldm2', 'incinerator':{'gid':2,'jid':1}} 
 nodes[61] = {'path':'/data/isatss_data/ledgers',                          'filesystem':' /data',     'ctype':'data','stype':'attached','root':'/data/isatss_data'}
 
+nodes[67] = {'path':'/dev/shm/isatss_data/info/67_amsr2_cntl',            'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[68] = {'path':'/dev/shm/isatss_data/info/68_amsr2_info',            'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[69] = {'path':'/data/isatss_data/data/69_amsr2_data',               'filesystem':'/data',   'ctype':'data','stype':'attached','root':'/data/isatss_data'}
+
 nodes[70] = {'path':'/dev/shm/isatss_data/info/70_gcom_cntl',             'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[71] = {'path':'/dev/shm/isatss_data/info/71_gcom_info',             'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[72] = {'path':'/dev/shm/isatss_data/data/72_gcom_data',             'filesystem':'/dev/shm','ctype':'data','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[72] = {'path':'/data/isatss_data/data/72_gcom_data',                'filesystem':'/data',   'ctype':'data','stype':'attached','root':'/data/isatss_data'}
 
 nodes[75] = {'path':'/dev/shm/isatss_data/info/75_h8_dispatch_cntl',      'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[76] = {'path':'/dev/shm/isatss_data/info/76_h8_dispatch_info',      'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
@@ -277,6 +281,7 @@ groups[4]['jobs']     = {}
 groups[4]['jobs'][1]  = {'host':2,'cfg':'ldm_output_replicator'}
 groups[4]['jobs'][2]  = {'host':2,'cfg':'ldm_output_manager'}
 groups[4]['jobs'][3]  = {'host':1,'cfg':'gcom_puller'}
+groups[4]['jobs'][4]  = {'host':1,'cfg':'amsr2_puller'}
 
 groups[5] = {}
 groups[5]['name']     = 'ldmin'
