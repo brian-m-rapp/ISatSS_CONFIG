@@ -61,10 +61,10 @@ job['work_time']        = 60
 job['sources'] = {}
 job['sources']['nodc'] =  {'protocol':'FTP', 'host':'ftp.nodc.noaa.gov', 'authid':2, 'timeout':10, 'retry':10,'paths':{},'sessions':1}
 
-jason2_args = {'window':14400, 'cyclecount':None, 'date_from':'stamp', 'date_format':None}
+jason2_args = {'window':86400, 'cyclecount':None, 'date_from':'stamp', 'date_format':None}
 jason2_args['target'] = {'data':job['data']['jfiles'], 'notifications':job['notifications']}
 jason2_args['ledger'] = {'node':job['data']['jledger']['location']['node'], 'name':'jason2.ledger'}
-jason3_args = {'window':14400, 'cyclecount':None}
+jason3_args = {'window':86400, 'cyclecount':None}
 jason3_args['target'] = {'data':job['data']['jfiles'], 'notifications':job['notifications']}
 jason3_args['ledger'] = {'node':job['data']['jledger']['location']['node'], 'name':'jason3.ledger'}
 job['sources']['nodc']['paths']['jason2'] = {'path':'/pub/data.nodc/jason2/ogdr/ogdr', 'dirs':{}, 'special':{}}
