@@ -180,11 +180,13 @@ nodes[88] = {'path':'/dev/shm/isatss_data/info/88_fls_proc_cntl',         'files
 nodes[91] = {'path':'/dev/shm/isatss_data/info/041_ldm_out_info',         'filesystem':'/dev/shm', 'ctype':'info', 'stype':'attached', 'root':'/dev/shm/isatss_data', 'incinerator':{'gid':2,'jid':1}}
 nodes[92] = {'path':'/data/isatss_data/data/042_ldm_out_data',            'filesystem':'/data',    'ctype':'data', 'stype':'attached', 'root':'/data/isatss_data', 'incinerator':{'gid':2,'jid':1}}
 
-nodes[95] = {'path':'/dev/shm/isatss_data/info/95_jason_disp_cntl',     'filesystem':'/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[96] = {'path':'/data/isatss_data/data/96_jason_disp_data',        'filesystem':'/data',    'ctype':'data','stype':'attached','root':'/data/isatss_data'}
-nodes[97] = {'path':'/dev/shm/isatss_data/info/97_jason_disp_info',     'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[95] = {'path':'/dev/shm/isatss_data/info/95_jason_disp_cntl',       'filesystem':'/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[96] = {'path':'/data/isatss_data/data/96_jason_disp_data',          'filesystem':'/data',    'ctype':'data','stype':'attached','root':'/data/isatss_data'}
+nodes[97] = {'path':'/dev/shm/isatss_data/info/97_jason_disp_info',       'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
 
-nodes[93] = {'path':'/dev/shm/isatss_data/info/93_jason_proc_cntl',     'filesystem':'/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[93] = {'path':'/dev/shm/isatss_data/info/93_jason_proc_cntl',       'filesystem':'/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[98] = {'path':'/data/isatss_data/data/98_jason_proc_data',          'filesystem':'/data',    'ctype':'data','stype':'attached','root':'/data/isatss_data'}
+nodes[99] = {'path':'/dev/shm/isatss_data/info/99_jason_proc_info',       'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
 
 
 nodes[700] = {'path':'/dev/shm/isatss_data/info/700_dmsp_f15_cut_cntl',     'filesystem':'/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
@@ -363,6 +365,7 @@ Process downloaded data files
 """
 groups[12]['jobs'] = {}
 groups[12]['jobs'][2]     = {'host':1, 'cfg':'fls_goesr_east_conus_config'}
+groups[12]['jobs'][3]     = {'host':1, 'cfg':'jason_processor'}
 
 # ldm tracker
 groups[16] = {}
