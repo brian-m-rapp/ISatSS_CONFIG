@@ -1,7 +1,6 @@
-# isatss SSMI filtering module
 """
     IDP Satellite Support Subsystem
-    Copyright (C) 2016 Joseph K. Zajic (joe.zajic@noaa.gov)
+    Copyright (C) 2016-2018 Joseph K. Zajic (joe.zajic@noaa.gov), Brian M. Rapp (brian.rapp@noaa.gov)
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -37,23 +36,17 @@ isc = isatss_init.import_config()
 fid = isatss_init.get_fid(__file__)
 
 def midpoint(lat1, lon1, lat2, lon2):
-	def toRadians(degs):
-		return degs * math.pi / 180.0
-
-	def toDegrees(rads):
-		return rads * 180.0 / math.pi
-
-	dLon = toRadians(lon2 - lon1)
-	lat1 = toRadians(lat1)
-	lat2 = toRadians(lat2)
-	lon1 = toRadians(lon1)
+	dLon = math.radians(lon2 - lon1)
+	lat1 = math.radians(lat1)
+	lat2 = math.radians(lat2)
+	lon1 = math.radians(lon1)
 
 	Bx = math.cos(lat2) * math.cos(dLon)
 	By = math.cos(lat2) * math.sin(dLon)
 	lat3 = math.atan2(math.sin(lat1) + math.sin(lat2), math.sqrt((math.cos(lat1) + Bx) * (math.cos(lat1) + Bx) + By * By))
 	lon3 = lon1 + math.atan2(By, math.cos(lat1) + Bx)
-	lat3 = round(toDegrees(lat3), 6)
-	lon3 = round(toDegrees(lon3), 6)
+	lat3 = round(math.degrees(lat3), 6)
+	lon3 = round(math.degrees(lon3), 6)
 
 	if lon3 <= -180.0:
 		lon3 += 360.0
@@ -65,7 +58,7 @@ def midpoint(lat1, lon1, lat2, lon2):
 def midLon(lon1, lon2):
 	return midpoint(0.0, lon1, 0.0, lon2)[1]
 
-class SSMI:
+class GeoRGE:
 	"""
 	"""
 	def __init__(self, args,logger, info):
@@ -117,7 +110,6 @@ class SSMI:
 			print(v)
 			self.data[v] = ncf.get(v,flat=False)
 			self.vdims[v] = ncf.ncf.variables[v].dimensions
-
 
 		lats = self.data['Latitude_lores']
 		lons = self.data['Longitude_lores']
@@ -182,14 +174,11 @@ class SSMI:
 		area_con_37v = swath_con_37v.resample(area)
 		print('area_con_37v: {}'.format(area_con_37v.image_data))
 
-
-		print('Hello World')
 		return
 
 		self.odata = {}
 
 		self.odata['filename']  = os.path.splitext(os.path.basename(infodict['file']))[0] + '_ssmi.nc'
-
 
 		oncf = im_ncfile.INCFile(prodinfo=self.args['ncspec'],mode='w',content=self.odata,info=self.infomsg)
 		oncf.populate()
