@@ -19,7 +19,7 @@
 """
 
 job = {}
-job['name']     = 'ssmi_project'
+job['name']     = 'ssmi_projector'
 job['cmd']      = 'mojo'
 job['class']    = 'MOJO'
 job['log']      = 'ssmi_project_log'
