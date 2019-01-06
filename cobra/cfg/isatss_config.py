@@ -159,6 +159,10 @@ nodes[59] = {'path':'/dev/shm/isatss_data/59_pda_replicator_in',          'files
 nodes[60] = {'path':'/mnt/ldm2/decoders',                                 'filesystem': '/mnt/ldm2', 'ctype':'data','stype':'network', 'root':'/mnt/ldm2', 'incinerator':{'gid':2,'jid':1}} 
 nodes[61] = {'path':'/data/isatss_data/ledgers',                          'filesystem':' /data',     'ctype':'data','stype':'attached','root':'/data/isatss_data'}
 
+nodes[64] = {'path':'/dev/shm/isatss_data/info/64_amsr2_cutter_cntl',     'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[65] = {'path':'/dev/shm/isatss_data/info/65_amsr2_cutter_info',     'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[66] = {'path':'/data/isatss_data/data/66_amsr2_cutter_data',        'filesystem':'/data',   'ctype':'data','stype':'attached','root':'/data/isatss_data'}
+
 nodes[67] = {'path':'/dev/shm/isatss_data/info/67_amsr2_cntl',            'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[68] = {'path':'/dev/shm/isatss_data/info/68_amsr2_info',            'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[69] = {'path':'/data/isatss_data/data/69_amsr2_data',               'filesystem':'/data',   'ctype':'data','stype':'attached','root':'/data/isatss_data'}
