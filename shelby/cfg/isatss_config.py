@@ -16,47 +16,11 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
+site = 'ROCK'
 
-"""
-Name of the ISatSS Processing facility - MI6 includes this in telemetry, notifications, and alerts
-
-For Redhat and Centos, the default 'sudo -Su' works.
-For openSUSE, use 'sudo -iu'.
-"""
-sudocmd = 'sudo -iu'	# defaults to 'sudo -Su'
-
-site = 'NAPO'
-
-tier = 'dev'	# dev/qa/ops - unique to IDP deployment, not used outside of this configuration file
-
-"""
-The host dictionary identifies all of the members of an ISatSS cluster, and defines the ports and nodes used by the agent86 control and communications app.
-Host IDs are referenced in the isatss_config.groups dictionary to identify on what machine and by which account an application is to be run.
-A host is defined by a fully qualified domain name and a valid user on that system.
-Dictionary fields:
-    host    (required)  fully qualified domain name of the host, must be the same as that returned by socket.getfqdn() on the host.
-    user    (optional)  valid user listed in the /etc/passwd file on the host.  Defaults to isatss_config.defaults['user']
-    ext     (optional)  "extension" for the im_shoephone library that agent86 on this server will listen on.  This is a tcp port that is open for communication on
-                        the network that connects all of the hosts in the cluster.  Defaults to the value of the global variable lib/im_shoephone.DefaultPort
-    cmd     (optional)  id of node in isatss_config.nodes that agent86 is going to watch for remote command execution request infomsgs.
-                        Defaults to isatss_config.defaults['command_node']
-    resp    (optional)  id of the node to which agent86 is going to write command response infomsgs.  Defaults to isatss_config.defaults['response_node']
-
-If no entries are provided, ISatSS assumes it is running on a non-clustered system.
-
-Example entry:
-hosts[2] = {'host':'grb01.nhc.noaa.gov','user':'ldm', 'ext':1336,'cmd':4,'resp':5}
-"""
 hosts = {}
-
-hosts[1] = {'host':'shelby.napo.nws.noaa.gov', 'shortname':'shelby',    'sudocmd':'sudo -iu'}
-hosts[2] = {'host':'shelby.napo.nws.noaa.gov', 'shortname':'shelbyldm', 'sudocmd':'sudo -iu', 'user':'ldm', 'cmd':72, 'resp':73}
-#hosts[2] = {'host':'dev1.napo.nws.noaa.gov',   'shortname':'dev1', 'connecteas':'140.90.141.140', 'resolvenames':False}
-#hosts[2] = {'host':'dev1.napo.nws.noaa.gov',   'shortname':'dev1'}
-
-hattr = {}
-hattr[1] = {'nics': [('netname', 'eth0')],   'filesystems': []}
-hattr[2] = {'nics': [('netname', 'eth0')],   'filesystems': []}
+hosts[1] = {'host':'shelby.napo.nws.noaa.gov', 'shortname':'shelby'}
+hosts[2] = {'host':'shelby.napo.nws.noaa.gov', 'shortname':'ldm', 'sudocmd':'sudo -iu', 'user':'ldm', 'ext':1338, 'cmd':74, 'resp':75}
 
 """
 The nodes dictionary defines all filesystem locations that are accessed (read, write, delete) by ISatSS applications.  For clustered configurations, it is assumed
@@ -91,8 +55,8 @@ nodes[0]  = {'path':'/scratch/isatss_data/info/default_info',		  'filesystem': '
 nodes[1]  = {'path':'/scratch/isatss_data/log',                           'filesystem': '/scratch', 'ctype':'log', 'stype':'attached','root':'/scratch/isatss_data'}
 nodes[2]  = {'path':'/scratch/isatss_data/info/02_agent86_commands_out',  'filesystem': '/scratch', 'ctype':'cmd', 'stype':'attached','root':'/scratch/isatss_data'}
 nodes[3]  = {'path':'/scratch/isatss_data/info/03_agent86_response',      'filesystem': '/scratch', 'ctype':'resp','stype':'attached','root':'/scratch/isatss_data'}
-nodes[72] = {'path':'/scratch/isatss_data/info/72_agent86_commands_out',  'filesystem': '/scratch', 'ctype':'cmd', 'stype':'attached','root':'/scratch/isatss_data'}
-nodes[73] = {'path':'/scratch/isatss_data/info/73_agent86_response',      'filesystem': '/scratch', 'ctype':'resp','stype':'attached','root':'/scratch/isatss_data'}
+nodes[74] = {'path':'/scratch/isatss_data/info/74_agent86_commands_out',  'filesystem': '/scratch', 'ctype':'cmd', 'stype':'attached','root':'/scratch/isatss_data'}
+nodes[75] = {'path':'/scratch/isatss_data/info/75_agent86_response',      'filesystem': '/scratch', 'ctype':'resp','stype':'attached','root':'/scratch/isatss_data'}
 nodes[18] = {'path':'/scratch/isatss_data/work',		          'filesystem': '/scratch', 'ctype':'data','stype':'attached','root':'/scratch/isatss_data'}
 nodes[19] = {'path':'/scratch/isatss_data/fault_cache',                   'filesystem': '/scratch', 'ctype':'data','stype':'attached','root':'/scratch/isatss_data'}
 
@@ -157,6 +121,33 @@ nodes[58] = {'path':'/dev/shm/isatss_data/58_pda',                        'files
 nodes[59] = {'path':'/dev/shm/isatss_data/59_pda_replicator_in',          'filesystem': '/dev/shm',  'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[60] = {'path':'/mnt/ldm2/decoders',                                 'filesystem': '/mnt/ldm2', 'ctype':'data','stype':'network', 'root':'/mnt/ldm2', 'incinerator':{'gid':2,'jid':1}} 
 
+nodes[70] = {'path':'/dev/shm/isatss_data/info/70_gcom_cntl',             'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[71] = {'path':'/dev/shm/isatss_data/info/71_gcom_info',             'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[72] = {'path':'/dev/shm/isatss_data/data/72_gcom_data',             'filesystem':'/dev/shm','ctype':'data','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[73] = {'path':'/scratch/isatss_data/data/73_gcom_ledger',           'filesystem':'/scratch','ctype':'data','stype':'attached','root':'/scratch/isatss_data'}
+
+nodes[80] = {'path':'/dev/shm/isatss_data/info/80_remote_dispatcher_cntl','filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[81] = {'path':'/dev/shm/isatss_data/info/81_ascat_info',            'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[82] = {'path':'/dev/shm/isatss_data/data/82_ascat_data',            'filesystem':'/dev/shm','ctype':'data','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[83] = {'path':'/scratch/isatss_data/data/83_ascat_ledger',          'filesystem':'/scratch','ctype':'data','stype':'attached','root':'/scratch/isatss_data'}
+
+nodes[84] = {'path':'/dev/shm/isatss_data/info/84_amsr2_cutter_cntl',     'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[85] = {'path':'/dev/shm/isatss_data/info/85_amsr2_cutter_info',     'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[86] = {'path':'/home/brapp/data/isatss_data/86_amsr2_cutter_data',  'filesystem':'/home/brapp/data','ctype':'data','stype':'attached','root':'/home'}
+
+nodes[87] = {'path':'/dev/shm/isatss_data/info/87_amsr2_cntl',            'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[88] = {'path':'/dev/shm/isatss_data/info/88_amsr2_info',            'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[89] = {'path':'/home/brapp/data/isatss_data/89_amsr2_data',         'filesystem':'/home/brapp/data','ctype':'data','stype':'attached','root':'/home'}
+
+nodes[700] = {'path':'/dev/shm/isatss_data/info/700_ssmi_cut_cntl',       'filesystem':'/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[702] = {'path':'/dev/shm/isatss_data/info/702_ssmi_cut_input',      'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[703] = {'path':'/home/brapp/data/isatss_data/703_ssmi_cut_data',    'filesystem':'/dev/shm', 'ctype':'data','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[704] = {'path':'/dev/shm/isatss_data/info/704_ssmi_cut_info_out',   'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+
+nodes[705] = {'path':'/dev/shm/isatss_data/info/705_reproject_cntl',     'filesystem':'/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[706] = {'path':'/dev/shm/isatss_data/info/706_reproject_input',    'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[707] = {'path':'/home/brapp/data/isatss_data/707_reproject_data',     'filesystem':'/dev/shm', 'ctype':'data','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[708] = {'path':'/dev/shm/isatss_data/info/708_reproject_info_out', 'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
 
 # system defaults
 defaults = {}
@@ -177,7 +168,7 @@ defaults['vlab']            = {}
 defaults['vlab']['url']     = 'https://vlab.ncep.noaa.gov'
 defaults['vlab']['company'] = 10132
 defaults['vlab']['group']   = 1334496		# ISatSS community group ID
-defaults['sudocmd']         = 'sudo -Su'
+defaults['sudocmd']         = 'sudo -iu'
 
 #groups
 groups = {}
@@ -197,6 +188,7 @@ groups[1]['cluster_action'] = ['init','shutdown']
 groups[1]['jobs']     = {}
 groups[1]['jobs'][1]  = {'host':1, 'cfg':'agent86_config'}
 groups[1]['jobs'][2]  = {'host':2, 'cfg':'agent86_config'}
+#groups[1]['jobs'][3]  = {'host':1, 'cfg':'thread_test_config'}
 
 groups[2] = {}
 groups[2]['name']     = 'incinerators'
@@ -233,6 +225,7 @@ ISatSS LDM Output Group
 groups[4]['jobs']     = {}
 groups[4]['jobs'][1]  = {'host':2,'cfg':'ldm_output_replicator'}
 groups[4]['jobs'][2]  = {'host':2,'cfg':'ldm_output_manager'}
+groups[4]['jobs'][3]  = {'host':1,'cfg':'gcom_puller'}
 
 groups[5] = {}
 groups[5]['name']     = 'ldmin'
@@ -253,7 +246,7 @@ The ldm_l1b_processing group generates AWIPS-II compatible reflectance and brigh
 tiles from full scene ABI L1B scene files.
 """
 groups[6]['jobs']     = {}
-groups[6]['jobs'][1]  = {'host':2,'cfg':'g16_george_l1b'}
+groups[6]['jobs'][1]  = {'host':1,'cfg':'g16_george_l1b'}
 groups[6]['jobs'][2]  = {'host':2,'cfg':'g16_tile_replicator'}
 
 
@@ -265,20 +258,26 @@ The pkt_l1b_processing group generates AWIPS-II compatible reflectance and brigh
 tiles from incoming GRB CCSDS packets.
 """
 groups[7]['jobs']     = {}
-groups[7]['jobs'][1]  = {'host':2,'cfg':'gpacket_config'}
-groups[7]['jobs'][2]  = {'host':2,'cfg':'grb_abi_lhcp_processor'}
-groups[7]['jobs'][3]  = {'host':2,'cfg':'grb_abi_rhcp_processor'}
-groups[7]['jobs'][4]  = {'host':2,'cfg':'grb_abi_band2_processor'}
+groups[7]['jobs'][1]  = {'host':1,'cfg':'gpacket_config'}
+groups[7]['jobs'][2]  = {'host':1,'cfg':'grb_abi_lhcp_processor'}
+groups[7]['jobs'][3]  = {'host':1,'cfg':'grb_abi_rhcp_processor'}
+groups[7]['jobs'][4]  = {'host':1,'cfg':'grb_abi_band2_processor'}
 
+# g17_packets
 groups[8] = {}
-groups[8]['name']     = 'goes-16_grb_nawips_imagery'
+groups[8]['name']     = 'goes-17_grb_pkt_l1b_processing'
 groups[8]['description'] = """
-The ncp_imagery group translates incoming ABI tiles into NAWIPS compatible McIDAS Area Files
+The pkt_l1b_processing group generates AWIPS-II compatible reflectance and brightness temperature
+tiles from incoming GRB CCSDS packets.
 """
 groups[8]['jobs']     = {}
-groups[8]['jobs'][1]  = {'host':2,'cfg':'g16_george_fdco'}
-groups[8]['jobs'][2]  = {'host':2,'cfg':'g16_george_meso'}
-groups[8]['jobs'][3]  = {'host':2,'cfg':'g16_ncm'}
+"""
+groups[8]['jobs'][1]  = {'host':1,'cfg':'g17_gpacket_config',        'icfg':{'io':{'x':200,'y':1200}}}
+groups[8]['jobs'][2]  = {'host':1,'cfg':'g17_grb_abi_lhcp_proc',     'icfg':{'io':{'x':1400,'y':600}}}
+groups[8]['jobs'][3]  = {'host':1,'cfg':'g17_grb_abi_rhcp_proc',     'icfg':{'io':{'x':1400,'y':200}}}
+groups[8]['jobs'][4]  = {'host':1,'cfg':'g17_grb_abi_bnd2_proc',     'icfg':{'io':{'x':1400,'y':1000}}}
+groups[8]['jobs'][5]  = {'host':1,'cfg':'g17_grb_glm_proc',          'icfg':{'io':{'x':1400,'y':1800}}}
+"""
 
 groups[9] = {}
 groups[9]['name']     = 'pda'
@@ -289,11 +288,11 @@ groups[9]['jobs']     = {}
 groups[9]['jobs'][1] = {'host':2,'cfg':'pda_dispatcher'}
 groups[9]['jobs'][2] = {'host':2,'cfg':'pda_replicator'}
 
-# ldm tracker
-groups[16] = {}
-groups[16]['name']     = 'sbn_ldm_tracker'
-groups[16]['description'] = """
-The SBN LDM tracker group collects and classifies data received over SBN 
+
+groups[10] = {}
+groups[10]['name']     = 'misc_retrieval'
+groups[10]['description'] = """
+Miscellaneous remote retrieval jobs
 """
-groups[16]['jobs']     = {}
-groups[16]['jobs'][1]  = {'host':1,'cfg':'ldmtracker_config',             'icfg':{'io':{'x':2000,'y':3200}}}
+groups[10]['jobs']     = {}
+groups[10]['jobs'][1] = {'host':1,'cfg':'remote_dispatcher'}
