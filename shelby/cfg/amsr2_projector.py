@@ -161,6 +161,7 @@ odata
 ncspec = {}
 ncspec['destination'] = job['data']['output']
 ncspec['namedef']     = []
+ncspec['namedef'].append({'default':'isatss','delimiter':'_'})
 ncspec['namedef'].append({'src':'filename'})
 
 ncspec['dimensions'] = {}

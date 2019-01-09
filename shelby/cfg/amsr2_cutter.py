@@ -50,7 +50,7 @@ job['data']['log']['method']       = {'technique':'inplace'}
 job['data']['log']['schedule']     = {'interval':3600}
 job['data']['log']['activeonly']   = True
 
-job['loglevel']             = 6
+job['loglevel']             = 5
 
 job['cntl_node']            = 84
 

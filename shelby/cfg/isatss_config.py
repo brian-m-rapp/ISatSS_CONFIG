@@ -114,7 +114,8 @@ nodes[35] = {'path':'/dev/shm/isatss_data/info/35_h8_fdgrg_input',        'files
 nodes[36] = {'path':'/dev/shm/isatss_data/info/36_h8_replicator_input',   'filesystem': '/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'} #
 nodes[37] = {'path':'/dev/shm/isatss_data/info/37_g16l1bgrg_input',       'filesystem': '/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'} #
 nodes[38] = {'path':'/dev/shm/isatss_data/info/38_hcast_input',           'filesystem': '/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'} #
-nodes[42] = {'path':'/dev/shm/isatss_data/info/42_ldm_arch_input',        'filesystem': '/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'} #
+#nodes[42] = {'path':'/dev/shm/isatss_data/info/42_ldm_arch_input',        'filesystem': '/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'} #
+nodes[42] = {'path':'/home/brapp/data/isatss_data/042_ldm_out_data',      'filesystem':'/raftr',   'ctype':'data', 'stype':'attached', 'root':'/raftr/isatss_data', 'incinerator':{'gid':2,'jid':1}}
 nodes[54] = {'path':'/dev/shm/isatss_data/info/54_ldm_out_input',         'filesystem': '/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
 
 nodes[58] = {'path':'/dev/shm/isatss_data/58_pda',                        'filesystem': '/dev/shm',  'ctype':'data','stype':'attached','root':'/dev/shm/isatss_data'}
@@ -135,13 +136,23 @@ nodes[84] = {'path':'/dev/shm/isatss_data/info/84_amsr2_cutter_cntl',     'files
 nodes[85] = {'path':'/dev/shm/isatss_data/info/85_amsr2_cutter_info',     'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[86] = {'path':'/home/brapp/data/isatss_data/86_amsr2_cutter_data',  'filesystem':'/home/brapp/data','ctype':'data','stype':'attached','root':'/home'}
 
-nodes[87] = {'path':'/dev/shm/isatss_data/info/87_amsr2_cntl',            'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[88] = {'path':'/dev/shm/isatss_data/info/88_amsr2_info',            'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[89] = {'path':'/home/brapp/data/isatss_data/89_amsr2_data',         'filesystem':'/home/brapp/data','ctype':'data','stype':'attached','root':'/home'}
+nodes[87] = {'path':'/dev/shm/isatss_data/info/87_amsr2_puller_cntl',     'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[88] = {'path':'/dev/shm/isatss_data/info/88_amsr2_puller_info',     'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[89] = {'path':'/home/brapp/data/isatss_data/89_amsr2_puller_data',  'filesystem':'/home/brapp/data','ctype':'data','stype':'attached','root':'/home'}
 
 nodes[90] = {'path':'/dev/shm/isatss_data/info/90_amsr2_proj_cntl',       'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[91] = {'path':'/dev/shm/isatss_data/info/91_amsr2_proj_info',       'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[92] = {'path':'/home/brapp/data/isatss_data/92_amsr2_projdata',     'filesystem':'/home/brapp/data','ctype':'data','stype':'attached','root':'/home'}
+
+nodes[93] = {'path':'/dev/shm/isatss_data/info/93_atms_puller_cntl',      'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[94] = {'path':'/dev/shm/isatss_data/info/94_atms_puller_info',      'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[95] = {'path':'/home/brapp/data/isatss_data/95_atms_puller_data',   'filesystem':'/home/brapp/data','ctype':'data','stype':'attached','root':'/home'}
+
+nodes[96] = {'path':'/dev/shm/isatss_data/info/96_atms_cutter_cntl',      'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[97] = {'path':'/dev/shm/isatss_data/info/97_atms_cutter_info',      'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[98] = {'path':'/home/brapp/data/isatss_data/98_atms_cutter_data',   'filesystem':'/home/brapp/data','ctype':'data','stype':'attached','root':'/home'}
+
+nodes[99] = {'path':'/dev/shm/isatss_data/info/99_atms_proj_cntl',       'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
 
 nodes[700] = {'path':'/dev/shm/isatss_data/info/700_ssmi_cut_cntl',       'filesystem':'/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[702] = {'path':'/dev/shm/isatss_data/info/702_ssmi_cut_input',      'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
@@ -299,4 +310,5 @@ groups[10]['description'] = """
 Miscellaneous remote retrieval jobs
 """
 groups[10]['jobs']     = {}
-groups[10]['jobs'][1] = {'host':1,'cfg':'remote_dispatcher'}
+groups[10]['jobs'][1] = {'host':1, 'cfg':'remote_dispatcher'}
+groups[10]['jobs'][2] = {'host':1, 'cfg':'atms_puller'}
