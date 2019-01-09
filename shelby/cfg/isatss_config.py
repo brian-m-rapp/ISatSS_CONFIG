@@ -139,6 +139,10 @@ nodes[87] = {'path':'/dev/shm/isatss_data/info/87_amsr2_cntl',            'files
 nodes[88] = {'path':'/dev/shm/isatss_data/info/88_amsr2_info',            'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[89] = {'path':'/home/brapp/data/isatss_data/89_amsr2_data',         'filesystem':'/home/brapp/data','ctype':'data','stype':'attached','root':'/home'}
 
+nodes[90] = {'path':'/dev/shm/isatss_data/info/90_amsr2_proj_cntl',       'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[91] = {'path':'/dev/shm/isatss_data/info/91_amsr2_proj_info',       'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[92] = {'path':'/home/brapp/data/isatss_data/92_amsr2_projdata',     'filesystem':'/home/brapp/data','ctype':'data','stype':'attached','root':'/home'}
+
 nodes[700] = {'path':'/dev/shm/isatss_data/info/700_ssmi_cut_cntl',       'filesystem':'/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[702] = {'path':'/dev/shm/isatss_data/info/702_ssmi_cut_input',      'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[703] = {'path':'/home/brapp/data/isatss_data/703_ssmi_cut_data',    'filesystem':'/dev/shm', 'ctype':'data','stype':'attached','root':'/dev/shm/isatss_data'}

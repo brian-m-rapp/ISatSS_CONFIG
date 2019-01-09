@@ -76,7 +76,6 @@ ncspec['globalmeta']['time_coverage_start'] = {'src':'meta/time_coverage_start'}
 ncspec['globalmeta']['time_coverage_end']   = {'src':'meta/time_coverage_end'}
 ncspec['globalmeta']['production_site']     = {'default':'NWS/NAPO'}
 ncspec['globalmeta']['Metadata_Link']       = {'src':'meta/Metadata_Link'}
-ncspec['globalmeta']['dataset_name']        = {'src':'filename'}
 
 ncspec['variables']   = {}
 
