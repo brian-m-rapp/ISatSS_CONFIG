@@ -312,3 +312,4 @@ Miscellaneous remote retrieval jobs
 groups[10]['jobs']     = {}
 groups[10]['jobs'][1] = {'host':1, 'cfg':'remote_dispatcher'}
 groups[10]['jobs'][2] = {'host':1, 'cfg':'atms_puller'}
+groups[10]['jobs'][3] = {'host':1, 'cfg':'amsr2_puller'}
