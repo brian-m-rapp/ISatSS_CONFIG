@@ -205,8 +205,7 @@ varmap['Longitude_lores'] = 'Longitude_for_36'
 varmap['Latitude_hires'] = 'Latitude_for_89A'
 varmap['Longitude_hires'] = 'Longitude_for_89A'
 
-dimmap = {'scans':{'scancount':'Number_of_Scans'}, 'resolutions':{'hires':'Number_of_hi_rez_FOVs', 'lores':'Number_of_low_rez_FOVs'}}
-scanmap = {'scanlines':'scancount'}
-args = {'ncspec':ncspec, 'coords':coordVars, 'dims':dimmap, 'scans':scanmap, 'boundaries':[-60.0, -30.0, 30.0, 60.0], 'overlap':5, 'varmap':varmap}
+dims = {'scans':{'scancount':'Number_of_Scans'}, 'resolutions':{'hires':'Number_of_hi_rez_FOVs', 'lores':'Number_of_low_rez_FOVs'}}
+args = {'ncspec':ncspec, 'coords':coordVars, 'dims':dims, 'boundaries':[-60.0, -30.0, 30.0, 60.0], 'overlap':5, 'varmap':varmap}
 
 job['modclass'] = {'module':'point_set_cutter_in_work', 'class':'PointSetCutter', 'args':args}
