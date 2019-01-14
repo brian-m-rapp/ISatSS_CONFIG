@@ -209,7 +209,10 @@ varmap['Longitude_hires'] = 'Longitude_for_89A'
 """
 
 # Map of dimensions to convert from the input file to the output file
-dimmap = {'scans':{'scancount':'Number_of_Scans'}, 'resolutions':{'hires':'Number_of_hi_rez_FOVs', 'lores':'Number_of_low_rez_FOVs'}}
+dimmap = {}
+dimmap['scans']       = {'scancount':'Number_of_Scans'}
+dimmap['resolutions'] = {'hires':'Number_of_hi_rez_FOVs', 'lores':'Number_of_low_rez_FOVs'}
+dimmap['primary']     = 'Brightness_Temperature_89_GHz_AV'
 
 # Map the variable row dimension back to odata row dimension
 scanmap = {'scanlines':'scancount'}
