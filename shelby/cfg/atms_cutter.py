@@ -27,14 +27,14 @@ job['log_node'] = 1
 
 job['data'] = {}
 job['data']['output'] = {}
-job['data']['output']['location']   = {'node':86}
+job['data']['output']['location']   = {'node':109}
 job['data']['output']['aging']      = {'window':3600, 'mode':'creationtime'}
 job['data']['output']['method']     = {'technique':'inplace'}
 job['data']['output']['activeonly'] = True
 job['data']['output']['schedule']   = {'interval':600}
 
 job['data']['info']                = {}
-job['data']['info']['location']    = {'node':85}
+job['data']['info']['location']    = {'node':108}
 job['data']['info']['aging']       = {'window':3600, 'mode':'creationtime'}
 job['data']['info']['method']      = {'technique':'inplace'}
 job['data']['info']['activeonly']  = False
@@ -52,9 +52,9 @@ job['data']['log']['activeonly']   = True
 
 job['loglevel']             = 6
 
-job['cntl_node']            = 84
+job['cntl_node']            = 107
 
-job['input_type']           = {'type':'infofile','node':88,'delete_file':True, 'delete_info':True}
+job['input_type']           = {'type':'infofile', 'node':105, 'delete_file':True, 'delete_info':True}
 
 job['watcher_timeout']      = 1000
 job['files_per_cycle']      = 50
@@ -65,10 +65,8 @@ ncspec['namedef']     = []
 ncspec['namedef'].append({'src':'filename'})
 
 ncspec['dimensions'] = {}
-ncspec['dimensions']['Scanline'] = {'src':'nscans/hires'}
-ncspec['dimensions']['nscans_lores'] = {'src':'nscans/lores'}
-ncspec['dimensions']['fov_hires']    = {'src':'fov/hires'}
-ncspec['dimensions']['fov_lores']    = {'src':'fov/lores'}
+ncspec['dimensions']['Scanline']      = {'src':'nscans/scancount'}
+ncspec['dimensions']['Field_of_view'] = {'src':'fov/fov'}
 
 ncspec['globalmeta'] = {}
 ncspec['globalmeta']['instrument_name']		= {'src':'meta/instrument_name'}
@@ -79,124 +77,67 @@ ncspec['globalmeta']['Metadata_Link']       = {'src':'meta/Metadata_Link'}
 
 ncspec['variables']   = {}
 
-ncspec['variables']['Latitude_for_89A']   = {}
-ncspec['variables']['Latitude_for_89A']['fmt']                    = {'default':'f'}
-ncspec['variables']['Latitude_for_89A']['shape']                  = {'default':['nscans_hires','fov_hires']}
-ncspec['variables']['Latitude_for_89A']['fill_value']             = {'default':-9999.}
-ncspec['variables']['Latitude_for_89A']['zlib']                   = {'default':True}
-ncspec['variables']['Latitude_for_89A']['complevel']              = {'default':1}
-ncspec['variables']['Latitude_for_89A']['shuffle']                = {'default':True}
-ncspec['variables']['Latitude_for_89A']['data']                   = {'src':'data/Latitude_for_89A'}
-ncspec['variables']['Latitude_for_89A']['attrs'] = {}
-ncspec['variables']['Latitude_for_89A']['attrs']['standard_name'] = {'default':'Latitude_for_89A'}
-ncspec['variables']['Latitude_for_89A']['attrs']['long_name']     = {'default':'Latitude High Resolution'}
-ncspec['variables']['Latitude_for_89A']['attrs']['units']         = {'default':'degrees_north'}
+ncspec['variables']['Latitude']   = {}
+ncspec['variables']['Latitude']['fmt']                    = {'default':'f'}
+ncspec['variables']['Latitude']['shape']                  = {'default':['Scanline','Field_of_view']}
+ncspec['variables']['Latitude']['fill_value']             = {'default':-9999.}
+ncspec['variables']['Latitude']['zlib']                   = {'default':True}
+ncspec['variables']['Latitude']['complevel']              = {'default':1}
+ncspec['variables']['Latitude']['shuffle']                = {'default':True}
+ncspec['variables']['Latitude']['data']                   = {'src':'data/Latitude'}
+ncspec['variables']['Latitude']['attrs'] = {}
+ncspec['variables']['Latitude']['attrs']['standard_name'] = {'default':'Latitude'}
+ncspec['variables']['Latitude']['attrs']['long_name']     = {'default':'Latitude'}
+ncspec['variables']['Latitude']['attrs']['units']         = {'default':'degrees_north'}
 
-ncspec['variables']['Longitude_for_89A']   = {}
-ncspec['variables']['Longitude_for_89A']['fmt']                    = {'default':'f'}
-ncspec['variables']['Longitude_for_89A']['shape']                  = {'default':['nscans_hires','fov_hires']}
-ncspec['variables']['Longitude_for_89A']['fill_value']             = {'default':-9999.}
-ncspec['variables']['Longitude_for_89A']['zlib']                   = {'default':True}
-ncspec['variables']['Longitude_for_89A']['complevel']              = {'default':1}
-ncspec['variables']['Longitude_for_89A']['shuffle']                = {'default':True}
-ncspec['variables']['Longitude_for_89A']['data']                   = {'src':'data/Longitude_for_89A'}
-ncspec['variables']['Longitude_for_89A']['attrs'] = {}
-ncspec['variables']['Longitude_for_89A']['attrs']['standard_name'] = {'default':'Longitude_for_89A'}
-ncspec['variables']['Longitude_for_89A']['attrs']['long_name']     = {'default':'Longitude High Resolution'}
-ncspec['variables']['Longitude_for_89A']['attrs']['units']         = {'default':'degrees_east'}
+ncspec['variables']['Longitude']   = {}
+ncspec['variables']['Longitude']['fmt']                    = {'default':'f'}
+ncspec['variables']['Longitude']['shape']                  = {'default':['Scanline','Field_of_view']}
+ncspec['variables']['Longitude']['fill_value']             = {'default':-9999.}
+ncspec['variables']['Longitude']['zlib']                   = {'default':True}
+ncspec['variables']['Longitude']['complevel']              = {'default':1}
+ncspec['variables']['Longitude']['shuffle']                = {'default':True}
+ncspec['variables']['Longitude']['data']                   = {'src':'data/Longitude'}
+ncspec['variables']['Longitude']['attrs'] = {}
+ncspec['variables']['Longitude']['attrs']['standard_name'] = {'default':'Longitude'}
+ncspec['variables']['Longitude']['attrs']['long_name']     = {'default':'Longitude'}
+ncspec['variables']['Longitude']['attrs']['units']         = {'default':'degrees_east'}
 
-ncspec['variables']['Latitude_for_36']   = {}
-ncspec['variables']['Latitude_for_36']['fmt']                    = {'default':'f'}
-ncspec['variables']['Latitude_for_36']['shape']                  = {'default':['nscans_lores','fov_lores']}
-ncspec['variables']['Latitude_for_36']['fill_value']             = {'default':-9999.}
-ncspec['variables']['Latitude_for_36']['zlib']                   = {'default':True}
-ncspec['variables']['Latitude_for_36']['complevel']              = {'default':1}
-ncspec['variables']['Latitude_for_36']['shuffle']                = {'default':True}
-ncspec['variables']['Latitude_for_36']['data']                   = {'src':'data/Latitude_for_36'}
-ncspec['variables']['Latitude_for_36']['attrs'] = {}
-ncspec['variables']['Latitude_for_36']['attrs']['standard_name'] = {'default':'Latitude_for_36'}
-ncspec['variables']['Latitude_for_36']['attrs']['long_name']     = {'default':'Latitude Low Resolution'}
-ncspec['variables']['Latitude_for_36']['attrs']['units']         = {'default':'degrees_north'}
 
-ncspec['variables']['Longitude_for_36']   = {}
-ncspec['variables']['Longitude_for_36']['fmt']                    = {'default':'f'}
-ncspec['variables']['Longitude_for_36']['shape']                  = {'default':['nscans_lores','fov_lores']}
-ncspec['variables']['Longitude_for_36']['fill_value']             = {'default':-9999.}
-ncspec['variables']['Longitude_for_36']['zlib']                   = {'default':True}
-ncspec['variables']['Longitude_for_36']['complevel']              = {'default':1}
-ncspec['variables']['Longitude_for_36']['shuffle']                = {'default':True}
-ncspec['variables']['Longitude_for_36']['data']                   = {'src':'data/Longitude_for_36'}
-ncspec['variables']['Longitude_for_36']['attrs'] = {}
-ncspec['variables']['Longitude_for_36']['attrs']['standard_name'] = {'default':'Longitude_for_36'}
-ncspec['variables']['Longitude_for_36']['attrs']['long_name']     = {'default':'Longitude Low Resolution'}
-ncspec['variables']['Longitude_for_36']['attrs']['units']         = {'default':'degrees_east'}
-
-ncspec['variables']['Brightness_Temperature_36_GHzV']   = {}
-ncspec['variables']['Brightness_Temperature_36_GHzV']['fmt']                    = {'default':'f'}
-ncspec['variables']['Brightness_Temperature_36_GHzV']['shape']                  = {'default':['nscans_lores','fov_lores']}
-ncspec['variables']['Brightness_Temperature_36_GHzV']['fill_value']             = {'default':-9999.}
-ncspec['variables']['Brightness_Temperature_36_GHzV']['zlib']                   = {'default':True}
-ncspec['variables']['Brightness_Temperature_36_GHzV']['complevel']              = {'default':1}
-ncspec['variables']['Brightness_Temperature_36_GHzV']['shuffle']                = {'default':True}
-ncspec['variables']['Brightness_Temperature_36_GHzV']['data']                   = {'src':'data/Brightness_Temperature_36_GHzV'}
-ncspec['variables']['Brightness_Temperature_36_GHzV']['attrs'] = {}
-ncspec['variables']['Brightness_Temperature_36_GHzV']['attrs']['coordinates']   = {'default':['Latitude_for_36, Longitude_for_36']}
-ncspec['variables']['Brightness_Temperature_36_GHzV']['attrs']['standard_name'] = {'default':'37 GHz V Brightness Temperature'}
-ncspec['variables']['Brightness_Temperature_36_GHzV']['attrs']['long_name']     = {'default':'37 GHz V Brightness Temperature'}
-ncspec['variables']['Brightness_Temperature_36_GHzV']['attrs']['units']         = {'default':'K'}
-
-ncspec['variables']['Brightness_Temperature_36_GHzH']   = {}
-ncspec['variables']['Brightness_Temperature_36_GHzH']['fmt']                    = {'default':'f'}
-ncspec['variables']['Brightness_Temperature_36_GHzH']['shape']                  = {'default':['nscans_lores','fov_lores']}
-ncspec['variables']['Brightness_Temperature_36_GHzH']['fill_value']             = {'default':-9999.}
-ncspec['variables']['Brightness_Temperature_36_GHzH']['zlib']                   = {'default':True}
-ncspec['variables']['Brightness_Temperature_36_GHzH']['complevel']              = {'default':1}
-ncspec['variables']['Brightness_Temperature_36_GHzH']['shuffle']                = {'default':True}
-ncspec['variables']['Brightness_Temperature_36_GHzH']['data']                   = {'src':'data/Brightness_Temperature_36_GHzH'}
-ncspec['variables']['Brightness_Temperature_36_GHzH']['attrs'] = {}
-ncspec['variables']['Brightness_Temperature_36_GHzH']['attrs']['coordinates']   = {'default':['Latitude_for_36, Longitude_for_36']}
-ncspec['variables']['Brightness_Temperature_36_GHzH']['attrs']['standard_name'] = {'default':'37 GHz H Brightness Temperature'}
-ncspec['variables']['Brightness_Temperature_36_GHzH']['attrs']['long_name']     = {'default':'37 GHz H Brightness Temperature'}
-ncspec['variables']['Brightness_Temperature_36_GHzH']['attrs']['units']         = {'default':'K'}
-
-ncspec['variables']['Brightness_Temperature_89_GHz_AV']   = {}
-ncspec['variables']['Brightness_Temperature_89_GHz_AV']['fmt']                    = {'default':'f'}
-ncspec['variables']['Brightness_Temperature_89_GHz_AV']['shape']                  = {'default':['nscans_hires','fov_hires']}
-ncspec['variables']['Brightness_Temperature_89_GHz_AV']['fill_value']             = {'default':-9999.}
-ncspec['variables']['Brightness_Temperature_89_GHz_AV']['zlib']                   = {'default':True}
-ncspec['variables']['Brightness_Temperature_89_GHz_AV']['complevel']              = {'default':1}
-ncspec['variables']['Brightness_Temperature_89_GHz_AV']['shuffle']                = {'default':True}
-ncspec['variables']['Brightness_Temperature_89_GHz_AV']['data']                   = {'src':'data/Brightness_Temperature_89_GHz_AV'}
-ncspec['variables']['Brightness_Temperature_89_GHz_AV']['attrs'] = {}
-ncspec['variables']['Brightness_Temperature_89_GHz_AV']['attrs']['coordinates']   = {'default':['Latitude_for_89A, Longitude_for_89A']}
-ncspec['variables']['Brightness_Temperature_89_GHz_AV']['attrs']['standard_name'] = {'default':'85 GHz V Brightness Temperature'}
-ncspec['variables']['Brightness_Temperature_89_GHz_AV']['attrs']['long_name']     = {'default':'85 GHz V Brightness Temperature'}
-ncspec['variables']['Brightness_Temperature_89_GHz_AV']['attrs']['units']         = {'default':'K'}
-
-ncspec['variables']['Brightness_Temperature_89_GHz_AH']   = {}
-ncspec['variables']['Brightness_Temperature_89_GHz_AH']['fmt']                    = {'default':'f'}
-ncspec['variables']['Brightness_Temperature_89_GHz_AH']['shape']                  = {'default':['nscans_hires','fov_hires']}
-ncspec['variables']['Brightness_Temperature_89_GHz_AH']['fill_value']             = {'default':-9999.}
-ncspec['variables']['Brightness_Temperature_89_GHz_AH']['zlib']                   = {'default':True}
-ncspec['variables']['Brightness_Temperature_89_GHz_AH']['complevel']              = {'default':1}
-ncspec['variables']['Brightness_Temperature_89_GHz_AH']['shuffle']                = {'default':True}
-ncspec['variables']['Brightness_Temperature_89_GHz_AH']['data']                   = {'src':'data/Brightness_Temperature_89_GHz_AH'}
-ncspec['variables']['Brightness_Temperature_89_GHz_AH']['attrs'] = {}
-ncspec['variables']['Brightness_Temperature_89_GHz_AH']['attrs']['coordinates']   = {'default':['Latitude_for_89A, Longitude_for_89A']}
-ncspec['variables']['Brightness_Temperature_89_GHz_AH']['attrs']['standard_name'] = {'default':'85 GHz H Brightness Temperature'}
-ncspec['variables']['Brightness_Temperature_89_GHz_AH']['attrs']['long_name']     = {'default':'85 GHz H Brightness Temperature'}
-ncspec['variables']['Brightness_Temperature_89_GHz_AH']['attrs']['units']         = {'default':'K'}
+ncspec['variables']['BTemp_88GHz']   = {}
+ncspec['variables']['BTemp_88GHz']['fmt']                    = {'default':'f'}
+ncspec['variables']['BTemp_88GHz']['shape']                  = {'default':['Scanline','Field_of_view']}
+ncspec['variables']['BTemp_88GHz']['fill_value']             = {'default':-9999.}
+ncspec['variables']['BTemp_88GHz']['zlib']                   = {'default':True}
+ncspec['variables']['BTemp_88GHz']['complevel']              = {'default':1}
+ncspec['variables']['BTemp_88GHz']['shuffle']                = {'default':True}
+ncspec['variables']['BTemp_88GHz']['data']                   = {'src':'data/BTemp_88GHz'}
+ncspec['variables']['BTemp_88GHz']['attrs'] = {}
+ncspec['variables']['BTemp_88GHz']['attrs']['coordinates']   = {'default':['Latitude, Longitude']}
+ncspec['variables']['BTemp_88GHz']['attrs']['standard_name'] = {'default':'88 GHz H Brightness Temperature'}
+ncspec['variables']['BTemp_88GHz']['attrs']['long_name']     = {'default':'88 GHz H Brightness Temperature'}
+ncspec['variables']['BTemp_88GHz']['attrs']['units']         = {'default':'K'}
 
 ncspec['notifications'] = {'fields':{},'targets':{}}
-ncspec['notifications']['targets']['orbits']  = {'node':job['data']['info']['location']['node'], 'enabled':True, 'prefix':'amsr2_points', 'fields':['file','node']}
+ncspec['notifications']['targets']['orbits']  = {'node':job['data']['info']['location']['node'], 'enabled':True, 'prefix':'atms_points', 'fields':['file','node']}
 
+# Coordinate attributes (variables) for each output data variable
 coordVars = {}
-coordVars['Brightness_Temperature_36_GHzV']   = {'lat': 'Latitude_for_36', 'lon': 'Longitude_for_36', 'fov':'lores_fov'}
-coordVars['Brightness_Temperature_36_GHzH']   = {'lat': 'Latitude_for_36', 'lon': 'Longitude_for_36', 'fov':'lores_fov'}
-coordVars['Brightness_Temperature_89_GHz_AV'] = {'lat': 'Latitude_for_89A', 'lon': 'Longitude_for_89A', 'fov':'hires_fov'}
-coordVars['Brightness_Temperature_89_GHz_AH'] = {'lat': 'Latitude_for_89A', 'lon': 'Longitude_for_89A', 'fov':'hires_fov'}
+coordVars['BTemp_88GHz']  = {'lat': 'Latitude', 'lon': 'Longitude', 'offset':15}
 
-dims = {'scancount':'Number_of_Scans', 'hires_fov':'Number_of_hi_rez_FOVs', 'lores_fov':'Number_of_low_rez_FOVs'}
-args = {'ncspec':ncspec, 'coords':coordVars, 'dims':dims, 'boundaries':[-60.0, -30.0, 30.0, 60.0], 'overlap':5, 'primary':'Brightness_Temperature_36_GHzV'}
+# For renaming variables from the input file.  Keys are the new variable names; values are the original variable names.
+varmap = {}
+varmap['BTemp_88GHz'] = 'BT'
+
+# Map of dimensions to convert from the input file to the output file
+dimmap = {}
+dimmap['scans']       = {'scancount':'Scanline'}
+dimmap['resolutions'] = {'fov':'Field_of_view'}
+dimmap['primary']     = 'BTemp_88GHz'
+
+# Map the variable row dimension back to odata row dimension
+scanmap = {'Scanline':'scancount'}
+
+args = {'ncspec':ncspec, 'coords':coordVars, 'dimmap':dimmap, 'scanmap':scanmap, 'boundaries':[-60.0, -30.0, 30.0, 60.0], 'overlap':5, 'varmap':varmap}
 
 job['modclass'] = {'module':'point_set_cutter', 'class':'PointSetCutter', 'args':args}

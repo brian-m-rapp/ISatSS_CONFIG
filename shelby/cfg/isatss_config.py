@@ -151,12 +151,22 @@ nodes[95] = {'path':'/home/brapp/data/isatss_data/95_atms_puller_data',   'files
 nodes[96] = {'path':'/dev/shm/isatss_data/info/96_atms_cutter_cntl',      'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[97] = {'path':'/dev/shm/isatss_data/info/97_atms_cutter_info',      'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[98] = {'path':'/home/brapp/data/isatss_data/98_atms_cutter_data',   'filesystem':'/home/brapp/data','ctype':'data','stype':'attached','root':'/home'}
-nodes[99] = {'path':'/dev/shm/isatss_data/info/99_atms_proj_cntl',       'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[99] = {'path':'/dev/shm/isatss_data/info/99_atms_proj_cntl',        'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
 
 nodes[100] = {'path':'/scratch/isatss_data/ledgers',                      'filesystem':'/scratch','ctype':'data','stype':'attached','root':'/scratch/isatss_data'}
-nodes[101] = {'path':'/dev/shm/isatss_data/info/100_jason_puller_cntl',   'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[102] = {'path':'/dev/shm/isatss_data/info/101_jason_puller_info',   'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[103] = {'path':'/home/brapp/data/isatss_data/102_jason_puller_data','filesystem':'/home/brapp/data','ctype':'data','stype':'attached','root':'/home'}
+nodes[101] = {'path':'/dev/shm/isatss_data/info/101_jason_puller_cntl',   'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[102] = {'path':'/dev/shm/isatss_data/info/102_jason_puller_info',   'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[103] = {'path':'/home/brapp/data/isatss_data/103_jason_puller_data','filesystem':'/home/brapp/data','ctype':'data','stype':'attached','root':'/home'}
+
+nodes[104] = {'path':'/dev/shm/isatss_data/info/104_atms_puller_cntl',    'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[105] = {'path':'/dev/shm/isatss_data/info/105_atms_puller_info',    'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[106] = {'path':'/home/brapp/data/isatss_data/106_atms_puller_data', 'filesystem':'/home/brapp/data','ctype':'data','stype':'attached','root':'/home'}
+
+nodes[107] = {'path':'/dev/shm/isatss_data/info/107_atms_cutter_cntl',    'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[108] = {'path':'/dev/shm/isatss_data/info/108_atms_cutter_info',    'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[109] = {'path':'/home/brapp/data/isatss_data/109_atms_cutter_data', 'filesystem':'/home/brapp/data','ctype':'data','stype':'attached','root':'/home'}
+
+nodes[110] = {'path':'/dev/shm/isatss_data/info/110_atms_proj_cntl',      'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
 
 nodes[700] = {'path':'/dev/shm/isatss_data/info/700_ssmi_cut_cntl',       'filesystem':'/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[702] = {'path':'/dev/shm/isatss_data/info/702_ssmi_cut_input',      'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
@@ -315,6 +325,25 @@ Miscellaneous remote retrieval jobs
 """
 groups[10]['jobs']     = {}
 groups[10]['jobs'][1] = {'host':1, 'cfg':'remote_dispatcher'}
-groups[10]['jobs'][2] = {'host':1, 'cfg':'atms_puller'}
-groups[10]['jobs'][3] = {'host':1, 'cfg':'amsr2_puller'}
-groups[10]['jobs'][4] = {'host':1, 'cfg':'jason_dispatcher'}
+groups[10]['jobs'][2] = {'host':1, 'cfg':'amsr2_puller'}
+groups[10]['jobs'][3] = {'host':1, 'cfg':'jason_dispatcher'}
+groups[10]['jobs'][4] = {'host':1, 'cfg':'atms_dispatcher'}
+
+groups[11] = {}
+groups[11]['name']     = 'Cutters'
+groups[11]['description'] = """
+Miscellaneous file cutter jobs
+"""
+groups[11]['jobs']     = {}
+groups[11]['jobs'][1] = {'host':1, 'cfg':'atms_cutter'}
+
+groups[12] = {}
+groups[12]['name']     = 'ATMS'
+groups[12]['description'] = """
+ATMS processing jobs
+"""
+groups[12]['jobs']     = {}
+groups[12]['jobs'][1] = {'host':1, 'cfg':'atms_dispatcher'}
+groups[12]['jobs'][2] = {'host':1, 'cfg':'atms_cutter'}
+groups[12]['jobs'][3] = {'host':1, 'cfg':'atms_projector'}
+

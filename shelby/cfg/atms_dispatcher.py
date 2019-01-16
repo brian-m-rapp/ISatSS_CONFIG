@@ -19,7 +19,7 @@
 """
 
 job = {}
-job['name']     = 'atms_puller'
+job['name']     = 'atms_dispatcher'
 job['cmd']      = 'dispatcher'
 job['class']    = 'Dispatcher'
 job['log']      = 'atms_dispatch_log'
@@ -27,18 +27,18 @@ job['log_node'] = 1
 
 
 job['notifications']   = {}
-job['notifications']['atms']   = {'node':94, 'enabled':True, 'fields':['file', 'node'], 'prefix':'atms'}
+job['notifications']['atms']   = {'node':105, 'enabled':True, 'fields':['file', 'node'], 'prefix':'atms'}
 
 job['data'] = {}
 job['data']['afiles']                 = {}
-job['data']['afiles']['location']       = {'node':95}
+job['data']['afiles']['location']       = {'node':106}
 job['data']['afiles']['aging']          = {'window':3600, 'mode':'creationtime'}
 job['data']['afiles']['method']         = {'technique':'stage', 'path':'incinerator'}
 job['data']['afiles']['activeonly']     = True                                                            # check pidfile
 job['data']['afiles']['schedule']       = {'interval':600}
 
 job['data']['aledger']                = {}
-job['data']['aledger']['location']    = {'node':19}
+job['data']['aledger']['location']    = {'node':100}
 job['data']['aledger']['aging']       = {'window':86400*2, 'mode':'creationtime'}
 job['data']['aledger']['method']      = {'technique':'inplace'}
 job['data']['aledger']['activeonly']  = True
@@ -54,7 +54,7 @@ job['data']['log']['schedule']        = {'interval':3600}
 job['data']['log']['activeonly']      = True
 
 job['loglevel']         = 5
-job['cntl_node']        = 93
+job['cntl_node']        = 104
 job['max_sleep']        = 10
 job['work_time']        = 60
 
