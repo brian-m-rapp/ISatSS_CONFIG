@@ -114,8 +114,8 @@ ncspec['variables']['BTemp_88GHz']['shuffle']                = {'default':True}
 ncspec['variables']['BTemp_88GHz']['data']                   = {'src':'data/BTemp_88GHz'}
 ncspec['variables']['BTemp_88GHz']['attrs'] = {}
 ncspec['variables']['BTemp_88GHz']['attrs']['coordinates']   = {'default':['Latitude, Longitude']}
-ncspec['variables']['BTemp_88GHz']['attrs']['standard_name'] = {'default':'88 GHz H Brightness Temperature'}
-ncspec['variables']['BTemp_88GHz']['attrs']['long_name']     = {'default':'88 GHz H Brightness Temperature'}
+ncspec['variables']['BTemp_88GHz']['attrs']['standard_name'] = {'default':'88 GHz Brightness Temperature'}
+ncspec['variables']['BTemp_88GHz']['attrs']['long_name']     = {'default':'88 GHz Brightness Temperature'}
 ncspec['variables']['BTemp_88GHz']['attrs']['units']         = {'default':'K'}
 
 ncspec['notifications'] = {'fields':{},'targets':{}}

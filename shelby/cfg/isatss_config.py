@@ -168,6 +168,10 @@ nodes[109] = {'path':'/home/brapp/data/isatss_data/109_atms_cutter_data', 'files
 
 nodes[110] = {'path':'/dev/shm/isatss_data/info/110_atms_proj_cntl',      'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
 
+nodes[120] = {'path':'/dev/shm/isatss_data/info/120_gpm_puller_cntl',     'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[121] = {'path':'/dev/shm/isatss_data/info/121_gpm_puller_info',     'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[122] = {'path':'/home/brapp/data/isatss_data/122_gpm_puller_data',  'filesystem':'/home/brapp/data','ctype':'data','stype':'attached','root':'/home'}
+
 nodes[700] = {'path':'/dev/shm/isatss_data/info/700_ssmi_cut_cntl',       'filesystem':'/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[702] = {'path':'/dev/shm/isatss_data/info/702_ssmi_cut_input',      'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[703] = {'path':'/home/brapp/data/isatss_data/703_ssmi_cut_data',    'filesystem':'/dev/shm', 'ctype':'data','stype':'attached','root':'/dev/shm/isatss_data'}
@@ -347,3 +351,10 @@ groups[12]['jobs'][1] = {'host':1, 'cfg':'atms_dispatcher'}
 groups[12]['jobs'][2] = {'host':1, 'cfg':'atms_cutter'}
 groups[12]['jobs'][3] = {'host':1, 'cfg':'atms_projector'}
 
+groups[13] = {}
+groups[13]['name']     = 'GPM GMI'
+groups[13]['description'] = """
+GPM GMI processing jobs
+"""
+groups[13]['jobs']     = {}
+groups[13]['jobs'][1] = {'host':1, 'cfg':'gpm_dispatcher'}
