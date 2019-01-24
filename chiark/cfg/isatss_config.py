@@ -137,6 +137,14 @@ nodes[87] = {'path':'/dev/shm/isatss_data/info/87_amsr2_cntl',            'files
 nodes[88] = {'path':'/dev/shm/isatss_data/info/88_amsr2_info',            'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[89] = {'path':'/home/brapp/data/isatss_data/89_amsr2_data',         'filesystem':'/home/brapp/data','ctype':'data','stype':'attached','root':'/home'}
 
+nodes[90] = {'path':'/dev/shm/isatss_data/info/90_jason_disp_cntl',      'filesystem':'/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[91] = {'path':'/scratch/isatss_data/data/91_jason_disp_data',      'filesystem':'/scratch', 'ctype':'data','stype':'attached','root':'/scratch/isatss_data'}
+nodes[92] = {'path':'/dev/shm/isatss_data/info/92_jason_disp_info',      'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[93] = {'path':'/dev/shm/isatss_data/info/93_jason_proc_cntl',      'filesystem':'/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[94] = {'path':'/scratch/isatss_data/data/94_jason_proc_data',      'filesystem':'/scratch', 'ctype':'data','stype':'attached','root':'/scratch/isatss_data'}
+
+nodes[100] = {'path':'/scratch/isatss_data/ledgers',                      'filesystem':'/scratch', 'ctype':'data', 'stype':'attached', 'root':'/scratch/isatss_data'}
+
 nodes[700] = {'path':'/dev/shm/isatss_data/info/700_ssmi_cut_cntl',       'filesystem':'/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[702] = {'path':'/dev/shm/isatss_data/info/702_ssmi_cut_input',      'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[703] = {'path':'/home/brapp/data/isatss_data/703_ssmi_cut_data',    'filesystem':'/dev/shm', 'ctype':'data','stype':'attached','root':'/dev/shm/isatss_data'}
@@ -294,3 +302,13 @@ Miscellaneous remote retrieval jobs
 """
 groups[10]['jobs']     = {}
 groups[10]['jobs'][1] = {'host':1,'cfg':'remote_dispatcher'}
+
+
+groups[11]                = {}
+groups[11]['name']        = 'Jason2/3 Altimetry Processing'
+groups[11]['description'] = """
+Jobs for ingesting, processing, and pushing Altimetry data from Jason2/3
+"""
+groups[11]['jobs']        = {}
+groups[11]['jobs'][1]     = {'host':1, 'cfg':'jason_dispatcher'}
+groups[11]['jobs'][2]     = {'host':1, 'cfg':'jason_processor'}
