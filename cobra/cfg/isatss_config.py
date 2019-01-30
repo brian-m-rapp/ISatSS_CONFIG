@@ -104,7 +104,7 @@ nodes[17] = {'path':'/dev/shm/isatss_data/data/17_hcast_data_in',         'files
 nodes[25] = {'path':'/dev/shm/isatss_data/data/25_ldm_out_replicate_in',  'filesystem': '/dev/shm', 'ctype':'data','stype':'attached','root':'/dev/shm/isatss_data'} #
 nodes[32] = {'path':'/scratch/isatss_data/monitor_output',                'filesystem': '/scratch', 'ctype':'data','stype':'attached','root':'/scratch/isatss_data'} #
 
-nodes[41] = {'path':'/dev/shm/isatss_data/data/41_ldm_arch',              'filesystem': '/dev/shm', 'ctype':'data','stype':'attached','root':'/dev/shm/isatss_data'} #
+nodes[42] = {'path':'/data/isatss_data/data/42_ldm_arch',                 'filesystem': '/data',    'ctype':'data','stype':'attached','root':'/data'} #
 nodes[43] = {'path':'/dev/shm/isatss_data/data/43_star_in',               'filesystem': '/dev/shm', 'ctype':'data','stype':'attached','root':'/dev/shm/isatss_data'} #
 nodes[44] = {'path':'/dev/shm/isatss_data/data/44_h8_ncm_data_in',        'filesystem': '/dev/shm', 'ctype':'data','stype':'attached','root':'/dev/shm/isatss_data'} #
 nodes[45] = {'path':'/dev/shm/isatss_data/data/45_h8_fdgrg_data_in',      'filesystem': '/dev/shm', 'ctype':'data','stype':'attached','root':'/dev/shm/isatss_data'} #
@@ -151,7 +151,7 @@ nodes[35] = {'path':'/dev/shm/isatss_data/info/35_h8_fdgrg_input',        'files
 nodes[36] = {'path':'/dev/shm/isatss_data/info/36_h8_replicator_input',   'filesystem': '/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'} #
 nodes[37] = {'path':'/dev/shm/isatss_data/info/37_g16l1bgrg_input',       'filesystem': '/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'} #
 nodes[38] = {'path':'/dev/shm/isatss_data/info/38_hcast_input',           'filesystem': '/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'} #
-nodes[42] = {'path':'/dev/shm/isatss_data/info/42_ldm_arch_input',        'filesystem': '/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'} #
+nodes[41] = {'path':'/dev/shm/isatss_data/info/41_ldm_arch_input',        'filesystem': '/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'} #
 nodes[54] = {'path':'/dev/shm/isatss_data/info/54_ldm_out_input',         'filesystem': '/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
 
 nodes[58] = {'path':'/dev/shm/isatss_data/58_pda',                        'filesystem': '/dev/shm',  'ctype':'data','stype':'attached','root':'/dev/shm/isatss_data'}
@@ -195,6 +195,24 @@ nodes[97] = {'path':'/dev/shm/isatss_data/info/97_jason_disp_info',       'files
 nodes[93] = {'path':'/dev/shm/isatss_data/info/93_jason_proc_cntl',       'filesystem':'/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[98] = {'path':'/data/isatss_data/data/98_jason_proc_data',          'filesystem':'/data',    'ctype':'data','stype':'attached','root':'/data/isatss_data'}
 nodes[99] = {'path':'/dev/shm/isatss_data/info/99_jason_proc_info',       'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+
+nodes[100] = {'path':'/dev/shm/isatss_data/info/100_gpm_puller_cntl',     'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[101] = {'path':'/dev/shm/isatss_data/info/101_gpm_puller_info',     'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[102] = {'path':'/data/isatss_data/data/102_gpm_puller_data',        'filesystem':'/data',   'ctype':'data','stype':'attached','root':'/data/isatss_data'}
+
+nodes[104] = {'path':'/dev/shm/isatss_data/info/104_atms_puller_cntl',    'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[105] = {'path':'/dev/shm/isatss_data/info/105_atms_puller_info',    'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[106] = {'path':'/data/isatss_data/data/106_atms_puller_data',       'filesystem':'/data',   'ctype':'data','stype':'attached','root':'/data/isatss_data'}
+
+nodes[107] = {'path':'/dev/shm/isatss_data/info/107_atms_cutter_cntl',    'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[108] = {'path':'/dev/shm/isatss_data/info/108_atms_cutter_info',    'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[109] = {'path':'/data/isatss_data/data/109_atms_cutter_data',       'filesystem':'/data',   'ctype':'data','stype':'attached','root':'/data'}
+
+nodes[110] = {'path':'/dev/shm/isatss_data/info/110_atms_proj_cntl',      'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+
+nodes[111] = {'path':'/dev/shm/isatss_data/info/111_gpm_cutter_cntl',    'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[112] = {'path':'/dev/shm/isatss_data/info/112_gpm_cutter_info',    'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[113] = {'path':'/data/isatss_data/data/113_gpm_cutter_data',       'filesystem':'/data',   'ctype':'data','stype':'attached','root':'/data'}
 
 
 nodes[700] = {'path':'/dev/shm/isatss_data/info/700_dmsp_f15_cut_cntl',     'filesystem':'/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
@@ -276,106 +294,102 @@ groups[3]['jobs'][1]  = {'host':1, 'cfg':'mi6_config'}
 groups[3]['jobs'][2]  = {'host':2, 'cfg':'mi6_config'}
 groups[3]['jobs'][3]  = {'host':1, 'cfg':'gchq_config'}
 
-groups[4] = {}
-groups[4]['name']     = 'ldmout'
+groups[4]                = {}
+groups[4]['name']        = 'LDM'
 groups[4]['description'] = """
-ISatSS LDM Output Group
+Jobs for configuring and managing LDM instances
 """
-groups[4]['jobs']     = {}
-groups[4]['jobs'][1]  = {'host':2,'cfg':'ldm_output_replicator'}
-groups[4]['jobs'][2]  = {'host':2,'cfg':'ldm_output_manager'}
-groups[4]['jobs'][3]  = {'host':1,'cfg':'gcom_puller'}
-groups[4]['jobs'][4]  = {'host':1,'cfg':'amsr2_puller'}
+groups[4]['jobs']        = {}
+groups[4]['jobs'][1]     = {'host':2, 'cfg':'isatss_ldm_manager'}
+groups[4]['jobs'][2]     = {'host':1, 'cfg':'ldm_in_dispatcher'}
 
-groups[5] = {}
-groups[5]['name']     = 'ldmin'
+'''
+groups[5]                = {}
+groups[5]['name']        = 'ASCAT Processing'
 groups[5]['description'] = """
-ISatSS LDM Input Group
-ldm_input_manager runs an instance of LDMer on the LDM Input Server, placing data in node 25
-ldm_dispatch_manager runs an instance of Dispatcher on the LDM Input Server, 
+Job processing ASCAT products 
 """
-groups[5]['jobs']     = {}
-groups[5]['jobs'][1]  = {'host':1,'cfg':'ldm_input_manager'}
-groups[5]['jobs'][2]  = {'host':1,'cfg':'ldm_in_dispatcher'}
-groups[5]['jobs'][3]  = {'host':1,'cfg':'ldm_in_replicator'}
+groups[5]['jobs']        = {}
+groups[5]['jobs'][1]     = {'host':1, 'cfg':'convert_ascat_ambiguities'}
 
-groups[6] = {}
-groups[6]['name']     = 'goes-16_grb_ldm_l1b_processing'
+groups[6]                = {}
+groups[6]['name']        = 'GCOM Processing'
 groups[6]['description'] = """
-The ldm_l1b_processing group generates AWIPS-II compatible reflectance and brightness temperature
-tiles from full scene ABI L1B scene files.
+Jobs for ingesting, processing, and pushing GCOM products
 """
-groups[6]['jobs']     = {}
-groups[6]['jobs'][1]  = {'host':1,'cfg':'g16_george_l1b'}
-groups[6]['jobs'][2]  = {'host':2,'cfg':'g16_tile_replicator'}
+groups[6]['jobs']        = {}
+groups[6]['jobs'][1]     = {'host':1, 'cfg':'amsr2_ocean_puller'}
+groups[6]['jobs'][2]     = {'host':1, 'cfg':'amsr2_ocean_processor', 'icfg':{'io':{'x':2000,'y':3200}}}
 
-
-
-groups[7] = {}
-groups[7]['name']     = 'goes-16_grb_pkt_l1b_processing'
+groups[7]                = {}
+groups[7]['name']        = 'Fog and Low Stratus (FLS) Processing'
 groups[7]['description'] = """
-The pkt_l1b_processing group generates AWIPS-II compatible reflectance and brightness temperature
-tiles from incoming GRB CCSDS packets.
+Jobs for ingesting, processing, and pushing Fog and Low Stratus (FLS) products
 """
-groups[7]['jobs']     = {}
-groups[7]['jobs'][1]  = {'host':1,'cfg':'gpacket_config'}
-groups[7]['jobs'][2]  = {'host':1,'cfg':'grb_abi_lhcp_processor'}
-groups[7]['jobs'][3]  = {'host':1,'cfg':'grb_abi_rhcp_processor'}
-groups[7]['jobs'][4]  = {'host':1,'cfg':'grb_abi_band2_processor'}
+groups[7]['jobs']        = {}
+groups[7]['jobs'][1]     = {'host':1, 'cfg':'fls_puller'}
+groups[7]['jobs'][2]     = {'host':1, 'cfg':'fls_goesr_east_conus_config'}
 
-groups[8] = {}
-groups[8]['name']     = 'goes-16_grb_nawips_imagery'
+groups[8]                = {}
+groups[8]['name']        = 'Himawari Tile Processing'
 groups[8]['description'] = """
-The ncp_imagery group translates incoming ABI tiles into NAWIPS compatible McIDAS Area Files
+Jobs for ingesting, processing, and pushing Himawari tiles
 """
-groups[8]['jobs']     = {}
-groups[8]['jobs'][1]  = {'host':2,'cfg':'g16_george_fdco'}
-groups[8]['jobs'][2]  = {'host':2,'cfg':'g16_george_meso'}
-groups[8]['jobs'][3]  = {'host':2,'cfg':'g16_ncm'}
+groups[8]['jobs']        = {}
+groups[8]['jobs'][1]     = {'host':1, 'cfg':'star_dispatcher'}
+groups[8]['jobs'][2]     = {'host':1, 'cfg':'h8_slab2tile'}
+'''
 
-groups[9] = {}
-groups[9]['name']     = 'pda'
+groups[9]                = {}
+groups[9]['name']        = 'DMSP SSMI Processing'
 groups[9]['description'] = """
-PDA product group
+Jobs for ingesting, processing, and pushing DMSP SSMI data
 """
-groups[9]['jobs']     = {}
-groups[9]['jobs'][1] = {'host':2,'cfg':'pda_dispatcher'}
-groups[9]['jobs'][2] = {'host':2,'cfg':'pda_replicator'}
+groups[9]['jobs']        = {}
+groups[9]['jobs'][1]     = {'host':1, 'cfg':'dmsp_f15_cutter_config'}
+groups[9]['jobs'][2]     = {'host':1, 'cfg':'ssmi_projector'}
 
-# g17_packets
-groups[10] = {}
-groups[10]['name']     = 'goes-17_grb_pkt_l1b_processing'
+groups[10]                = {}
+groups[10]['name']        = 'Jason2/3 Altimetry Processing'
 groups[10]['description'] = """
-The pkt_l1b_processing group generates AWIPS-II compatible reflectance and brightness temperature
-tiles from incoming GRB CCSDS packets.
+Jobs for ingesting, processing, and pushing Altimetry data from Jason2/3
 """
-groups[10]['jobs']     = {}
-groups[10]['jobs'][1]  = {'host':1,'cfg':'g17_grb_abi_lhcp_proc',     'icfg':{'io':{'x':1400,'y':600}}}
-groups[10]['jobs'][2]  = {'host':1,'cfg':'g17_grb_abi_rhcp_proc',     'icfg':{'io':{'x':1400,'y':200}}}
-groups[10]['jobs'][3]  = {'host':1,'cfg':'g17_grb_abi_bnd2_proc',     'icfg':{'io':{'x':1400,'y':1000}}}
-groups[10]['jobs'][4]  = {'host':1,'cfg':'gpacket_config'}
+groups[10]['jobs']        = {}
+groups[10]['jobs'][1]     = {'host':1, 'cfg':'jason_dispatcher'}
+groups[10]['jobs'][2]     = {'host':1, 'cfg':'jason_processor'}
 
-groups[11] = {}
-groups[11]['name']        = 'misc retrieval'
+'''
+groups[11]                = {}
+groups[11]['name']        = 'AMSR2 Imagery Processing'
 groups[11]['description'] = """
-Contains miscellaneous data retrieval jobs
+Jobs for ingesting, processing, and pushing AMSR2 Imagery
 """
-groups[11]['jobs'] = {}
-groups[11]['jobs'][1] = {'host':1, 'cfg':'ascat_dispatcher'}
-groups[11]['jobs'][2] = {'host':1, 'cfg':'fls_puller'}
-groups[11]['jobs'][3] = {'host':1, 'cfg':'dmsp_f15_cutter_config'}
-groups[11]['jobs'][4] = {'host':1, 'cfg':'star_dispatcher'}
-groups[11]['jobs'][5] = {'host':1, 'cfg':'jason_dispatcher'}
+groups[11]['jobs']        = {}
+groups[11]['jobs'][1]     = {'host':1, 'cfg':'amsr2_dispatcher'}
+groups[11]['jobs'][2]     = {'host':1, 'cfg':'amsr2_cutter'}
+groups[11]['jobs'][3]     = {'host':1, 'cfg':'amsr2_projector'}
+'''
 
-groups[12] = {}
-groups[12]['name']        = 'misc procssing jobs'
+groups[12]                = {}
+groups[12]['name']        = 'ATMS Imagery Processing'
 groups[12]['description'] = """
-Process downloaded data files
+Jobs for ingesting, processing, and pushing ATMS Imagery
 """
-groups[12]['jobs'] = {}
-groups[12]['jobs'][2]     = {'host':1, 'cfg':'fls_goesr_east_conus_config'}
-groups[12]['jobs'][3]     = {'host':1, 'cfg':'jason_processor'}
+groups[12]['jobs']        = {}
+groups[12]['jobs'][1]     = {'host':1, 'cfg':'atms_dispatcher'}
+groups[12]['jobs'][2]     = {'host':1, 'cfg':'atms_cutter'}
+groups[12]['jobs'][3]     = {'host':1, 'cfg':'atms_projector'}
 
+groups[13] = {}
+groups[13]['name']     = 'GPM GMI'
+groups[13]['description'] = """
+GPM GMI processing jobs
+"""
+groups[13]['jobs']     = {}
+groups[13]['jobs'][1] = {'host':1, 'cfg':'gpm_dispatcher'}
+groups[13]['jobs'][2] = {'host':1, 'cfg':'gpm_gmi_cutter'}
+
+'''
 # ldm tracker
 groups[16] = {}
 groups[16]['name']     = 'sbn_ldm_tracker'
@@ -384,3 +398,4 @@ The SBN LDM tracker group collects and classifies data received over SBN
 """
 groups[16]['jobs']     = {}
 groups[16]['jobs'][1]  = {'host':1,'cfg':'ldmtracker_config',             'icfg':{'io':{'x':2000,'y':3200}}}
+'''
