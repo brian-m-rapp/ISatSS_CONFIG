@@ -145,6 +145,10 @@ nodes[94] = {'path':'/scratch/isatss_data/data/94_jason_proc_data',      'filesy
 
 nodes[100] = {'path':'/scratch/isatss_data/ledgers',                      'filesystem':'/scratch', 'ctype':'data', 'stype':'attached', 'root':'/scratch/isatss_data'}
 
+nodes[110] = {'path':'/dev/shm/isatss_data/info/110_gpm_puller_cntl',     'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[111] = {'path':'/dev/shm/isatss_data/info/111_gpm_puller_info',     'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[112] = {'path':'/scratch/isatss_data/112_gpm_puller_data',          'filesystem':'/scratch','ctype':'data','stype':'attached','root':'/scratch/isatss_data'}
+
 nodes[700] = {'path':'/dev/shm/isatss_data/info/700_ssmi_cut_cntl',       'filesystem':'/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[702] = {'path':'/dev/shm/isatss_data/info/702_ssmi_cut_input',      'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[703] = {'path':'/home/brapp/data/isatss_data/703_ssmi_cut_data',    'filesystem':'/dev/shm', 'ctype':'data','stype':'attached','root':'/dev/shm/isatss_data'}
@@ -312,3 +316,12 @@ Jobs for ingesting, processing, and pushing Altimetry data from Jason2/3
 groups[11]['jobs']        = {}
 groups[11]['jobs'][1]     = {'host':1, 'cfg':'jason_dispatcher'}
 groups[11]['jobs'][2]     = {'host':1, 'cfg':'jason_processor'}
+
+groups[12] = {}
+groups[12]['name']     = 'GPM GMI'
+groups[12]['description'] = """
+GPM GMI processing jobs
+"""
+groups[12]['jobs']     = {}
+groups[12]['jobs'][1] = {'host':1, 'cfg':'gpm_dispatcher'}
+groups[12]['jobs'][2] = {'host':1, 'cfg':'gpm_gmi_cutter'}
