@@ -207,12 +207,12 @@ nodes[106] = {'path':'/data/isatss_data/data/106_atms_puller_data',       'files
 nodes[107] = {'path':'/dev/shm/isatss_data/info/107_atms_cutter_cntl',    'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[108] = {'path':'/dev/shm/isatss_data/info/108_atms_cutter_info',    'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[109] = {'path':'/data/isatss_data/data/109_atms_cutter_data',       'filesystem':'/data',   'ctype':'data','stype':'attached','root':'/data'}
-
 nodes[110] = {'path':'/dev/shm/isatss_data/info/110_atms_proj_cntl',      'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
 
 nodes[111] = {'path':'/dev/shm/isatss_data/info/111_gpm_cutter_cntl',    'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[112] = {'path':'/dev/shm/isatss_data/info/112_gpm_cutter_info',    'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[113] = {'path':'/data/isatss_data/data/113_gpm_cutter_data',       'filesystem':'/data',   'ctype':'data','stype':'attached','root':'/data'}
+nodes[114] = {'path':'/dev/shm/isatss_data/info/114_gpm_proj_cntl',      'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
 
 
 nodes[700] = {'path':'/dev/shm/isatss_data/info/700_dmsp_f15_cut_cntl',     'filesystem':'/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
@@ -388,6 +388,7 @@ GPM GMI processing jobs
 groups[13]['jobs']     = {}
 groups[13]['jobs'][1] = {'host':1, 'cfg':'gpm_dispatcher'}
 groups[13]['jobs'][2] = {'host':1, 'cfg':'gpm_gmi_cutter'}
+groups[13]['jobs'][3] = {'host':1, 'cfg':'gpm_gmi_projector'}
 
 '''
 # ldm tracker

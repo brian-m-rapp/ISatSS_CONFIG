@@ -69,12 +69,11 @@ ncspec['dimensions']['Scanline']      = {'src':'nscans/scancount'}
 ncspec['dimensions']['Field_of_view'] = {'src':'fov/fov'}
 
 ncspec['globalmeta'] = {}
+ncspec['globalmeta']['satellite_name']      = {'src':'meta/satellite_name'}
 ncspec['globalmeta']['instrument_name']		= {'src':'meta/instrument_name'}
 ncspec['globalmeta']['time_coverage_start'] = {'src':'meta/time_coverage_start'}
-ncspec['globalmeta']['time_coverage_end']   = {'src':'meta/time_coverage_end'}
-ncspec['globalmeta']['production_site']     = {'default':'NWS/NAPO'}
+ncspec['globalmeta']['production_site']     = {'default':'NAPO'}
 ncspec['globalmeta']['Metadata_Link']       = {'src':'meta/Metadata_Link'}
-
 ncspec['variables']   = {}
 
 ncspec['variables']['Latitude']   = {}
