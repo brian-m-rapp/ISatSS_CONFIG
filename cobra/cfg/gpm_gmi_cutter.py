@@ -193,6 +193,7 @@ dimmap['primary']     = 'BTemp_37GHz_V'
 # Map the variable row dimension back to odata row dimension
 scanmap = {'Scanline':'scancount'}
 
-args = {'ncspec':ncspec, 'coords':coordVars, 'dimmap':dimmap, 'scanmap':scanmap, 'boundaries':[-60.0, -30.0, 30.0, 60.0], 'overlap':5, 'varmap':varmap}
+bounds = [-60.0, -30.0, 30.0, 60.0]
+args = {'ncspec':ncspec, 'coords':coordVars, 'dimmap':dimmap, 'scanmap':scanmap, 'boundaries':bounds, 'overlap':5, 'varmap':varmap, 'by_orbit': False}
 
 job['modclass'] = {'module':'gpm_gmi_tailor', 'class':'GpmGmiTailor', 'args':args}
