@@ -169,7 +169,7 @@ nodes[69] = {'path':'/data/isatss_data/data/69_amsr2_data',               'files
 
 nodes[70] = {'path':'/dev/shm/isatss_data/info/70_gcom_cntl',             'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[71] = {'path':'/dev/shm/isatss_data/info/71_gcom_info',             'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[72] = {'path':'/data/isatss_data/data/72_gcom_data',                'filesystem':'/data',   'ctype':'data','stype':'attached','root':'/data/isatss_data'}
+nodes[74] = {'path':'/data/isatss_data/data/74_gcom_data',                'filesystem':'/data',   'ctype':'data','stype':'attached','root':'/data/isatss_data'}
 
 nodes[75] = {'path':'/dev/shm/isatss_data/info/75_h8_dispatch_cntl',      'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[76] = {'path':'/dev/shm/isatss_data/info/76_h8_dispatch_info',      'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}

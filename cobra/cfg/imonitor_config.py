@@ -50,8 +50,8 @@ sets['cpu1avg']['timerange'] = {'reference':'end','span':-3600}
 sets['cpu1avg']['extractors'] = {}
 sets['cpu1avg']['extractors']['mi6_cpu'] = {'module':'mi6_system_extractors', 'class':'ValBySelector'}
 sets['cpu1avg']['fields'] = {}
-sets['cpu1avg']['fields'][1]  = {'tm':'mi6_cpu','val':'la1_avg','selectors':{'host':{'method':'decode_host_shortname','args':{'shortname':'shelby'}}},  'label':'shelby','format':'5.2f','width':7,'just':'left'}
-sets['cpu1avg']['fields'][2]  = {'tm':'mi6_cpu','val':'la1_avg','selectors':{'host':{'method':'decode_host_shortname','args':{'shortname':'dev1'}}},  'label':'dev1','format':'5.2f','width':7,'just':'left'}
+sets['cpu1avg']['fields'][1]  = {'tm':'mi6_cpu','val':'la1_avg','selectors':{'host':{'method':'decode_host_shortname','args':{'shortname':'cobra'}}},  'label':'shelby','format':'5.2f','width':7,'just':'left'}
+sets['cpu1avg']['fields'][2]  = {'tm':'mi6_cpu','val':'la1_avg','selectors':{'host':{'method':'decode_host_shortname','args':{'shortname':'ldm'}}},  'label':'dev1','format':'5.2f','width':7,'just':'left'}
 
 sets['cpu1avgr'] = {}
 sets['cpu1avgr']['description'] = 'List of Average One Minute CPU Load vs reported times for all CPRK Servers'

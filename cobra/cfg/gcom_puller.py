@@ -31,7 +31,7 @@ job['notifications']['gcom']   = {'node':53, 'enabled':True, 'fields':['file', '
 
 job['data'] = {}
 job['data']['gfiles']                 = {}
-job['data']['gfiles']['location']       = {'node':72}
+job['data']['gfiles']['location']       = {'node':74}
 job['data']['gfiles']['aging']          = {'window':3600, 'mode':'creationtime'}
 job['data']['gfiles']['method']         = {'technique':'stage', 'path':'incinerator'}
 job['data']['gfiles']['activeonly']     = True                                                            # check pidfile

@@ -129,7 +129,7 @@ indexes['abi_meta_stats']['curator_args']['time_template']   = indexes['abi_meta
 
 job['publishers']['telemetry'][4] = {}
 job['publishers']['telemetry'][4]['provider']            = 'esearch'
-job['publishers']['telemetry'][4]['enabled']             = True
+job['publishers']['telemetry'][4]['enabled']             = False
 job['publishers']['telemetry'][4]['parms']               = {}
 job['publishers']['telemetry'][4]['parms']['connection'] = [{'host':'lotus', 'port':9200, 'use_ssl': False}]
 job['publishers']['telemetry'][4]['parms']['indexes']    = indexes
