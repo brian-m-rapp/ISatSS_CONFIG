@@ -90,6 +90,15 @@ nodes[3]  = {'path':'/home/lbyerle/scratch/isatss_data/info/03_agent86_response'
 nodes[10] = {'path':'/home/lbyerle/scratch/isatss_data/ledgers',                      'filesystem':' /home', 'ctype':'data','stype':'attached','root':'/home/lbyerle/scratch/isatss_data'}
 nodes[11] = {'path':'/home/lbyerle/scratch/isatss_data/monitor_output',               'filesystem': '/home', 'ctype':'data','stype':'attached','root':'/home/lbyerle/scratch/isatss_data'}
 
+nodes[50] = {'path':'/dev/shm/isatss_data/info/50_gcom_puller_cntl',              'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[51] = {'path':'/dev/shm/isatss_data/info/51_gcom_puller_info',              'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[52] = {'path':'/home/lbyerle/isatss_data/data/52_gcom_puller_data',         'filesystem':'/home',   'ctype':'data','stype':'attached','root':'/home/lbyerle/isatss_data'}
+
+nodes[55] = {'path':'/dev/shm/isatss_data/info/55_gcom_rep_cntl',                 'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[56] = {'path':'/dev/shm/isatss_data/info/56_gcom_wspd_rep_info',            'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[57] = {'path':'/home/lbyerle/isatss_data/data/57_gcom_wspd_rep_data',       'filesystem':'/home',   'ctype':'data','stype':'attached','root':'/home/lbyerle/isatss_data'}
+nodes[58] = {'path':'/dev/shm/isatss_data/info/58_gcom_ocean_rep_info',           'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[59] = {'path':'/home/lbyerle/isatss_data/data/59_gcom_ocean_rep_data',      'filesystem':'/home',   'ctype':'data','stype':'attached','root':'/home/lbyerle/isatss_data'}
 
 # system defaults
 defaults = {}
@@ -157,4 +166,14 @@ consumes the messages, and writes them to a file named system_tm.YYYYMMDD on nod
 groups[3]['jobs']     = {}
 groups[3]['jobs'][1]  = {'host':1, 'cfg':'mi6_config'}
 groups[3]['jobs'][3]  = {'host':1, 'cfg':'gchq_config'}
+
+groups[4]                = {}
+groups[4]['name']        = 'GCOM AMSR2 OCEAN Processing'
+groups[4]['description'] = """
+Jobs for ingesting, processing, and pushing AMSR2 Ocean products
+"""
+groups[4]['jobs']        = {}
+groups[4]['jobs'][1]     = {'host':1, 'cfg':'gcom_puller'}
+groups[4]['jobs'][2]     = {'host':1, 'cfg':'gcom_ocean_replicator'}
+groups[4]['jobs'][3]     = {'host':1, 'cfg':'amsr2_projector'}
 
