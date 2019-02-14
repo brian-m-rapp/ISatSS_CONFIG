@@ -51,7 +51,6 @@ hosts = {}
 
 hosts[1] = {'host':'cobra.napo.nws.noaa.gov', 'shortname':'cobra', 'sudocmd':'sudo -iu'}
 #hosts[2] = {'host':'cobra.napo.nws.noaa.gov', 'shortname':'cobraldm', 'sudocmd':'sudo -iu', 'cmd':72, 'resp':73, 'user':'ldm'}
-#hosts[2] = {'host':'dev1.napo.nws.noaa.gov',   'shortname':'dev1', 'connecteas':'140.90.141.140', 'resolvenames':False}
 hosts[2] = {'host':'cobra.napo.nws.noaa.gov', 'shortname':'ldm', 'sudocmd':'sudo -iu', 'user':'ldm', 'ext':1338, 'cmd':72, 'resp':73}
 
 hattr = {}
