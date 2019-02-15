@@ -126,7 +126,7 @@ ncspec['variables']['Longitude_for_Low_Resolution']['attrs']['long_name']     = 
 ncspec['variables']['Longitude_for_Low_Resolution']['attrs']['units']         = {'default':'degrees_east'}
 
 ncspec['variables']['WSPD']   = {}
-ncspec['variables']['WSPD']['fmt']                    = {'default':'f'}
+ncspec['variables']['WSPD']['fmt']                    = {'default':'f8'}
 ncspec['variables']['WSPD']['shape']                  = {'default':['scanlines','fov_lores']}
 ncspec['variables']['WSPD']['fill_value']             = {'default':-9999.}
 ncspec['variables']['WSPD']['zlib']                   = {'default':True}
@@ -139,7 +139,7 @@ ncspec['variables']['WSPD']['attrs']['long_name']     = {'default':'Wind Speed'}
 ncspec['variables']['WSPD']['attrs']['units']         = {'default':'m/s'}
 
 ncspec['variables']['TPW']   = {}
-ncspec['variables']['TPW']['fmt']                    = {'default':'f'}
+ncspec['variables']['TPW']['fmt']                    = {'default':'f8'}
 ncspec['variables']['TPW']['shape']                  = {'default':['scanlines','fov_lores']}
 ncspec['variables']['TPW']['fill_value']             = {'default':-9999.}
 ncspec['variables']['TPW']['zlib']                   = {'default':True}
@@ -152,7 +152,7 @@ ncspec['variables']['TPW']['attrs']['long_name']     = {'default':'Total Precipi
 ncspec['variables']['TPW']['attrs']['units']         = {'default':'mm'}
 
 ncspec['variables']['CLW']   = {}
-ncspec['variables']['CLW']['fmt']                    = {'default':'f'}
+ncspec['variables']['CLW']['fmt']                    = {'default':'f8'}
 ncspec['variables']['CLW']['shape']                  = {'default':['scanlines','fov_lores']}
 ncspec['variables']['CLW']['fill_value']             = {'default':-9999.}
 ncspec['variables']['CLW']['zlib']                   = {'default':True}
@@ -165,7 +165,7 @@ ncspec['variables']['CLW']['attrs']['long_name']     = {'default':'Cloud Liquid 
 ncspec['variables']['CLW']['attrs']['units']         = {'default':'mm'}
 
 ncspec['variables']['SST']   = {}
-ncspec['variables']['SST']['fmt']                    = {'default':'f'}
+ncspec['variables']['SST']['fmt']                    = {'default':'f8'}
 ncspec['variables']['SST']['shape']                  = {'default':['scanlines','fov_lores']}
 ncspec['variables']['SST']['fill_value']             = {'default':-9999.}
 ncspec['variables']['SST']['zlib']                   = {'default':True}
@@ -175,10 +175,10 @@ ncspec['variables']['SST']['data']                   = {'src':'data/SST'}
 ncspec['variables']['SST']['attrs'] = {}
 ncspec['variables']['SST']['attrs']['coordinates']   = {'default':['Latitude_for_Low_Resolution, Longitude_for_Low_Resolution']}
 ncspec['variables']['SST']['attrs']['long_name']     = {'default':'Sea Surface Temperature'}
-ncspec['variables']['SST']['attrs']['units']         = {'default':'Kelvin'}
+ncspec['variables']['SST']['attrs']['units']         = {'default':'K'}
 
 ncspec['variables']['Rain_Rate']   = {}
-ncspec['variables']['Rain_Rate']['fmt']                    = {'default':'f'}
+ncspec['variables']['Rain_Rate']['fmt']                    = {'default':'f8'}
 ncspec['variables']['Rain_Rate']['shape']                  = {'default':['scanlines','fov_hires']}
 ncspec['variables']['Rain_Rate']['fill_value']             = {'default':-9999.}
 ncspec['variables']['Rain_Rate']['zlib']                   = {'default':True}
