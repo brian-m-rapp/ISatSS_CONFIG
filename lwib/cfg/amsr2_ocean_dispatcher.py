@@ -24,7 +24,7 @@ job['log']      = 'amsr2_ocean_dispatcher_log'
 job['log_node'] = 1
 
 job['loglevel']         = 5
-job['cntl_node']        = 215
+job['cntl_node']        = 240
 job['max_sleep']        = 10
 job['work_time']        = 60
 
@@ -39,14 +39,14 @@ job['data']['log']['schedule']           = {'interval':3600}
 job['data']['log']['activeonly']         = True
 
 job['data']['output'] = {}
-job['data']['output']['location']     = {'node':217}
+job['data']['output']['location']     = {'node':242}
 job['data']['output']['aging']        = {'window':3600, 'mode':'creationtime'}
 job['data']['output']['method']       = {'technique':'inplace'}
 job['data']['output']['activeonly']   = True
 job['data']['output']['schedule']     = {'interval':600}
 
 job['data']['info'] = {}
-job['data']['info']['location']     = {'node':216}
+job['data']['info']['location']     = {'node':241}
 job['data']['info']['aging']        = {'window':3600, 'mode':'creationtime'}
 job['data']['info']['method']       = {'technique':'inplace'}
 job['data']['info']['activeonly']   = True
@@ -56,12 +56,12 @@ job['notifications']   = {}
 job['notifications']['nhc']    = {'node':job['data']['info']['location']['node'], 'enabled':True, 'fields':['file','node'], 'prefix':'amsr2_'}
 
 amsr2_filtdef = []
-amsr2_filtdef.append({'filt':'substring', 'target':'name', 'startswith':'AMSR2-OCEAN', 'name':'AMSR2'})
-amsr2_filtdef.append({'filt':'substring', 'target':'name', 'endswith':'.nc', 'name':'AMSR2'})
+amsr2_filtdef.append({'filt':'substring', 'target':'name', 'startswith':'AMSR2-OCEAN', 'name':'AMSR2_OCEAN'})
+amsr2_filtdef.append({'filt':'substring', 'target':'name', 'endswith':'.nc', 'name':'AMSR2_OCEAN'})
 
 job['sources'] = {}
 job['sources']['amsr2'] = {'protocol':'CP', 'paths':{}}
-job['sources']['amsr2']['paths']['dropzone'] = {'node':210, 'files':{}, 'delete':True}
+job['sources']['amsr2']['paths']['dropzone'] = {'node':247, 'files':{}, 'delete':True}
 job['sources']['amsr2']['paths']['dropzone']['files']['amsr2']  = {'retrieve':{}, 'filt':amsr2_filtdef}
 job['sources']['amsr2']['paths']['dropzone']['files']['amsr2']['retrieve']['nhc']  = {'enabled':True, 'dataitem':'output',  'notifications':['nhc']}
 
