@@ -17,7 +17,7 @@
 """
 
 job = {}
-job['name']     = 'amsr2_ocean_projector'
+job['name']     = 'amsr2_ocean_projector_nhcprep'
 job['cmd']      = 'mojo'
 job['class']    = 'MOJO'
 job['log']      = 'amsr2_ocean_project_log'
@@ -49,8 +49,8 @@ job['data']['log']['schedule']     = {'interval':3600}
 job['data']['log']['activeonly']   = True
 
 job['loglevel']             = 5
-job['cntl_node']            = 123
-job['input_type']           = {'type':'infofile','node':120,'delete_file':True, 'delete_info':True}
+job['cntl_node']            = 246
+job['input_type']           = {'type':'infofile','node':244,'delete_file':True, 'delete_info':True}
 
 job['watcher_timeout']      = 1000
 job['files_per_cycle']      = 50

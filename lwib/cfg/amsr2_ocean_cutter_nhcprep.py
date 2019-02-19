@@ -19,7 +19,7 @@
 """
 
 job = {}
-job['name']     = 'amsr2_ocean_cutter'
+job['name']     = 'amsr2_ocean_cutter_nhcprep'
 job['cmd']      = 'mojo'
 job['class']    = 'MOJO'
 job['log']      = 'amsr2_ocean_cutter_log'
@@ -27,14 +27,14 @@ job['log_node'] = 1
 
 job['data'] = {}
 job['data']['output'] = {}
-job['data']['output']['location']   = {'node':121}
+job['data']['output']['location']   = {'node':245}
 job['data']['output']['aging']      = {'window':3600, 'mode':'creationtime'}
 job['data']['output']['method']     = {'technique':'inplace'}
 job['data']['output']['activeonly'] = True
 job['data']['output']['schedule']   = {'interval':600}
 
 job['data']['info']                = {}
-job['data']['info']['location']    = {'node':120}
+job['data']['info']['location']    = {'node':244}
 job['data']['info']['aging']       = {'window':3600, 'mode':'creationtime'}
 job['data']['info']['method']      = {'technique':'inplace'}
 job['data']['info']['activeonly']  = False
@@ -52,9 +52,9 @@ job['data']['log']['activeonly']   = True
 
 job['loglevel']             = 5
 
-job['cntl_node']            = 122
+job['cntl_node']            = 243
 
-job['input_type']           = {'type':'infofile','node':58,'delete_file':True, 'delete_info':True}
+job['input_type']           = {'type':'infofile','node':241,'delete_file':True, 'delete_info':True}
 
 job['watcher_timeout']      = 1000
 job['files_per_cycle']      = 50

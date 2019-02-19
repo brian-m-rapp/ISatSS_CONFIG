@@ -90,24 +90,32 @@ nodes[3]  = {'path':'/home/lbyerle/scratch/isatss_data/info/03_agent86_response'
 nodes[10] = {'path':'/home/lbyerle/scratch/isatss_data/ledgers',                      'filesystem':' /home', 'ctype':'data','stype':'attached','root':'/home/lbyerle/scratch/isatss_data'}
 nodes[11] = {'path':'/home/lbyerle/scratch/isatss_data/monitor_output',               'filesystem': '/home', 'ctype':'data','stype':'attached','root':'/home/lbyerle/scratch/isatss_data'}
 
-nodes[41] = {'path':'/dev/shm/isatss_data/info/41_ldm_out_info',                   'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[42] = {'path':'/home/lbyerle/scratch/isatss_data/042_ldm_out_data',          'filesystem':'/home',  'ctype':'data','stype':'attached','root':'/home/lbyerle/isatss_data'}
+nodes[41] = {'path':'/dev/shm/isatss_data/info/041_ldm_out_info',                   'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[42] = {'path':'/home/lbyerle/scratch/isatss_data/042_ldm_out_data',           'filesystem':'/home',  'ctype':'data','stype':'attached','root':'/home/lbyerle/isatss_data'}
 
-nodes[50] = {'path':'/dev/shm/isatss_data/info/50_gcom_puller_cntl',              'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[51] = {'path':'/dev/shm/isatss_data/info/51_gcom_puller_info',              'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[52] = {'path':'/home/lbyerle/isatss_data/data/52_gcom_puller_data',         'filesystem':'/home',   'ctype':'data','stype':'attached','root':'/home/lbyerle/isatss_data'}
-nodes[54] = {'path':'/dev/shm/isatss_data/info/54_gcom_wspd_pro_cntl',            'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[50] = {'path':'/dev/shm/isatss_data/info/050_gcom_puller_cntl',              'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[51] = {'path':'/dev/shm/isatss_data/info/051_gcom_puller_info',              'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[52] = {'path':'/home/lbyerle/isatss_data/052_gcom_puller_data',              'filesystem':'/home',   'ctype':'data','stype':'attached','root':'/home/lbyerle/isatss_data'}
+nodes[54] = {'path':'/dev/shm/isatss_data/info/054_gcom_wspd_pro_cntl',            'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
 
-nodes[55] = {'path':'/dev/shm/isatss_data/info/55_gcom_rep_cntl',                 'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[56] = {'path':'/dev/shm/isatss_data/info/56_gcom_wspd_rep_info',            'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[57] = {'path':'/home/lbyerle/isatss_data/data/57_gcom_wspd_rep_data',       'filesystem':'/home',   'ctype':'data','stype':'attached','root':'/home/lbyerle/isatss_data'}
-nodes[58] = {'path':'/dev/shm/isatss_data/info/58_gcom_ocean_rep_info',           'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[59] = {'path':'/home/lbyerle/isatss_data/data/59_gcom_ocean_rep_data',      'filesystem':'/home',   'ctype':'data','stype':'attached','root':'/home/lbyerle/isatss_data'}
+nodes[55] = {'path':'/dev/shm/isatss_data/info/055_gcom_rep_cntl',                 'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[56] = {'path':'/dev/shm/isatss_data/info/056_gcom_wspd_rep_info',            'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[57] = {'path':'/home/lbyerle/isatss_data/057_gcom_wspd_rep_data',            'filesystem':'/home',   'ctype':'data','stype':'attached','root':'/home/lbyerle/isatss_data'}
+nodes[58] = {'path':'/dev/shm/isatss_data/info/058_gcom_ocean_rep_info',           'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[59] = {'path':'/home/lbyerle/isatss_data/059_gcom_ocean_rep_data',           'filesystem':'/home',   'ctype':'data','stype':'attached','root':'/home/lbyerle/isatss_data'}
 
 nodes[120] = {'path':'/dev/shm/isatss_data/info/120_amsr2_ocean_cut_info',           'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[121] = {'path':'/home/lbyerle/scratch/isatss_data/121_amsr2_ocean_cut_data',   'filesystem':'/home',  'ctype':'data','stype':'attached','root':'/home/lbyerle/isatss_data'}
+nodes[121] = {'path':'/home/lbyerle/isatss_data/121_amsr2_ocean_cut_data',           'filesystem':'/home',  'ctype':'data','stype':'attached','root':'/home/lbyerle/isatss_data'}
 nodes[122] = {'path':'/dev/shm/isatss_data/info/122_amsr2_ocean_cut_cntl',           'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[123] = {'path':'/dev/shm/isatss_data/info/123_amsr2_ocean_proj_cntl',          'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+
+nodes[240] = {'path':'/dev/shm/isatss_data/info/240_gcom_puller_nhcprep_cntl',              'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[241] = {'path':'/dev/shm/isatss_data/info/241_gcom_puller_nhcprep_info',              'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[242] = {'path':'/home/lbyerle/isatss_data/242_gcom_puller_nhcprep_data',              'filesystem':'/home',   'ctype':'data','stype':'attached','root':'/home/lbyerle/isatss_data'}
+nodes[243] = {'path':'/dev/shm/isatss_data/info/243_amsr2_ocean_nhcprep_cut_cntl',          'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[244] = {'path':'/dev/shm/isatss_data/info/244_amsr2_ocean_nhcprep_cut_info',          'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[245] = {'path':'/home/lbyerle/isatss_data/245_amsr2_ocean_nhcprep_cut_data',          'filesystem':'/home',  'ctype':'data','stype':'attached','root':'/home/lbyerle/isatss_data'}
+nodes[246] = {'path':'/dev/shm/isatss_data/info/246_amsr2_ocean_nhcprep_proj_cntl',         'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
 
 # system defaults
 defaults = {}
@@ -187,4 +195,14 @@ groups[4]['jobs'][2]     = {'host':1, 'cfg':'gcom_ocean_replicator'}
 groups[4]['jobs'][3]     = {'host':1, 'cfg':'gcom_processor'}
 groups[4]['jobs'][4]     = {'host':1, 'cfg':'amsr2_ocean_cutter'}
 groups[4]['jobs'][5]     = {'host':1, 'cfg':'amsr2_ocean_projector'}
+
+groups[5]                = {}
+groups[5]['name']        = 'GCOM AMSR2 OCEAN Processing NHC Prep'
+groups[5]['description'] = """
+Jobs for ingesting, processing, and pushing AMSR2 Ocean products, NHC Prep
+"""
+groups[5]['jobs']        = {}
+groups[5]['jobs'][1]     = {'host':1, 'cfg':'gcom_puller_nhcprep'}
+groups[5]['jobs'][2]     = {'host':1, 'cfg':'amsr2_ocean_cutter_nhcprep'}
+groups[5]['jobs'][3]     = {'host':1, 'cfg':'amsr2_ocean_projector_nhcprep'}
 
