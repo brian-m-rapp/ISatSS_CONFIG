@@ -109,6 +109,14 @@ nodes[121] = {'path':'/home/lbyerle/isatss_data/121_amsr2_ocean_cut_data',      
 nodes[122] = {'path':'/dev/shm/isatss_data/info/122_amsr2_ocean_cut_cntl',           'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[123] = {'path':'/dev/shm/isatss_data/info/123_amsr2_ocean_proj_cntl',          'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
 
+nodes[240] = {'path':'/dev/shm/isatss_data/info/240_gcom_puller_nhcprep_cntl',              'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[241] = {'path':'/dev/shm/isatss_data/info/241_gcom_puller_nhcprep_info',              'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[242] = {'path':'/home/lbyerle/isatss_data/242_gcom_puller_nhcprep_data',              'filesystem':'/home',   'ctype':'data','stype':'attached','root':'/home/lbyerle/isatss_data'}
+nodes[243] = {'path':'/dev/shm/isatss_data/info/243_amsr2_ocean_nhcprep_cut_cntl',          'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[244] = {'path':'/dev/shm/isatss_data/info/244_amsr2_ocean_nhcprep_cut_info',          'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[245] = {'path':'/home/lbyerle/isatss_data/245_amsr2_ocean_nhcprep_cut_data',          'filesystem':'/home',  'ctype':'data','stype':'attached','root':'/home/lbyerle/isatss_data'}
+nodes[246] = {'path':'/dev/shm/isatss_data/info/246_amsr2_ocean_nhcprep_proj_cntl',         'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+
 # system defaults
 defaults = {}
 defaults['log']             = 'isatss_log'	  			# default log file name
@@ -187,4 +195,14 @@ groups[4]['jobs'][2]     = {'host':1, 'cfg':'gcom_ocean_replicator'}
 groups[4]['jobs'][3]     = {'host':1, 'cfg':'gcom_processor'}
 groups[4]['jobs'][4]     = {'host':1, 'cfg':'amsr2_ocean_cutter'}
 groups[4]['jobs'][5]     = {'host':1, 'cfg':'amsr2_ocean_projector'}
+
+groups[5]                = {}
+groups[5]['name']        = 'GCOM AMSR2 OCEAN Processing NHC Prep'
+groups[5]['description'] = """
+Jobs for ingesting, processing, and pushing AMSR2 Ocean products, NHC Prep
+"""
+groups[5]['jobs']        = {}
+groups[5]['jobs'][1]     = {'host':1, 'cfg':'gcom_puller_nhcprep'}
+groups[5]['jobs'][2]     = {'host':1, 'cfg':'amsr2_ocean_cutter_nhcprep'}
+groups[5]['jobs'][3]     = {'host':1, 'cfg':'amsr2_ocean_projector_nhcprep'}
 
