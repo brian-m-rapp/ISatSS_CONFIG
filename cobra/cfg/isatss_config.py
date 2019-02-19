@@ -208,10 +208,18 @@ nodes[108] = {'path':'/dev/shm/isatss_data/info/108_atms_cutter_info',    'files
 nodes[109] = {'path':'/data/isatss_data/data/109_atms_cutter_data',       'filesystem':'/data',   'ctype':'data','stype':'attached','root':'/data'}
 nodes[110] = {'path':'/dev/shm/isatss_data/info/110_atms_proj_cntl',      'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
 
-nodes[111] = {'path':'/dev/shm/isatss_data/info/111_gpm_cutter_cntl',    'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[112] = {'path':'/dev/shm/isatss_data/info/112_gpm_cutter_info',    'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[113] = {'path':'/data/isatss_data/data/113_gpm_cutter_data',       'filesystem':'/data',   'ctype':'data','stype':'attached','root':'/data'}
-nodes[114] = {'path':'/dev/shm/isatss_data/info/114_gpm_proj_cntl',      'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[111] = {'path':'/dev/shm/isatss_data/info/111_gpm_cutter_cntl',     'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[112] = {'path':'/dev/shm/isatss_data/info/112_gpm_cutter_info',     'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[113] = {'path':'/data/isatss_data/data/113_gpm_cutter_data',        'filesystem':'/data',   'ctype':'data','stype':'attached','root':'/data'}
+nodes[114] = {'path':'/dev/shm/isatss_data/info/114_gpm_proj_cntl',       'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+
+nodes[120] = {'path':'/dev/shm/isatss_data/info/120_cryosat_disp_cntl',   'filesystem':'/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[121] = {'path':'/data/isatss_data/data/121_cryosat_disp_data',      'filesystem':'/data',    'ctype':'data','stype':'attached','root':'/data/isatss_data'}
+nodes[122] = {'path':'/dev/shm/isatss_data/info/122_cryosat_disp_info',   'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+
+nodes[123] = {'path':'/dev/shm/isatss_data/info/123_cryosat_proc_cntl',   'filesystem':'/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[124] = {'path':'/data/isatss_data/data/124_cryosat_proc_data',      'filesystem':'/data',    'ctype':'data','stype':'attached','root':'/data/isatss_data'}
+nodes[125] = {'path':'/dev/shm/isatss_data/info/125_cryosat_proc_info',   'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
 
 
 nodes[700] = {'path':'/dev/shm/isatss_data/info/700_dmsp_f15_cut_cntl',     'filesystem':'/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
@@ -319,16 +327,16 @@ Jobs for ingesting, processing, and pushing GCOM products
 groups[6]['jobs']        = {}
 groups[6]['jobs'][1]     = {'host':1, 'cfg':'amsr2_ocean_puller'}
 groups[6]['jobs'][2]     = {'host':1, 'cfg':'amsr2_ocean_processor', 'icfg':{'io':{'x':2000,'y':3200}}}
-
+'''
 groups[7]                = {}
-groups[7]['name']        = 'Fog and Low Stratus (FLS) Processing'
+groups[7]['name']        = 'Cryosat Altimetry Processing'
 groups[7]['description'] = """
-Jobs for ingesting, processing, and pushing Fog and Low Stratus (FLS) products
+Jobs for ingesting, processing, and pushing Cryosat altimetry products
 """
 groups[7]['jobs']        = {}
-groups[7]['jobs'][1]     = {'host':1, 'cfg':'fls_puller'}
-groups[7]['jobs'][2]     = {'host':1, 'cfg':'fls_goesr_east_conus_config'}
-
+groups[7]['jobs'][1]     = {'host':1, 'cfg':'cryosat_dispatcher'}
+groups[7]['jobs'][2]     = {'host':1, 'cfg':'cryosat_processor'}
+'''
 groups[8]                = {}
 groups[8]['name']        = 'Himawari Tile Processing'
 groups[8]['description'] = """
@@ -389,13 +397,3 @@ groups[13]['jobs'][1] = {'host':1, 'cfg':'gpm_dispatcher'}
 groups[13]['jobs'][2] = {'host':1, 'cfg':'gpm_gmi_cutter'}
 groups[13]['jobs'][3] = {'host':1, 'cfg':'gpm_gmi_projector'}
 
-'''
-# ldm tracker
-groups[16] = {}
-groups[16]['name']     = 'sbn_ldm_tracker'
-groups[16]['description'] = """
-The SBN LDM tracker group collects and classifies data received over SBN 
-"""
-groups[16]['jobs']     = {}
-groups[16]['jobs'][1]  = {'host':1,'cfg':'ldmtracker_config',             'icfg':{'io':{'x':2000,'y':3200}}}
-'''
