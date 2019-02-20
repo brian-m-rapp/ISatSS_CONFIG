@@ -2,7 +2,7 @@
 
 """
     IDP Satellite Support Subsystem
-    Copyright (C) 2016 Joseph K. Zajic (joe.zajic@noaa.gov), Brian M. Rapp (brian.rapp@noaa.gov)
+    Copyright (C) 2016-2019 Joseph K. Zajic (joe.zajic@noaa.gov), Brian M. Rapp (brian.rapp@noaa.gov)
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -21,13 +21,10 @@
     Reformat/tailor Cryosat text files (as avail from star) into a format for the goes-r dmw
     plugin.  The purpose is to ingest the data into edex via the dmw table for access
     in cave using the point plot resource data, latter plots the values of wave height as text.
-    Relies upon modification of im_ncfile.py modification: mapscalefac dictionary to multiply
-    incoming data by the incoming data scale factor and add offset if applicable, whenever the i
-    data in the array does not match the key in mapscalefac.
 
     These files do not flow over SBN, but can be found on the star anonymous ftp:
     ftp://ftp.star.nesdis.noaa.gov/pub/socd/lsa/johnl/c2
-    example: c2_20190212T14_swh.txt
+    example file name: c2_20190212T14_swh.txt
 """
 
 job = {}
@@ -71,28 +68,26 @@ job['input_type']           = {'type':'infofile','node':122,'delete_file':False,
 job['watcher_timeout']      = 1000
 job['files_per_cycle']      = 50
 
-#inncf
 ncspec = {}
 ncspec['destination'] = job['data']['output']
 ncspec['namedef']     = []
-ncspec['namedef'].append({'default':'cryosat','delimiter':'_'})
-ncspec['namedef'].append({'src':'inncf/globalmeta/cycle_number','delimiter':'_'})
-ncspec['namedef'].append({'src':'inncf/globalmeta/pass_number','delimiter':'.nc'})
+ncspec['namedef'].append({'default':'cryosat2', 'delimiter':'_'})
+ncspec['namedef'].append({'src':'indata/filetime', 'delimiter':'.nc'})
 
 ncspec['dimensions'] = {}
-ncspec['dimensions']['time']        = {'src':'inncf/dimensions/time'}
-ncspec['dimensions']['dmw_band']     = {'default':1}
+ncspec['dimensions']['data_rows'] = {'src':'indata/data_rows'}
+ncspec['dimensions']['dmw_band']  = {'default':1}
 
 ncspec['globalmeta'] = {}
-ncspec['globalmeta']['mission_name']                = {'default':'CryoSat'}
-ncspec['globalmeta']['first_meas_time']             = {'src':'inncf/globalmeta/first_meas_time'}
-ncspec['globalmeta']['last_meas_time']              = {'src':'inncf/globalmeta/last_meas_time'}
-ncspec['globalmeta']['production_site']             = {'default':'NAPO'}
+ncspec['globalmeta']['mission_name']        = {'default':'CryoSat-2'}
+ncspec['globalmeta']['production_site']     = {'src':'indata/production_site'}
+ncspec['globalmeta']['coverage_start_time'] = {'src':'indata/start_time', 'timeformat':'%Y-%m-%dT%H:%M:%S'}
+ncspec['globalmeta']['coverage_end_time']   = {'src':'indata/end_time', 'timeformat':'%Y-%m-%dT%H:%M:%S'}
 
 ncspec['variables']   = {}
 ncspec['variables']['lat']   = {}
 ncspec['variables']['lat']['fmt']                    = {'default':'f4'}
-ncspec['variables']['lat']['shape']                  = {'default':['time']}
+ncspec['variables']['lat']['shape']                  = {'default':['data_rows']}
 ncspec['variables']['lat']['zlib']                   = {'default':True}
 ncspec['variables']['lat']['complevel']              = {'default':1}
 ncspec['variables']['lat']['shuffle']                = {'default':True}
@@ -103,7 +98,7 @@ ncspec['variables']['lat']['attrs']['units']         = {'default':'degrees_north
 
 ncspec['variables']['lon']   = {}
 ncspec['variables']['lon']['fmt']                    = {'default':'f4'}
-ncspec['variables']['lon']['shape']                  = {'default':['time']}
+ncspec['variables']['lon']['shape']                  = {'default':['data_rows']}
 ncspec['variables']['lon']['zlib']                   = {'default':True}
 ncspec['variables']['lon']['complevel']              = {'default':1}
 ncspec['variables']['lon']['shuffle']                = {'default':True}
@@ -114,19 +109,19 @@ ncspec['variables']['lon']['attrs']['units']         = {'default':'degrees_east'
 
 ncspec['variables']['time']   = {}
 ncspec['variables']['time']['fmt']                    = {'default':'f8'}
-ncspec['variables']['time']['shape']                  = {'default':['time']}
+ncspec['variables']['time']['shape']                  = {'default':['data_rows']}
 ncspec['variables']['time']['zlib']                   = {'default':True}
 ncspec['variables']['time']['complevel']              = {'default':1}
 ncspec['variables']['time']['shuffle']                = {'default':True}
 ncspec['variables']['time']['data']                   = {'src':'data/time'}
 ncspec['variables']['time']['attrs'] = {}
 ncspec['variables']['time']['attrs']['standard_name'] = {'default':'time'}
-ncspec['variables']['time']['attrs']['long_name']     = {'default':'Cryosat scan start time, seconds since 1970-01-01 00:00:00'}
+ncspec['variables']['time']['attrs']['long_name']     = {'default':'CryoSat-2 scan start time, seconds since 1970-01-01 00:00:00'}
 ncspec['variables']['time']['attrs']['units']         = {'default':'s'}
 
 ncspec['variables']['swh']   = {}
 ncspec['variables']['swh']['fmt']                    = {'default':'f4'}
-ncspec['variables']['swh']['shape']                  = {'default':['time']}
+ncspec['variables']['swh']['shape']                  = {'default':['data_rows']}
 #ncspec['variables']['swh']['fill_value']             = {'default':32767}
 ncspec['variables']['swh']['zlib']                   = {'default':True}
 ncspec['variables']['swh']['complevel']              = {'default':1}
@@ -139,7 +134,7 @@ ncspec['variables']['swh']['attrs']['long_name']     = {'default':'Significant w
 
 ncspec['variables']['wspd']   = {}
 ncspec['variables']['wspd']['fmt']                    = {'default':'f4'}
-ncspec['variables']['wspd']['shape']                  = {'default':['time']}
+ncspec['variables']['wspd']['shape']                  = {'default':['data_rows']}
 ncspec['variables']['wspd']['zlib']                   = {'default':True}
 ncspec['variables']['wspd']['complevel']              = {'default':1}
 ncspec['variables']['wspd']['shuffle']                = {'default':True}
@@ -148,7 +143,32 @@ ncspec['variables']['wspd']['attrs'] = {}
 ncspec['variables']['wspd']['attrs']['long_name']     = {'default':'Wind speed'}
 ncspec['variables']['wspd']['attrs']['units']         = {'default':'m/s'}
 
-ncspec['notifications'] = {'fields':{},'targets':{}}
-ncspec['notifications']['targets']['orbits']  = {'node':job['data']['info']['location']['node'], 'enabled':True, 'prefix':'jason', 'fields':['file','node']}
+ncspec['variables']['DQF']   = {}
+ncspec['variables']['DQF']['fmt']                    = {'default':'i1'}
+ncspec['variables']['DQF']['shape']                  = {'default':['data_rows']}
+ncspec['variables']['DQF']['fill_value']             = {'default':-1}
+ncspec['variables']['DQF']['zlib']                   = {'default':True}
+ncspec['variables']['DQF']['complevel']              = {'default':1}
+ncspec['variables']['DQF']['shuffle']                = {'default':True}
+ncspec['variables']['DQF']['data']                   = {'default':0}
+ncspec['variables']['DQF']['attrs'] = {}
+ncspec['variables']['DQF']['attrs']['units']         = {'default':'1'}
+ncspec['variables']['DQF']['attrs']['long_name']     = {'default':'quality flag for SWH (forced to 0)'}
+ncspec['variables']['DQF']['attrs']['flag_values']   = {'default':[0,1]}
+ncspec['variables']['DQF']['attrs']['flag_meanings'] = {'default':'good, bad'}
 
-job['modclass'] = {'module':'convert_cryosat','class':'CryosatConvert','args':{'ncspec':ncspec}}
+ncspec['variables']['band_id']   = {}
+ncspec['variables']['band_id']['fmt']                    = {'default':'i1'}
+ncspec['variables']['band_id']['shape']                  = {'default':['dmw_band']}
+ncspec['variables']['band_id']['zlib']                   = {'default':True}
+ncspec['variables']['band_id']['complevel']              = {'default':1}
+ncspec['variables']['band_id']['shuffle']                = {'default':True}
+ncspec['variables']['band_id']['data']                   = {'default':11}
+ncspec['variables']['band_id']['attrs'] = {}
+ncspec['variables']['band_id']['attrs']['long_name']     = {'default':'Generic band identifier for use in AWIPS DMW plug-in'}
+ncspec['variables']['band_id']['attrs']['units']         = {'default':'1'}
+
+ncspec['notifications'] = {'fields':{},'targets':{}}
+ncspec['notifications']['targets']['orbits']  = {'node':job['data']['info']['location']['node'], 'enabled':True, 'prefix':'cryosat2', 'fields':['file','node']}
+
+job['modclass'] = {'module':'cryosat_convert','class':'CryosatConvert','args':{'ncspec':ncspec}}

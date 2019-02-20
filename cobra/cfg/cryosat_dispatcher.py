@@ -4,7 +4,7 @@ FTP site.
 """
 """
     IDP Satellite Support Subsystem
-    Copyright (C) 2016 Joseph K. Zajic (joe.zajic@noaa.gov), Brian M. Rapp (brian.rapp@noaa.gov)
+    Copyright (C) 2016-2019 Joseph K. Zajic (joe.zajic@noaa.gov), Brian M. Rapp (brian.rapp@noaa.gov)
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -60,9 +60,10 @@ job['max_sleep']        = 10
 job['work_time']        = 60
 
 job['sources'] = {}
-job['sources']['star'] =  {'protocol':'FTP', 'host':'ftp.star.nesdis.noaa.gov', 'authid':2, 'timeout':10, 'retry':10,'paths':{},'sessions':1}
+#job['sources']['star'] =  {'protocol':'FTP', 'host':'ftp.star.nesdis.noaa.gov', 'authid':2, 'timeout':10, 'retry':10,'paths':{},'sessions':1}
+job['sources']['star'] =  {'protocol':'FTP', 'host':'ftp.star.nesdis.noaa.gov', 'authid':3, 'timeout':10, 'retry':10,'paths':{},'sessions':1}
 
-cryo_args = {'window':86400, 'cyclecount':20}
+cryo_args = {'window':43200, 'cyclecount':20}
 cryo_args['target'] = {'data':job['data']['cryfiles'], 'notifications':job['notifications']}
 cryo_args['ledger'] = {'node':job['data']['cryledger']['location']['node'],'name':job['name']+'.ledger'}
 job['sources']['star']['paths']['cryosat'] = {'path':'/pub/socd/lsa/johnl/c2', 'dirs':{}, 'special':{}}

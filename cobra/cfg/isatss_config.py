@@ -48,10 +48,12 @@ Example entry:
 hosts[2] = {'host':'grb01.nhc.noaa.gov','user':'ldm', 'ext':1336,'cmd':4,'resp':5}
 """
 hosts = {}
-
+"""
 hosts[1] = {'host':'cobra.napo.nws.noaa.gov', 'shortname':'cobra', 'sudocmd':'sudo -iu'}
-#hosts[2] = {'host':'cobra.napo.nws.noaa.gov', 'shortname':'cobraldm', 'sudocmd':'sudo -iu', 'cmd':72, 'resp':73, 'user':'ldm'}
 hosts[2] = {'host':'cobra.napo.nws.noaa.gov', 'shortname':'ldm', 'sudocmd':'sudo -iu', 'user':'ldm', 'ext':1338, 'cmd':72, 'resp':73}
+"""
+hosts[1] = {'host':'chiark.dilireum.org', 'shortname':'chiark'}
+hosts[2] = {'host':'masaq.dilireum.org',  'shortname':'masaq'}
 
 hattr = {}
 hattr[1] = {'nics': [('netname', 'eth0')],   'filesystems': []}
@@ -396,4 +398,13 @@ groups[13]['jobs']     = {}
 groups[13]['jobs'][1] = {'host':1, 'cfg':'gpm_dispatcher'}
 groups[13]['jobs'][2] = {'host':1, 'cfg':'gpm_gmi_cutter'}
 groups[13]['jobs'][3] = {'host':1, 'cfg':'gpm_gmi_projector'}
+
+groups[14] = {}
+groups[14]['name']     = 'CryoSat processing'
+groups[14]['description'] = """
+CryoSat processing chain
+"""
+groups[14]['jobs']     = {}
+groups[14]['jobs'][1]  = {'host':1,'cfg':'cryosat_dispatcher'}
+groups[14]['jobs'][2]  = {'host':1,'cfg':'cryosat_processor'}
 
