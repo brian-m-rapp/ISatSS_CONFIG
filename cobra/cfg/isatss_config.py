@@ -235,7 +235,13 @@ nodes[123] = {'path':'/dev/shm/isatss_data/info/123_cryosat_proc_cntl',   'files
 nodes[124] = {'path':'/data/isatss_data/data/124_cryosat_proc_data',      'filesystem':'/data',    'ctype':'data','stype':'attached','root':'/data/isatss_data'}
 nodes[125] = {'path':'/dev/shm/isatss_data/info/125_cryosat_proc_info',   'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
 
+nodes[130] = {'path':'/dev/shm/isatss_data/info/130_altika_disp_cntl',    'filesystem':'/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[131] = {'path':'/data/isatss_data/data/131_altika_disp_data',       'filesystem':'/data',    'ctype':'data','stype':'attached','root':'/data/isatss_data'}
+nodes[132] = {'path':'/dev/shm/isatss_data/info/132_altika_disp_info',    'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
 
+nodes[133] = {'path':'/dev/shm/isatss_data/info/133_altika_proc_cntl',    'filesystem':'/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[134] = {'path':'/data/isatss_data/data/134_altika_proc_data',       'filesystem':'/data',    'ctype':'data','stype':'attached','root':'/data/isatss_data'}
+nodes[135] = {'path':'/dev/shm/isatss_data/info/135_altika_proc_info',    'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
 
 nodes[700] = {'path':'/dev/shm/isatss_data/info/700_dmsp_f15_cut_cntl',     'filesystem':'/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[702] = {'path':'/dev/shm/isatss_data/info/702_dmsp_f15_cut_input',    'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
@@ -420,4 +426,13 @@ CryoSat processing chain
 groups[14]['jobs']     = {}
 groups[14]['jobs'][1]  = {'host':1,'cfg':'cryosat_dispatcher'}
 groups[14]['jobs'][2]  = {'host':1,'cfg':'cryosat_processor'}
+
+groups[15] = {}
+groups[15]['name']     = 'Altika processing'
+groups[15]['description'] = """
+Altika processing chain
+"""
+groups[15]['jobs']     = {}
+groups[15]['jobs'][1]  = {'host':1,'cfg':'altika_dispatcher'}
+#groups[15]['jobs'][2]  = {'host':1,'cfg':'altika_processor'}
 
