@@ -141,7 +141,7 @@ ncspec['variables']['wspd']['shuffle']                = {'default':True}
 ncspec['variables']['wspd']['data']                   = {'src':'data/wspd'}
 ncspec['variables']['wspd']['attrs'] = {}
 ncspec['variables']['wspd']['attrs']['long_name']     = {'default':'Wind speed'}
-ncspec['variables']['wspd']['attrs']['units']         = {'default':'m/s'}
+ncspec['variables']['wspd']['attrs']['units']         = {'default':'kt'}
 
 ncspec['variables']['DQF']   = {}
 ncspec['variables']['DQF']['fmt']                    = {'default':'i1'}
