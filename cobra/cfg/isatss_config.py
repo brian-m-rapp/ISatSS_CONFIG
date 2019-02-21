@@ -25,7 +25,14 @@ For openSUSE, use 'sudo -iu'.
 """
 sudocmd = 'sudo -iu'	# defaults to 'sudo -Su'
 
-site = 'NAPO'
+import socket
+ipaddr = socket.gethostbyname(socket.gethostname())
+if ipaddr.startswith('140.90.141'):
+	site = 'NAPO'
+elif ipaddr.startswith('192.168'):
+	site = 'ROCK'
+else:
+	site = 'unknown'
 
 tier = 'dev'	# dev/qa/ops - unique to IDP deployment, not used outside of this configuration file
 
@@ -48,12 +55,16 @@ Example entry:
 hosts[2] = {'host':'grb01.nhc.noaa.gov','user':'ldm', 'ext':1336,'cmd':4,'resp':5}
 """
 hosts = {}
-"""
-hosts[1] = {'host':'cobra.napo.nws.noaa.gov', 'shortname':'cobra', 'sudocmd':'sudo -iu'}
-hosts[2] = {'host':'cobra.napo.nws.noaa.gov', 'shortname':'ldm', 'sudocmd':'sudo -iu', 'user':'ldm', 'ext':1338, 'cmd':72, 'resp':73}
-"""
-hosts[1] = {'host':'chiark.dilireum.org', 'shortname':'chiark'}
-hosts[2] = {'host':'masaq.dilireum.org',  'shortname':'masaq'}
+if site == 'NAPO':
+	hosts[1] = {'host':'cobra.napo.nws.noaa.gov', 'shortname':'cobra', 'sudocmd':'sudo -iu'}
+	hosts[2] = {'host':'cobra.napo.nws.noaa.gov', 'shortname':'ldm', 'sudocmd':'sudo -iu', 'user':'ldm', 'ext':1338, 'cmd':72, 'resp':73}
+elif site == 'ROCK':
+	hosts[1] = {'host':'chiark.dilireum.org', 'shortname':'chiark'}
+	hosts[2] = {'host':'masaq.dilireum.org',  'shortname':'masaq'}
+else:
+	print('Unknown site')
+	import sys
+	sys.exit(1)
 
 hattr = {}
 hattr[1] = {'nics': [('netname', 'eth0')],   'filesystems': []}
