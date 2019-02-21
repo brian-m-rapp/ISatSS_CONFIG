@@ -59,7 +59,7 @@ job['max_sleep']        = 10
 job['work_time']        = 60
 
 job['sources'] = {}
-job['sources']['nodc'] =  {'protocol':'FTP', 'host':'ftp.nodc.noaa.gov', 'authid':3, 'timeout':10, 'retry':10,'paths':{},'sessions':1}
+job['sources']['nodc'] =  {'protocol':'FTP', 'host':'ftp.nodc.noaa.gov', 'timeout':10, 'retry':10,'paths':{},'sessions':1}
 
 jason2_args = {'window':86400, 'cyclecount':None, 'date_from':'stamp', 'date_format':None}
 jason2_args['target'] = {'data':job['data']['jfiles'], 'notifications':job['notifications']}

@@ -60,7 +60,7 @@ job['max_sleep']        = 10
 job['work_time']        = 60
 
 job['sources'] = {}
-job['sources']['star'] =  {'protocol':'FTP', 'host':'ftp.star.nesdis.noaa.gov', 'authid':2, 'timeout':10, 'retry':10,'paths':{},'sessions':1}
+job['sources']['star'] =  {'protocol':'FTP', 'host':'ftp.star.nesdis.noaa.gov', 'timeout':10, 'retry':10,'paths':{},'sessions':1}
 
 fls_args = {'window':2*86400, 'cyclecount':5}
 fls_args['target'] = {'data':job['data']['flsfiles'], 'notifications':job['notifications']}

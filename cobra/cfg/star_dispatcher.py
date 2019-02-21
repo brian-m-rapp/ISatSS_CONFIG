@@ -27,7 +27,7 @@ job['log_node'] = 1
 
 
 job['notifications']   = {}
-job['notifications']['slab']   = {'node':71, 'enabled':True,'fields':['file','node'],'prefix':'h8_slab'}
+job['notifications']['slab']   = {'node':78, 'enabled':True,'fields':['file','node'],'prefix':'h8_slab'}
 
 job['data'] = {}
 job['data']['h8slab']                 = {}

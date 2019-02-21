@@ -186,6 +186,7 @@ nodes[74] = {'path':'/data/isatss_data/data/74_gcom_data',                'files
 nodes[75] = {'path':'/dev/shm/isatss_data/info/75_h8_dispatch_cntl',      'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[76] = {'path':'/dev/shm/isatss_data/info/76_h8_dispatch_info',      'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[77] = {'path':'/data/isatss_data/data/77_h8_dispatch_data',         'filesystem':'/ddata',  'ctype':'data','stype':'attached','root':'/data/isatss_data'}
+nodes[78] = {'path':'/dev/shm/isatss_data/info/78_h8_dispatch_info',      'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
 
 nodes[80] = {'path':'/dev/shm/isatss_data/info/80_remote_dispatcher_cntl','filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[81] = {'path':'/dev/shm/isatss_data/info/81_ascat_info',            'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
@@ -233,6 +234,7 @@ nodes[122] = {'path':'/dev/shm/isatss_data/info/122_cryosat_disp_info',   'files
 nodes[123] = {'path':'/dev/shm/isatss_data/info/123_cryosat_proc_cntl',   'filesystem':'/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[124] = {'path':'/data/isatss_data/data/124_cryosat_proc_data',      'filesystem':'/data',    'ctype':'data','stype':'attached','root':'/data/isatss_data'}
 nodes[125] = {'path':'/dev/shm/isatss_data/info/125_cryosat_proc_info',   'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+
 
 
 nodes[700] = {'path':'/dev/shm/isatss_data/info/700_dmsp_f15_cut_cntl',     'filesystem':'/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
@@ -323,15 +325,15 @@ groups[4]['jobs']        = {}
 groups[4]['jobs'][1]     = {'host':2, 'cfg':'isatss_ldm_manager'}
 groups[4]['jobs'][2]     = {'host':1, 'cfg':'ldm_in_dispatcher'}
 
-'''
+
 groups[5]                = {}
-groups[5]['name']        = 'ASCAT Processing'
+groups[5]['name']        = 'FLS Processing'
 groups[5]['description'] = """
-Job processing ASCAT products 
+Job processing Fog and Low Stratus products 
 """
 groups[5]['jobs']        = {}
-groups[5]['jobs'][1]     = {'host':1, 'cfg':'convert_ascat_ambiguities'}
-
+groups[5]['jobs'][1]     = {'host':1, 'cfg':'fls_puller'}
+'''
 groups[6]                = {}
 groups[6]['name']        = 'GCOM Processing'
 groups[6]['description'] = """
@@ -349,7 +351,7 @@ Jobs for ingesting, processing, and pushing Cryosat altimetry products
 groups[7]['jobs']        = {}
 groups[7]['jobs'][1]     = {'host':1, 'cfg':'cryosat_dispatcher'}
 groups[7]['jobs'][2]     = {'host':1, 'cfg':'cryosat_processor'}
-'''
+
 groups[8]                = {}
 groups[8]['name']        = 'Himawari Tile Processing'
 groups[8]['description'] = """
@@ -358,7 +360,7 @@ Jobs for ingesting, processing, and pushing Himawari tiles
 groups[8]['jobs']        = {}
 groups[8]['jobs'][1]     = {'host':1, 'cfg':'star_dispatcher'}
 groups[8]['jobs'][2]     = {'host':1, 'cfg':'h8_slab2tile'}
-'''
+
 
 groups[9]                = {}
 groups[9]['name']        = 'DMSP SSMI Processing'
@@ -378,17 +380,17 @@ groups[10]['jobs']        = {}
 groups[10]['jobs'][1]     = {'host':1, 'cfg':'jason_dispatcher'}
 groups[10]['jobs'][2]     = {'host':1, 'cfg':'jason_processor'}
 
-'''
+
 groups[11]                = {}
 groups[11]['name']        = 'AMSR2 Imagery Processing'
 groups[11]['description'] = """
 Jobs for ingesting, processing, and pushing AMSR2 Imagery
 """
 groups[11]['jobs']        = {}
-groups[11]['jobs'][1]     = {'host':1, 'cfg':'amsr2_dispatcher'}
+groups[11]['jobs'][1]     = {'host':1, 'cfg':'amsr2_puller'}
 groups[11]['jobs'][2]     = {'host':1, 'cfg':'amsr2_cutter'}
 groups[11]['jobs'][3]     = {'host':1, 'cfg':'amsr2_projector'}
-'''
+
 
 groups[12]                = {}
 groups[12]['name']        = 'ATMS Imagery Processing'

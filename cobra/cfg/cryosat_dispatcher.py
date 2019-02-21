@@ -60,8 +60,7 @@ job['max_sleep']        = 10
 job['work_time']        = 60
 
 job['sources'] = {}
-#job['sources']['star'] =  {'protocol':'FTP', 'host':'ftp.star.nesdis.noaa.gov', 'authid':2, 'timeout':10, 'retry':10,'paths':{},'sessions':1}
-job['sources']['star'] =  {'protocol':'FTP', 'host':'ftp.star.nesdis.noaa.gov', 'authid':3, 'timeout':10, 'retry':10,'paths':{},'sessions':1}
+job['sources']['star'] =  {'protocol':'FTP', 'host':'ftp.star.nesdis.noaa.gov', 'timeout':10, 'retry':10,'paths':{},'sessions':1}
 
 cryo_args = {'window':43200, 'cyclecount':20}
 cryo_args['target'] = {'data':job['data']['cryfiles'], 'notifications':job['notifications']}

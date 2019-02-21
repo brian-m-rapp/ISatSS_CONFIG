@@ -57,7 +57,7 @@ job['max_sleep']        = 10
 job['work_time']        = 60
 
 job['sources'] = {}
-job['sources']['satepsanone'] =  {'protocol':'HTTPS', 'host':'satepsanone.nesdis.noaa.gov', 'authid':2, 'timeout':10, 'retry':10,'paths':{},'sessions':1}
+job['sources']['satepsanone'] =  {'protocol':'HTTPS', 'host':'satepsanone.nesdis.noaa.gov', 'timeout':10, 'retry':10,'paths':{},'sessions':1}
 
 gpm_args = {'window':86400}
 gpm_args['target'] = {'data':job['data']['afiles'], 'notifications':job['notifications']}

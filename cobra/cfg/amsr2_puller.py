@@ -59,7 +59,7 @@ job['max_sleep']        = 10
 job['work_time']        = 60
 
 job['sources'] = {}
-job['sources']['satepsanone'] =  {'protocol':'HTTPS', 'host':'satepsanone.nesdis.noaa.gov', 'authid':0, 'timeout':10, 'retry':10,'paths':{},'sessions':1}
+job['sources']['satepsanone'] =  {'protocol':'HTTPS', 'host':'satepsanone.nesdis.noaa.gov', 'timeout':10, 'retry':10,'paths':{},'sessions':1}
 job['sources']['satepsanone']['decompress'] = 'byext'
 
 amsr2_args = {'window':86400}
