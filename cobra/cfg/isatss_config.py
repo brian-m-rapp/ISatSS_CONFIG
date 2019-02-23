@@ -330,6 +330,7 @@ Jobs for configuring and managing LDM instances
 groups[4]['jobs']        = {}
 groups[4]['jobs'][1]     = {'host':2, 'cfg':'isatss_ldm_manager'}
 groups[4]['jobs'][2]     = {'host':1, 'cfg':'ldm_in_dispatcher'}
+groups[4]['jobs'][3]     = {'host':1, 'cfg':'goes_stats_processor'}
 
 
 groups[5]                = {}
