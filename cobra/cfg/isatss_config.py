@@ -435,5 +435,5 @@ Altika processing chain
 """
 groups[15]['jobs']     = {}
 groups[15]['jobs'][1]  = {'host':1,'cfg':'altika_dispatcher'}
-#groups[15]['jobs'][2]  = {'host':1,'cfg':'altika_processor'}
+groups[15]['jobs'][2]  = {'host':1,'cfg':'altika_processor'}
 
