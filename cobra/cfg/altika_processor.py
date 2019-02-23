@@ -61,7 +61,7 @@ job['loglevel']             = 5
 
 job['cntl_node']            = 133
 
-job['input_type']           = {'type':'infofile','node':132,'delete_file':False, 'delete_info':False}
+job['input_type']           = {'type':'infofile','node':132,'delete_file':True, 'delete_info':True}
 
 job['watcher_timeout']      = 1000
 job['files_per_cycle']      = 50
