@@ -160,14 +160,14 @@ ncspec['variables']['wind_speed_alt']['fill_value']             = {'default':-99
 ncspec['variables']['wind_speed_alt']['zlib']                   = {'default':True}
 ncspec['variables']['wind_speed_alt']['complevel']              = {'default':1}
 ncspec['variables']['wind_speed_alt']['shuffle']                = {'default':True}
-ncspec['variables']['wind_speed_alt']['data']                   = {'src':'data/wind_speed_alt', 'mapscalefac':{-999:{'scale':.01}}, 'map':{32767:-999}, 'fmt':'f4'}
+ncspec['variables']['wind_speed_alt']['data']                   = {'src':'data/wind_speed_alt', 'mapscalefac':{-999:{'scale':.0194384}}, 'map':{32767:-999}, 'fmt':'f4'} # Native format is integer * 100 in m/s; convert to float as knots
 ncspec['variables']['wind_speed_alt']['attrs'] = {}
 ncspec['variables']['wind_speed_alt']['attrs']['long_name']     = {'default':'altimeter wind speed'}
 ncspec['variables']['wind_speed_alt']['attrs']['standard_name'] = {'default':'wind_speed'}
 ncspec['variables']['wind_speed_alt']['attrs']['source']        = {'default':'John Lillibridge and co [2013] - One and Two-Dimensional Wind Speed Models for Ka-band Altimetry - JTECH-D-13-00167.1'}
-ncspec['variables']['wind_speed_alt']['attrs']['units']         = {'default':'m/s'}
+ncspec['variables']['wind_speed_alt']['attrs']['units']         = {'default':'kt'}
 ncspec['variables']['wind_speed_alt']['attrs']['coordinates']   = {'default':['lon, lat']}
-ncspec['variables']['wind_speed_alt']['attrs']['comment']       = {'default':'Should not be used over land. See SARAL User Handbook'}
+ncspec['variables']['wind_speed_alt']['attrs']['comment']       = {'default':'Should not be used over land. See SARAL User Handbook. Value is in knots.'}
 
 ncspec['variables']['band_id']   = {}
 ncspec['variables']['band_id']['fmt']                    = {'default':'i1'}
