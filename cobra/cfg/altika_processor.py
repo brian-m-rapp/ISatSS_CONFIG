@@ -69,9 +69,8 @@ job['files_per_cycle']      = 50
 ncspec = {}
 ncspec['destination'] = job['data']['output']
 ncspec['namedef']     = []
-ncspec['namedef'].append({'default':'altika_pass', 'delimiter':'_'})
-ncspec['namedef'].append({'src':'meta/absolute_pass_number', 'delimiter':'_rev_'})
-ncspec['namedef'].append({'src':'meta/absolute_rev_number', 'delimiter':'.nc'})
+ncspec['namedef'].append({'default':'isatss_altika', 'delimiter':'_'})
+ncspec['namedef'].append({'src':'isatss/filename'})
 
 ncspec['dimensions'] = {}
 ncspec['dimensions']['time']      = {'src':'inncf/dimensions/time'}
