@@ -17,29 +17,29 @@
 """
 
 job = {}
-job['name']     = 'cryosat_dispatcher'
+job['name']     = 'sentinel_dispatcher'
 job['cmd']      = 'dispatcher'
 job['class']    = 'Dispatcher'
-job['log']      = 'cryosat_dispatcher_log'
+job['log']      = 'sentinel_dispatcher_log'
 job['log_node'] = 1
 
 job['notifications']   = {}
-job['notifications']['cryosat']   = {'node':122, 'enabled':True, 'fields':['file', 'node'], 'prefix':'cryosat'}
+job['notifications']['sentinel']   = {'node':122, 'enabled':True, 'fields':['file', 'node'], 'prefix':'sentinel'}
 
 job['data'] = {}
-job['data']['cryfiles']                = {}
-job['data']['cryfiles']['location']    = {'node':121}
-job['data']['cryfiles']['aging']       = {'window':3600, 'mode':'creationtime'}
-job['data']['cryfiles']['method']      = {'technique':'stage', 'path':'incinerator'}
-job['data']['cryfiles']['activeonly']  = True                                                            # check pidfile
-job['data']['cryfiles']['schedule']    = {'interval':600}
+job['data']['sentinel_files']                = {}
+job['data']['sentinel_files']['location']    = {'node':121}
+job['data']['sentinel_files']['aging']       = {'window':3600, 'mode':'creationtime'}
+job['data']['sentinel_files']['method']      = {'technique':'stage', 'path':'incinerator'}
+job['data']['sentinel_files']['activeonly']  = True                                                            # check pidfile
+job['data']['sentinel_files']['schedule']    = {'interval':600}
 
-job['data']['cryledger']               = {}
-job['data']['cryledger']['location']   = {'node':61}
-job['data']['cryledger']['aging']      = {'window':86400*10, 'mode':'creationtime'}
-job['data']['cryledger']['method']     = {'technique':'inplace'}
-job['data']['cryledger']['activeonly'] = True
-job['data']['cryledger']['schedule']   = {'interval':600}
+job['data']['sentinel_ledger']               = {}
+job['data']['sentinel_ledger']['location']   = {'node':61}
+job['data']['sentinel_ledger']['aging']      = {'window':86400*10, 'mode':'creationtime'}
+job['data']['sentinel_ledger']['method']     = {'technique':'inplace'}
+job['data']['sentinel_ledger']['activeonly'] = True
+job['data']['sentinel_ledger']['schedule']   = {'interval':600}
 
 job['data']['log']                     = {}
 job['data']['log']['location']         = {'node':1}
@@ -56,13 +56,17 @@ job['max_sleep']        = 10
 job['work_time']        = 60
 
 job['sources'] = {}
-job['sources']['star'] =  {'protocol':'FTP', 'host':'ftp.star.nesdis.noaa.gov', 'timeout':10, 'retry':10,'paths':{},'sessions':1}
+job['sources']['sentinel'] =  {'protocol':'FTP', 'host':'ftp.star.nesdis.noaa.gov', 'timeout':10, 'retry':10,'paths':{},'sessions':1}
+job['sources']['sentinel']['decompress'] = 'byext'
 
-cryo_args = {'window':43200, 'cyclecount':20}
-cryo_args['target'] = {'data':job['data']['cryfiles'], 'notifications':job['notifications']}
-cryo_args['ledger'] = {'node':job['data']['cryledger']['location']['node'],'name':job['name']+'.ledger'}
-job['sources']['star']['paths']['cryosat'] = {'path':'/pub/socd/lsa/johnl/c2', 'dirs':{}, 'special':{}}
-job['sources']['star']['paths']['cryosat']['special'] = {'module':'remote_puller','class':'FilePuller','args':cryo_args}
+sentinel_args = {'window':43200, 'cyclecount':20}
+sentinel_args['target'] = {'data':job['data']['sentinel_files'], 'notifications':job['notifications']}
+sentinel_args['ledger'] = {'node':job['data']['sentinel_ledger']['location']['node'],'name':job['name']+'.ledger'}
+
+job['sources']['sentinel']['paths']['sentinel'] = {'path':'/pub/socd3/coastwatch/sral/L2', 'dirs':{}, 'special':{}, 'options':{}}
+manifest_desc = {'name':'S3A_SR_2_WAT_NRT_manifest', 'node':61, 'fields':{'filename':{'index':0}, 'date':{'index':1, 'format':'%Y-%m-%d'}, 'time':{'index':2, 'format':'%H:%M:%S'}}}
+job['sources']['sentinel']['paths']['sentinel']['options'] = {'manifest':manifest_desc}
+job['sources']['sentinel']['paths']['sentinel']['special'] = {'module':'remote_puller','class':'FilePuller','args':sentinel_args}
 
 job['monitor'] = {'agents':{},'mi6':{}}
 job['monitor']['agents']['pmd_admin']                = {'enabled':True, 'module':'im_daemon', 'class':'PMDAdmin', 'args':{'alerts':[27,28], 'telemetry':[26,27,28]}}

@@ -243,6 +243,14 @@ nodes[133] = {'path':'/dev/shm/isatss_data/info/133_altika_proc_cntl',    'files
 nodes[134] = {'path':'/data/isatss_data/data/134_altika_proc_data',       'filesystem':'/data',    'ctype':'data','stype':'attached','root':'/data/isatss_data'}
 nodes[135] = {'path':'/dev/shm/isatss_data/info/135_altika_proc_info',    'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
 
+nodes[140] = {'path':'/dev/shm/isatss_data/info/140_sentinel_disp_cntl',  'filesystem':'/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[141] = {'path':'/data/isatss_data/data/141_sentinel_disp_data',     'filesystem':'/data',    'ctype':'data','stype':'attached','root':'/data/isatss_data'}
+nodes[142] = {'path':'/dev/shm/isatss_data/info/142_sentinel_disp_info',  'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+
+nodes[143] = {'path':'/dev/shm/isatss_data/info/143_sentinel_proc_cntl',  'filesystem':'/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[144] = {'path':'/data/isatss_data/data/144_sentinel_proc_data',     'filesystem':'/data',    'ctype':'data','stype':'attached','root':'/data/isatss_data'}
+nodes[145] = {'path':'/dev/shm/isatss_data/info/145_sentinel_proc_info',  'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+
 nodes[700] = {'path':'/dev/shm/isatss_data/info/700_dmsp_f15_cut_cntl',     'filesystem':'/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[702] = {'path':'/dev/shm/isatss_data/info/702_dmsp_f15_cut_input',    'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[703] = {'path':'/data/isatss_data/data/703_dmsp_f15_cut_data',        'filesystem':'/data',    'ctype':'data','stype':'attached','root':'/data/isatss_data'}
@@ -437,3 +445,11 @@ groups[15]['jobs']     = {}
 groups[15]['jobs'][1]  = {'host':1,'cfg':'altika_dispatcher'}
 groups[15]['jobs'][2]  = {'host':1,'cfg':'altika_processor'}
 
+groups[16] = {}
+groups[16]['name']     = 'Sentinel-3 processing'
+groups[16]['description'] = """
+Sentinel-3 processing chain
+"""
+groups[16]['jobs']     = {}
+groups[16]['jobs'][1]  = {'host':1,'cfg':'sentinel_dispatcher'}
+#groups[16]['jobs'][2]  = {'host':1,'cfg':'sentinel_processor'}
