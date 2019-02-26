@@ -60,7 +60,7 @@ job['work_time']        = 60
 
 job['sources'] = {}
 job['sources']['satepsanone'] =  {'protocol':'HTTPS', 'host':'satepsanone.nesdis.noaa.gov', 'timeout':10, 'retry':10,'paths':{},'sessions':1}
-job['sources']['satepsanone']['decompress'] = 'byext'
+job['sources']['satepsanone']['decompress'] = {'method':'byext'}
 
 gcom_args = {'window':86400}
 gcom_args['target'] = {'data':job['data']['gfiles'], 'notifications':job['notifications']}
