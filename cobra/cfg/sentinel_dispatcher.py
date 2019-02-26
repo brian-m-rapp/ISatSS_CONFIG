@@ -24,11 +24,11 @@ job['log']      = 'sentinel_dispatcher_log'
 job['log_node'] = 1
 
 job['notifications']   = {}
-job['notifications']['sentinel']   = {'node':122, 'enabled':True, 'fields':['file', 'node'], 'prefix':'sentinel'}
+job['notifications']['sentinel']   = {'node':142, 'enabled':True, 'fields':['file', 'node'], 'prefix':'sentinel'}
 
 job['data'] = {}
 job['data']['sentinel_files']                = {}
-job['data']['sentinel_files']['location']    = {'node':121}
+job['data']['sentinel_files']['location']    = {'node':141}
 job['data']['sentinel_files']['aging']       = {'window':3600, 'mode':'creationtime'}
 job['data']['sentinel_files']['method']      = {'technique':'stage', 'path':'incinerator'}
 job['data']['sentinel_files']['activeonly']  = True                                                            # check pidfile
@@ -51,21 +51,21 @@ job['data']['log']['schedule']         = {'interval':3600}
 job['data']['log']['activeonly']       = True
 
 job['loglevel']         = 5
-job['cntl_node']        = 120
+job['cntl_node']        = 140
 job['max_sleep']        = 10
 job['work_time']        = 60
 
 job['sources'] = {}
 job['sources']['sentinel'] =  {'protocol':'FTP', 'host':'ftp.star.nesdis.noaa.gov', 'timeout':10, 'retry':10,'paths':{},'sessions':1}
-job['sources']['sentinel']['decompress'] = 'byext'
 
 sentinel_args = {'window':43200, 'cyclecount':20}
 sentinel_args['target'] = {'data':job['data']['sentinel_files'], 'notifications':job['notifications']}
 sentinel_args['ledger'] = {'node':job['data']['sentinel_ledger']['location']['node'],'name':job['name']+'.ledger'}
 
-job['sources']['sentinel']['paths']['sentinel'] = {'path':'/pub/socd3/coastwatch/sral/L2', 'dirs':{}, 'special':{}, 'options':{}}
+job['sources']['sentinel']['paths']['sentinel'] = {'path':'/pub/socd3/coastwatch/sral/L2', 'dirs':{}, 'special':{}, 'manifest':{}}
 manifest_desc = {'name':'S3A_SR_2_WAT_NRT_manifest', 'node':61, 'fields':{'filename':{'index':0}, 'date':{'index':1, 'format':'%Y-%m-%d'}, 'time':{'index':2, 'format':'%H:%M:%S'}}}
-job['sources']['sentinel']['paths']['sentinel']['options'] = {'manifest':manifest_desc}
+job['sources']['sentinel']['paths']['sentinel']['manifest']['sentinel'] = manifest_desc
+job['sources']['sentinel']['paths']['sentinel']['decompress'] = {'method':False}
 job['sources']['sentinel']['paths']['sentinel']['special'] = {'module':'remote_puller','class':'FilePuller','args':sentinel_args}
 
 job['monitor'] = {'agents':{},'mi6':{}}
