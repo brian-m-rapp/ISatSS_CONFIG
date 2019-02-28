@@ -60,7 +60,7 @@ job['work_time']        = 60
 
 job['sources'] = {}
 job['sources']['satepsanone'] =  {'protocol':'HTTPS', 'host':'satepsanone.nesdis.noaa.gov', 'authid':0, 'timeout':10, 'retry':10,'paths':{},'sessions':1}
-job['sources']['satepsanone']['decompress'] = 'byext'
+job['sources']['satepsanone']['extract'] = 'byext'
 
 atms_args = {'window':86400}
 atms_args['target'] = {'data':job['data']['afiles'], 'notifications':job['notifications']}

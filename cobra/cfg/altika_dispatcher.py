@@ -61,7 +61,7 @@ job['work_time']        = 60
 
 job['sources'] = {}
 job['sources']['altika'] =  {'protocol':'FTP', 'host':'avisoftp.cnes.fr', 'timeout':10, 'retry':10,'paths':{},'sessions':1}
-job['sources']['altika']['decompress'] = {'method':'byext'}
+job['sources']['altika']['extract'] = {'method':'byext'}
 
 altika_args = {'window':43200, 'cyclecount':20}
 altika_args['target'] = {'data':job['data']['altfiles'], 'notifications':job['notifications']}
