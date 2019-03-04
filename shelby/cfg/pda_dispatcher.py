@@ -72,7 +72,7 @@ ambigFilter.append({'filt':'substring', 'target':'name', 'contains':'metopa', 'n
 ambigFilter.append({'filt':'substring', 'target':'name', 'contains':'l2_winds-lite_ambiguity', 'name':'contains l2_winds-lite_ambiguity'})
 
 job['sources'] = {}
-job['sources']['pda'] = {'protocol':'FTPS', 'host':'lotus', 'authid':3, 'timeout':30, 'paths':{}, 'sessions':1}
+job['sources']['pda'] = {'protocol':'AFTPS', 'host':'lotus', 'authid':3, 'timeout':30, 'paths':{}, 'sessions':1}
 job['sources']['pda']['paths']['ascat'] = {'path':'/appdata/PDAFileLinks/GLOBAL/ASCAT', 'files':{}}
 job['sources']['pda']['paths']['ascat']['files']['winds'] = {'retrieve':{'winds':windsRetriever}, 'filt':windsFilter}
 job['sources']['pda']['paths']['ascat']['files']['ambig'] = {'retrieve':{'ambig':ambigRetriever}, 'filt':ambigFilter}
