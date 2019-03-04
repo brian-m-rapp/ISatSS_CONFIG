@@ -17,22 +17,22 @@
 """
 
 job = {}
-job['name']     = 'viirs_ice_processing'
+job['name']     = 'viirs_ice_stitcher'
 job['cmd']      = 'mojo'
 job['class']    = 'MOJO'
-job['log']      = 'viirs_ice_processing_log'
+job['log']      = 'viirs_ice_stitcher_log'
 job['log_node'] = 1
 
 job['data'] = {}
 job['data']['output'] = {}
-job['data']['output']['location']   = {'node':92}
+job['data']['output']['location']   = {'node':155}
 job['data']['output']['aging']      = {'window':3600, 'mode':'creationtime'}
 job['data']['output']['method']     = {'technique':'inplace'}
 job['data']['output']['activeonly'] = True
 job['data']['output']['schedule']   = {'interval':600}
 
 job['data']['info']                = {}
-job['data']['info']['location']    = {'node':91}
+job['data']['info']['location']    = {'node':154}
 job['data']['info']['aging']       = {'window':3600, 'mode':'creationtime'}
 job['data']['info']['method']      = {'technique':'inplace'}
 job['data']['info']['activeonly']  = False
@@ -50,9 +50,9 @@ job['data']['log']['activeonly']   = True
 
 job['loglevel']             = 5
 
-job['cntl_node']            = 88
+job['cntl_node']            = 153
 
-job['input_type']           = {'type':'infofile', 'node':87, 'delete_file':True, 'delete_info':True}
+job['input_type']           = {'type':'infofile', 'node':151, 'delete_file':True, 'delete_info':True}
 
 job['watcher_timeout']      = 1000
 job['files_per_cycle']      = 50
@@ -60,9 +60,7 @@ job['files_per_cycle']      = 50
 #inncf
 ncspec = {}
 ncspec['destination'] = job['data']['output']
-ncspec['namedef']     = []
-ncspec['namedef'].append({'default':'isatss_viirs_ice', 'delimiter':'_'})
-ncspec['namedef'].append({'src':'isatss/filename'})
+ncspec['namedef']     = [{'src':'isatss/filename'}]
 
 ncspec['dimensions'] = {}
 ncspec['dimensions']['Rows']        = {'src':'inncf/dimensions/Rows'}
@@ -72,36 +70,36 @@ ncspec['globalmeta'] = {}
 ncspec['globalmeta']['time_coverage_start']     = {'src':'inncf/globalmeta/time_coverage_start'}
 ncspec['globalmeta']['time_coverage_end']       = {'src':'inncf/globalmeta/time_coverage_end'}
 ncspec['globalmeta']['production_site']         = {'src':'isatss/site'}
-ncspec['globalmeta']['Metadata_Link']           = {'default': 'isatss/filename'}
+ncspec['globalmeta']['Metadata_Link']           = {'src':'isatss/filename'}
 ncspec['globalmeta']['instrument_name']         = {'src':'inncf/globalmeta/instrument_name'}
 ncspec['globalmeta']['satellite_name']          = {'src':'inncf/globalmeta/satellite_name'}
 
 ncspec['variables']   = {}
-ncspec['variables']['latitude']   = {}
-ncspec['variables']['latitude']['fmt']                    = {'default':'f4'}
-ncspec['variables']['latitude']['shape']                  = {'default':['Rows','Columns']}
-ncspec['variables']['latitude']['fill_value']             = {'default':-999.}
-ncspec['variables']['latitude']['zlib']                   = {'default':True}
-ncspec['variables']['latitude']['complevel']              = {'default':1}
-ncspec['variables']['latitude']['shuffle']                = {'default':True}
-ncspec['variables']['latitude']['data']                   = {'src':'data/Latitude'}
-ncspec['variables']['latitude']['attrs'] = {}
-ncspec['variables']['latitude']['attrs']['standard_name'] = {'default':'latitude'}
-ncspec['variables']['latitude']['attrs']['long_name']     = {'default':'Pixel latitude in field Latitude (degree)'}
-ncspec['variables']['latitude']['attrs']['units']         = {'default':'degrees_north'}
+ncspec['variables']['Latitude']   = {}
+ncspec['variables']['Latitude']['fmt']                    = {'default':'f4'}
+ncspec['variables']['Latitude']['shape']                  = {'default':['Rows','Columns']}
+ncspec['variables']['Latitude']['fill_value']             = {'default':-999.}
+ncspec['variables']['Latitude']['zlib']                   = {'default':True}
+ncspec['variables']['Latitude']['complevel']              = {'default':1}
+ncspec['variables']['Latitude']['shuffle']                = {'default':True}
+ncspec['variables']['Latitude']['data']                   = {'src':'data/Latitude'}
+ncspec['variables']['Latitude']['attrs'] = {}
+ncspec['variables']['Latitude']['attrs']['standard_name'] = {'default':'Latitude'}
+ncspec['variables']['Latitude']['attrs']['long_name']     = {'default':'Pixel latitude in field Latitude (degree)'}
+ncspec['variables']['Latitude']['attrs']['units']         = {'default':'degrees_north'}
 
-ncspec['variables']['longitude']   = {}
-ncspec['variables']['longitude']['fmt']                    = {'default':'f4'}
-ncspec['variables']['longitude']['shape']                  = {'default':['Rows','Columns']}
-ncspec['variables']['longitude']['fill_value']             = {'default':-999.}
-ncspec['variables']['longitude']['zlib']                   = {'default':True}
-ncspec['variables']['longitude']['complevel']              = {'default':1}
-ncspec['variables']['longitude']['shuffle']                = {'default':True}
-ncspec['variables']['longitude']['data']                   = {'src':'data/Longitude'}
-ncspec['variables']['longitude']['attrs'] = {}
-ncspec['variables']['longitude']['attrs']['standard_name'] = {'default':'longitude'}
-ncspec['variables']['longitude']['attrs']['long_name']     = {'default':'Pixel longitude in field Longitude (degree)'}
-ncspec['variables']['longitude']['attrs']['units']         = {'default':'degrees_east'}
+ncspec['variables']['Longitude']   = {}
+ncspec['variables']['Longitude']['fmt']                    = {'default':'f4'}
+ncspec['variables']['Longitude']['shape']                  = {'default':['Rows','Columns']}
+ncspec['variables']['Longitude']['fill_value']             = {'default':-999.}
+ncspec['variables']['Longitude']['zlib']                   = {'default':True}
+ncspec['variables']['Longitude']['complevel']              = {'default':1}
+ncspec['variables']['Longitude']['shuffle']                = {'default':True}
+ncspec['variables']['Longitude']['data']                   = {'src':'data/Longitude'}
+ncspec['variables']['Longitude']['attrs'] = {}
+ncspec['variables']['Longitude']['attrs']['standard_name'] = {'default':'Longitude'}
+ncspec['variables']['Longitude']['attrs']['long_name']     = {'default':'Pixel longitude in field Longitude (degree)'}
+ncspec['variables']['Longitude']['attrs']['units']         = {'default':'degrees_east'}
 
 ncspec['variables']['IceConc']   = {}
 ncspec['variables']['IceConc']['fmt']                    = {'default':'f4'}
@@ -113,7 +111,7 @@ ncspec['variables']['IceConc']['shuffle']                = {'default':True}
 ncspec['variables']['IceConc']['data']                   = {'src':'data/IceConc'}
 ncspec['variables']['IceConc']['attrs'] = {}
 ncspec['variables']['IceConc']['attrs']['standard_name'] = {'default':'Ice Concentration'}
-ncspec['variables']['IceConc']['attrs']['coordinates']   = {'default':['longitude latitude']}
+ncspec['variables']['IceConc']['attrs']['coordinates']   = {'default':['Longitude Latitude']}
 ncspec['variables']['IceConc']['attrs']['long_name']     = {'default':'Ice_Concentration'}
 ncspec['variables']['IceConc']['attrs']['units']         = {'default':'%'}
 
@@ -124,11 +122,25 @@ ncspec['variables']['IceMap']['fill_value']             = {'default':-3}
 ncspec['variables']['IceMap']['zlib']                   = {'default':True}
 ncspec['variables']['IceMap']['complevel']              = {'default':1}
 ncspec['variables']['IceMap']['shuffle']                = {'default':True}
-ncspec['variables']['IceMap']['data']                   = {'src':'data/IceMap'}
+ncspec['variables']['IceMap']['data']                   = {'src':'data/IceMap', 'map':{2:1, 0:-3, -1:-3, -2:-3}}
 ncspec['variables']['IceMap']['attrs'] = {}
 ncspec['variables']['IceMap']['attrs']['long_name']     = {'default':'Ice Cover map codes'}
-ncspec['variables']['IceMap']['attrs']['coordinates']   = {'default':['longitude latitude']}
+ncspec['variables']['IceMap']['attrs']['coordinates']   = {'default':['Longitude Latitude']}
 ncspec['variables']['IceMap']['attrs']['units']         = {'default':'1'}
+
+ncspec['variables']['SummaryQC_Ice_Concentration']   = {}
+ncspec['variables']['SummaryQC_Ice_Concentration']['fmt']                    = {'default':'i1'}
+ncspec['variables']['SummaryQC_Ice_Concentration']['shape']                  = {'default':['Rows','Columns']}
+ncspec['variables']['SummaryQC_Ice_Concentration']['fill_value']             = {'default':-128}
+ncspec['variables']['SummaryQC_Ice_Concentration']['zlib']                   = {'default':True}
+ncspec['variables']['SummaryQC_Ice_Concentration']['complevel']              = {'default':1}
+ncspec['variables']['SummaryQC_Ice_Concentration']['shuffle']                = {'default':True}
+ncspec['variables']['SummaryQC_Ice_Concentration']['data']                   = {'src':'data/SummaryQC_Ice_Concentration'}
+ncspec['variables']['SummaryQC_Ice_Concentration']['attrs'] = {}
+ncspec['variables']['SummaryQC_Ice_Concentration']['attrs']['units']         = {'default':'1'}
+ncspec['variables']['SummaryQC_Ice_Concentration']['attrs']['long_name']     = {'default':'User-level summary QC: 0=Normal, 1=Uncertain, 2=Non-Retrievable, 3=Bad'}
+ncspec['variables']['SummaryQC_Ice_Concentration']['attrs']['flag_values']   = {'default':[0,1,2,3]}
+ncspec['variables']['SummaryQC_Ice_Concentration']['attrs']['flag_meanings'] = {'default':'Normal, Uncertain, Non-Retrievable, Bad'}
 
 ncspec['notifications'] = {'fields':{},'targets':{}}
 ncspec['notifications']['targets']['orbits']  = {'node':job['data']['info']['location']['node'], 'enabled':True, 'prefix':'viirs_ice', 'fields':['file','node']}

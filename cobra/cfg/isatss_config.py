@@ -251,6 +251,15 @@ nodes[143] = {'path':'/dev/shm/isatss_data/info/143_sentinel_proc_cntl',  'files
 nodes[144] = {'path':'/data/isatss_data/data/144_sentinel_proc_data',     'filesystem':'/data',    'ctype':'data','stype':'attached','root':'/data/isatss_data'}
 nodes[145] = {'path':'/dev/shm/isatss_data/info/145_sentinel_proc_info',  'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
 
+nodes[150] = {'path':'/dev/shm/isatss_data/info/150_vice_puller_cntl',    'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[151] = {'path':'/dev/shm/isatss_data/info/151_vice_puller_info',    'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[152] = {'path':'/data/isatss_data/data/152_vice_puller_data',       'filesystem':'/data',   'ctype':'data','stype':'attached','root':'/data/isatss_data'}
+
+nodes[153] = {'path':'/dev/shm/isatss_data/info/153_vice_stitcher_cntl',  'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[154] = {'path':'/dev/shm/isatss_data/info/154_vice_stitcher_info',  'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[155] = {'path':'/data/isatss_data/data/155_vice_stitcher_data',     'filesystem':'/data',   'ctype':'data','stype':'attached','root':'/data'}
+nodes[156] = {'path':'/dev/shm/isatss_data/info/156_vice_proj_cntl',      'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+
 nodes[700] = {'path':'/dev/shm/isatss_data/info/700_dmsp_f15_cut_cntl',     'filesystem':'/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[702] = {'path':'/dev/shm/isatss_data/info/702_dmsp_f15_cut_input',    'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[703] = {'path':'/data/isatss_data/data/703_dmsp_f15_cut_data',        'filesystem':'/data',    'ctype':'data','stype':'attached','root':'/data/isatss_data'}
@@ -260,7 +269,6 @@ nodes[705] = {'path':'/dev/shm/isatss_data/info/705_reproject_cntl',      'files
 nodes[706] = {'path':'/dev/shm/isatss_data/info/706_reproject_input',     'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[707] = {'path':'/data/isatss_data/data/707_reproject_data',         'filesystem':'/data',    'ctype':'data','stype':'attached','root':'/data/isatss_data'}
 nodes[708] = {'path':'/dev/shm/isatss_data/info/708_reproject_info_out',  'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
-
 
 # system defaults
 defaults = {}
@@ -453,3 +461,14 @@ Sentinel-3 processing chain
 groups[16]['jobs']     = {}
 groups[16]['jobs'][1]  = {'host':1,'cfg':'sentinel_dispatcher'}
 #groups[16]['jobs'][2]  = {'host':1,'cfg':'sentinel_processor'}
+
+groups[17] = {}
+groups[17]['name']     = 'VIIRS ice concentration processing'
+groups[17]['description'] = """
+VIIRS ice concentration processing chain
+"""
+groups[17]['jobs']     = {}
+groups[17]['jobs'][2]  = {'host':1,'cfg':'viirs_ice_stitcher'}
+groups[17]['jobs'][3]  = {'host':1,'cfg':'viirs_ice_projector'}
+
+
