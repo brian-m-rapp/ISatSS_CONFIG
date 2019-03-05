@@ -67,8 +67,10 @@ ncspec['dimensions']['Rows']        = {'src':'inncf/dimensions/Rows'}
 ncspec['dimensions']['Columns']     = {'src':'inncf/dimensions/Columns'}
 
 ncspec['globalmeta'] = {}
-ncspec['globalmeta']['time_coverage_start']     = {'src':'inncf/globalmeta/time_coverage_start'}
-ncspec['globalmeta']['time_coverage_end']       = {'src':'inncf/globalmeta/time_coverage_end'}
+ncspec['globalmeta']['time_coverage_start']     = {'src':'inncf/globalmeta/time_coverage_start', 'timereformat':{'truncate':7200, 
+													'in':'%Y-%m-%dT%H:%M:%S','out':'%Y-%m-%dT%H:%M:%SZ','start':0,'nchar':19}}
+ncspec['globalmeta']['time_coverage_end']       = {'src':'inncf/globalmeta/time_coverage_end', 'timereformat':{'truncate':7200, 
+													'in':'%Y-%m-%dT%H:%M:%S','out':'%Y-%m-%dT%H:%M:%SZ','start':0,'nchar':19}}
 ncspec['globalmeta']['production_site']         = {'src':'isatss/site'}
 ncspec['globalmeta']['Metadata_Link']           = {'src':'isatss/filename'}
 ncspec['globalmeta']['instrument_name']         = {'src':'inncf/globalmeta/instrument_name'}
@@ -144,6 +146,9 @@ ncspec['variables']['SummaryQC_Ice_Concentration']['attrs']['flag_meanings'] = {
 
 ncspec['notifications'] = {'fields':{},'targets':{}}
 ncspec['notifications']['targets']['orbits']  = {'node':job['data']['info']['location']['node'], 'enabled':True, 'prefix':'viirs_ice', 'fields':['file','node']}
+
+varmap = {}
+varmap['DQF'] = 'SummaryQC_Ice_Concentration'
 
 job['modclass'] = {'module':'stitch_swaths','class':'StitchSwaths','args':{'ncspec':ncspec, 'overlap':3, 'length_dim':'Rows'}}
 
