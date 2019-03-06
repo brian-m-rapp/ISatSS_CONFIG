@@ -133,21 +133,21 @@ pimages['iceconc']['pfield'] = 'image'
 pimages['iceconc']['lats']   = 'Latitude'
 pimages['iceconc']['lons']   = 'Longitude'
 pimages['iceconc']['vals']   = 'IceConc'
-pimages['iceconc']['roi']    = 1000             # Radius of Influence (in meters)
+pimages['iceconc']['roi']    = 750             # Radius of Influence (in meters)
 
 pimages['icemap'] = {}
 pimages['icemap']['pfield'] = 'image'
 pimages['icemap']['lats']   = 'Latitude'
 pimages['icemap']['lons']   = 'Longitude'
 pimages['icemap']['vals']   = 'IceMap'
-pimages['icemap']['roi']    = 1000             # Radius of Influence (in meters)
+pimages['icemap']['roi']    = 750             # Radius of Influence (in meters)
 
 pimages['dqf'] = {}
 pimages['dqf']['pfield'] = 'image'
 pimages['dqf']['lats']   = 'Latitude'
 pimages['dqf']['lons']   = 'Longitude'
 pimages['dqf']['vals']   = 'SummaryQC_Ice_Concentration'
-pimages['dqf']['roi']    = 1000             # Radius of Influence (in meters)
+pimages['dqf']['roi']    = 750             # Radius of Influence (in meters)
 
 """
 odata
