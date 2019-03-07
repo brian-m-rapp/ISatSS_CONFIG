@@ -147,8 +147,19 @@ ncspec['variables']['SummaryQC_Ice_Concentration']['attrs']['flag_meanings'] = {
 ncspec['notifications'] = {'fields':{},'targets':{}}
 ncspec['notifications']['targets']['orbits']  = {'node':job['data']['info']['location']['node'], 'enabled':True, 'prefix':'viirs_ice', 'fields':['file','node']}
 
-varmap = {}
-varmap['DQF'] = 'SummaryQC_Ice_Concentration'
+coordVals = {}
+# lat and lon will be variable names, rows and cols will be dimension names
+coordVals['IceConc']                     = {'lat': 'Latitude', 'lon': 'Longitude', 'rows':'Rows', 'cols':'Columns', 'expected_columns':3200}
+coordVals['IceMap']                      = {'lat': 'Latitude', 'lon': 'Longitude', 'rows':'Rows', 'cols':'Columns', 'expected_columns':3200}
+coordVals['SummaryQC_Ice_Concentration'] = {'lat': 'Latitude', 'lon': 'Longitude', 'rows':'Rows', 'cols':'Columns', 'expected_columns':3200}
 
-job['modclass'] = {'module':'stitch_swaths','class':'StitchSwaths','args':{'ncspec':ncspec, 'overlap':3, 'length_dim':'Rows'}}
+varmap = {}
+#varmap['DQF'] = 'SummaryQC_Ice_Concentration'    # Map output variables to input variables
+
+granule_times = {'start':{'src':'time_coverage_start', 'timereformat':{'in':'%Y-%m-%dT%H:%M:%S','out':'%s','start':0,'nchar':19}, 'fmt':'int'},
+				 'end':{'src':'time_coverage_end', 'timereformat':{'in':'%Y-%m-%dT%H:%M:%S','out':'%s','start':0,'nchar':19}, 'fmt':'int'}}
+
+dims = {'rows':{'row_count':'Rows'}, 'columns':{'col_count':'Columns'}, 'primary':'IceConc'}
+args = {'ncspec':ncspec, 'coords':coordVals, 'dimmap':dims, 'boundaries':[-60.0, -30.0, 30.0, 60.0], 'overlap':16, 'varmap':varmap, 'time_extents':granule_times}
+job['modclass'] = {'module':'point_set_stitcher','class':'PointSetStitcher','args':args}
 
