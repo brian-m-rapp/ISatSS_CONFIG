@@ -49,7 +49,7 @@ hosts[2] = {'host':'grb01.nhc.noaa.gov','user':'ldm', 'ext':1336,'cmd':4,'resp':
 """
 hosts = {}
 
-hosts[1] = {'host':'lwib.napo.nws.noaa.gov', 'shortname':'lwib', 'sudocmd':'sudo -iu'}
+hosts[1] = {'host':'lwib.napo.nws.gov', 'shortname':'lwib', 'sudocmd':'sudo -iu'}
 
 hattr = {}
 hattr[1] = {'nics': [('netname', 'eth0')],   'filesystems': []}
@@ -116,6 +116,12 @@ nodes[243] = {'path':'/dev/shm/isatss_data/info/243_amsr2_ocean_nhcprep_cut_cntl
 nodes[244] = {'path':'/dev/shm/isatss_data/info/244_amsr2_ocean_nhcprep_cut_info',          'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[245] = {'path':'/home/lbyerle/isatss_data/245_amsr2_ocean_nhcprep_cut_data',          'filesystem':'/home',  'ctype':'data','stype':'attached','root':'/home/lbyerle/isatss_data'}
 nodes[246] = {'path':'/dev/shm/isatss_data/info/246_amsr2_ocean_nhcprep_proj_cntl',         'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+
+nodes[270] = {'path':'/home/lbyerle/checkisatss/pullFromPDA/Global/ASCAT/metopa',         'filesystem':'/home',       'ctype':'data','stype':'attached','root':'/home/lbyerle/checkisatss/pullFromPDA'}
+nodes[271] = {'path':'/home/lbyerle/checkisatss/pullFromPDA/Global/ASCAT/metopb',         'filesystem':'/home',       'ctype':'data','stype':'attached','root':'/home/lbyerle/checkisatss/pullFromPDA'}
+nodes[272] = {'path':'/dev/shm/isatss_data/info/272_ascat_dispatch_cntl',                 'filesystem':'/dev/shm',    'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[273] = {'path':'/dev/shm/isatss_data/info/273_ascat_dispatch_info',                 'filesystem':'/dev/shm',    'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[274] = {'path':'/home/lbyerle/isatss_data/274_ascat_dispatch_data',                 'filesystem':'/home',       'ctype':'data','stype':'attached','root':'/home/lbyerle/isatss_data'}
 
 # system defaults
 defaults = {}
@@ -206,3 +212,10 @@ groups[5]['jobs'][1]     = {'host':1, 'cfg':'gcom_puller_nhcprep'}
 groups[5]['jobs'][2]     = {'host':1, 'cfg':'amsr2_ocean_cutter_nhcprep'}
 groups[5]['jobs'][3]     = {'host':1, 'cfg':'amsr2_ocean_projector_nhcprep'}
 
+groups[6]                = {}
+groups[6]['name']        = 'ASCAT Processing'
+groups[6]['description'] = """
+Job processing ASCAT products 
+"""
+groups[6]['jobs']        = {}
+groups[6]['jobs'][1]     = {'host':1,'cfg':'ascat_dispatcher'}
