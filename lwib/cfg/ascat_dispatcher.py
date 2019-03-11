@@ -35,7 +35,7 @@ job['data'] = {}
 job['data']['afiles']                 = {}
 job['data']['afiles']['location']       = {'node':274}
 job['data']['afiles']['aging']          = {'window':3600, 'mode':'creationtime'}
-job['data']['afiles']['method']         = {'technique':'stage', 'path':'incinerator'}
+job['data']['afiles']['method']         = {'technique':'inplace'}
 job['data']['afiles']['activeonly']     = True                                                            # check pidfile
 job['data']['afiles']['schedule']       = {'interval':600}
 
@@ -57,7 +57,7 @@ job['data']['log']['activeonly']      = True
 
 
 job['notifications']   = {}
-job['notifications']['ascat']   = {'node':273, 'enabled':True, 'fields':['file', 'node'], 'prefix':'ascat_'}
+job['notifications']['nhc']   = {'node':273, 'enabled':True, 'fields':['file', 'node'], 'prefix':'ascat_'}
 
 
 job['sources'] = {}
@@ -73,11 +73,11 @@ ascatb_args['ledger'] = {'node':job['data']['aledger']['location']['node'],'name
 
 job['sources']['ascat']['paths']['dropzone'] = {'node':270, 'files':{}, 'delete':False}
 job['sources']['ascat']['paths']['dropzone']['files']['ascata']  = {'retrieve':{}, 'args':ascata_args}
-job['sources']['ascat']['paths']['dropzone']['files']['ascata']['retrieve']['ascat']  = {'enabled':True, 'dataitem':'output',  'notifications':['ascat']}
+job['sources']['ascat']['paths']['dropzone']['files']['ascata']['retrieve']['nhc']  = {'enabled':True, 'dataitem':'afiles',  'notifications':['nhc']}
 
 job['sources']['ascat']['paths']['dropzone'] = {'node':271, 'files':{}, 'delete':False}
 job['sources']['ascat']['paths']['dropzone']['files']['ascatb']  = {'retrieve':{}, 'args':ascatb_args}
-job['sources']['ascat']['paths']['dropzone']['files']['ascatb']['retrieve']['ascat']  = {'enabled':True, 'dataitem':'output',  'notifications':['ascat']}
+job['sources']['ascat']['paths']['dropzone']['files']['ascatb']['retrieve']['nhc']  = {'enabled':True, 'dataitem':'afiles',  'notifications':['nhc']}
 
 
 job['monitor'] = {'agents':{},'mi6':{}}
