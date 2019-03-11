@@ -26,14 +26,16 @@ job['log']      = 'ascat_dispatch_log'
 job['log_node'] = 1
 
 
-job['notifications']   = {}
-job['notifications']['ascat']   = {'node':54, 'enabled':True, 'fields':['file', 'node'], 'prefix':'ascat'}
+job['loglevel']         = 5
+job['cntl_node']        = 272
+job['max_sleep']        = 10
+job['work_time']        = 60
 
 job['data'] = {}
 job['data']['afiles']                 = {}
-job['data']['afiles']['location']       = {'node':82}
+job['data']['afiles']['location']       = {'node':274}
 job['data']['afiles']['aging']          = {'window':3600, 'mode':'creationtime'}
-job['data']['afiles']['method']         = {'technique':'stage', 'path':'incinerator'}
+job['data']['afiles']['method']         = {'technique':'inplace'}
 job['data']['afiles']['activeonly']     = True                                                            # check pidfile
 job['data']['afiles']['schedule']       = {'interval':600}
 
@@ -53,23 +55,23 @@ job['data']['log']['method']          = {'technique':'inplace'}
 job['data']['log']['schedule']        = {'interval':3600}
 job['data']['log']['activeonly']      = True
 
-job['loglevel']         = 5
-job['cntl_node']        = 70
-job['max_sleep']        = 10
-job['work_time']        = 60
+job['notifications']   = {}
+job['notifications']['nhc']   = {'node':273, 'enabled':True, 'fields':['file', 'node'], 'prefix':'ascat_'}
 
 job['sources'] = {}
-job['sources']['nhc'] =  {'protocol':'SCP', 'host':'lotus.napo.nws.noaa.gov', 'authid':1, 'timeout':10, 'retry':10,'paths':{},'sessions':1}
-#job['sources']['nhc'] =  {'protocol':'SCP', 'host':'grb01.nhc.noaa.gov', 'authid':0, 'timeout':10, 'retry':10,'paths':{},'sessions':1}
-#'pull_along_path' = False	# If true, pull all files from every directory of the root (inclusive) to the 'depth' directories
-#'depth' = 1		# 0 = pull from this dir; 1 = pull from all subdirectories of the root; -1 = recursively pull from all subdirectories
+job['sources']['ascat'] =  {'protocol':'CP', 'timeout':10, 'retry':10,'paths':{},'sessions':1}
 
-ascat_args = {'window':3600, 'cyclecount':None}
-ascat_args['target'] = {'data':job['data']['afiles'], 'notifications':job['notifications']}
-ascat_args['ledger'] = {'node':job['data']['aledger']['location']['node'],'name':job['name']+'.ledger'}
+ascata_args = {'window':3600, 'cyclecount':None}
+ascata_args['target'] = {'data':job['data']['afiles'], 'notifications':job['notifications']}
+ascata_args['ledger'] = {'node':job['data']['aledger']['location']['node'],'name':'ascata.ledger'}
+job['sources']['ascat']['paths']['ascata'] = {'node':270, 'dirs':{}, 'special':{}}
+job['sources']['ascat']['paths']['ascata']['special'] = {'module':'remote_puller','class':'FilePuller','args':ascata_args}
 
-job['sources']['nhc']['paths']['ascata'] = {'path':'/appdata/ascat', 'dirs':{}, 'special':{}}
-job['sources']['nhc']['paths']['ascata']['special'] = {'module':'remote_puller','class':'FilePuller','args':ascat_args}
+ascatb_args = {'window':3600, 'cyclecount':None}
+ascatb_args['target'] = {'data':job['data']['afiles'], 'notifications':job['notifications']}
+ascatb_args['ledger'] = {'node':job['data']['aledger']['location']['node'],'name':'ascatb.ledger'}
+job['sources']['ascat']['paths']['ascatb'] = {'node':271, 'dirs':{}, 'special':{}}
+job['sources']['ascat']['paths']['ascatb']['special'] = {'module':'remote_puller','class':'FilePuller','args':ascatb_args}
 
 
 job['monitor'] = {'agents':{},'mi6':{}}
@@ -78,4 +80,3 @@ job['monitor']['mi6']['non_isatss']                  = {'enabled':True, 'lockout
 job['monitor']['mi6']['forward']                     = {'enabled':True, 'types':{}, 'messages':{}}
 job['monitor']['mi6']['forward']['types']['ERROR']   = {'enabled':True, 'alert':{'enabled':True, 'lockout':1800}, 'tm':{'enabled':False}}
 job['monitor']['mi6']['forward']['types']['WARNING'] = {'enabled':True, 'alert':{'enabled':True, 'lockout':1800}, 'tm':{'enabled':False}}   #or include
-
