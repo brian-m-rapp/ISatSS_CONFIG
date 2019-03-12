@@ -58,19 +58,22 @@ job['data']['log']['activeonly']      = True
 job['notifications']   = {}
 job['notifications']['nhc']   = {'node':273, 'enabled':True, 'fields':['file', 'node'], 'prefix':'ascat_'}
 
+job['notifications']   = {}
+job['notifications']['nhc']   = {'node':273, 'enabled':True, 'fields':['file', 'node'], 'prefix':'ascat_'}
+
 job['sources'] = {}
 job['sources']['ascat'] =  {'protocol':'CP', 'timeout':10, 'retry':10,'paths':{},'sessions':1}
 
 ascata_args = {'window':3600, 'cyclecount':None}
 ascata_args['target'] = {'data':job['data']['afiles'], 'notifications':job['notifications']}
 ascata_args['ledger'] = {'node':job['data']['aledger']['location']['node'],'name':'ascata.ledger'}
-job['sources']['ascat']['paths']['ascata'] = {'path':'/home/lbyerle/checkisatss/pullFromPDA/Global/ASCAT/metopa', 'dirs':{}, 'special':{}}
+job['sources']['ascat']['paths']['ascata'] = {'node':270, 'dirs':{}, 'special':{}}
 job['sources']['ascat']['paths']['ascata']['special'] = {'module':'remote_puller','class':'FilePuller','args':ascata_args}
 
 ascatb_args = {'window':3600, 'cyclecount':None}
 ascatb_args['target'] = {'data':job['data']['afiles'], 'notifications':job['notifications']}
 ascatb_args['ledger'] = {'node':job['data']['aledger']['location']['node'],'name':'ascatb.ledger'}
-job['sources']['ascat']['paths']['ascatb'] = {'path':'/home/lbyerle/checkisatss/pullFromPDA/Global/ASCAT/metopb', 'dirs':{}, 'special':{}}
+job['sources']['ascat']['paths']['ascatb'] = {'node':271, 'dirs':{}, 'special':{}}
 job['sources']['ascat']['paths']['ascatb']['special'] = {'module':'remote_puller','class':'FilePuller','args':ascatb_args}
 
 
