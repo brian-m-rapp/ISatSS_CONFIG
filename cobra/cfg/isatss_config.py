@@ -260,13 +260,6 @@ nodes[154] = {'path':'/dev/shm/isatss_data/info/154_vice_stitcher_info',  'files
 nodes[155] = {'path':'/data/isatss_data/data/155_vice_stitcher_data',     'filesystem':'/data',   'ctype':'data','stype':'attached','root':'/data'}
 nodes[156] = {'path':'/dev/shm/isatss_data/info/156_vice_proj_cntl',      'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
 
-nodes[270] = {'path':'/home/brapp/checkisatss/pullFromPDA/Global/ASCAT/metopa',         'filesystem':'/home',       'ctype':'data','stype':'attached','root':'/home/lbyerle/checkisatss/pullFromPDA'}
-nodes[271] = {'path':'/home/brapp/checkisatss/pullFromPDA/Global/ASCAT/metopb',         'filesystem':'/home',       'ctype':'data','stype':'attached','root':'/home/lbyerle/checkisatss/pullFromPDA'}
-nodes[272] = {'path':'/dev/shm/isatss_data/info/272_ascat_dispatch_cntl',                 'filesystem':'/dev/shm',    'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[273] = {'path':'/dev/shm/isatss_data/info/273_ascat_dispatch_info',                 'filesystem':'/dev/shm',    'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[274] = {'path':'/home/brapp/isatss_data/274_ascat_dispatch_data',                 'filesystem':'/home',       'ctype':'data','stype':'attached','root':'/home/lbyerle/isatss_data'}
-
-
 nodes[700] = {'path':'/dev/shm/isatss_data/info/700_dmsp_f15_cut_cntl',     'filesystem':'/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[702] = {'path':'/dev/shm/isatss_data/info/702_dmsp_f15_cut_input',    'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[703] = {'path':'/data/isatss_data/data/703_dmsp_f15_cut_data',        'filesystem':'/data',    'ctype':'data','stype':'attached','root':'/data/isatss_data'}
@@ -475,7 +468,6 @@ groups[17]['description'] = """
 VIIRS ice concentration processing chain
 """
 groups[17]['jobs']     = {}
-groups[17]['jobs'][1]  = {'host':1,'cfg':'ascat_dispatcher'}
 groups[17]['jobs'][2]  = {'host':1,'cfg':'viirs_ice_stitcher'}
 groups[17]['jobs'][3]  = {'host':1,'cfg':'viirs_ice_projector'}
 

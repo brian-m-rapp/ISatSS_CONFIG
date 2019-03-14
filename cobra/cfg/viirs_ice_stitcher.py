@@ -67,9 +67,9 @@ ncspec['dimensions']['Rows']        = {'src':'inncf/dimensions/Rows'}
 ncspec['dimensions']['Columns']     = {'src':'inncf/dimensions/Columns'}
 
 ncspec['globalmeta'] = {}
-ncspec['globalmeta']['time_coverage_start']     = {'src':'inncf/globalmeta/time_coverage_start', 'timereformat':{'truncate':7200, 
+ncspec['globalmeta']['time_coverage_start']     = {'src':'inncf/globalmeta/time_coverage_start', 'timereformat':{'truncate':3600, 
 													'in':'%Y-%m-%dT%H:%M:%S','out':'%Y-%m-%dT%H:%M:%SZ','start':0,'nchar':19}}
-ncspec['globalmeta']['time_coverage_end']       = {'src':'inncf/globalmeta/time_coverage_end', 'timereformat':{'truncate':7200, 
+ncspec['globalmeta']['time_coverage_end']       = {'src':'inncf/globalmeta/time_coverage_end', 'timereformat':{'truncate':3600, 
 													'in':'%Y-%m-%dT%H:%M:%S','out':'%Y-%m-%dT%H:%M:%SZ','start':0,'nchar':19}}
 ncspec['globalmeta']['production_site']         = {'src':'isatss/site'}
 ncspec['globalmeta']['Metadata_Link']           = {'src':'isatss/filename'}
@@ -157,7 +157,7 @@ varmap = {}
 #varmap['DQF'] = 'SummaryQC_Ice_Concentration'    # Map output variables to input variables
 
 granule_times = {'start':{'src':'time_coverage_start', 'timereformat':{'in':'%Y-%m-%dT%H:%M:%S','out':'%s','start':0,'nchar':19}, 'fmt':'int'},
-				 'end':{'src':'time_coverage_end', 'timereformat':{'in':'%Y-%m-%dT%H:%M:%S','out':'%s','start':0,'nchar':19}, 'fmt':'int'}}
+				 'end':  {'src':'time_coverage_end',   'timereformat':{'in':'%Y-%m-%dT%H:%M:%S','out':'%s','start':0,'nchar':19}, 'fmt':'int'}}
 
 dims = {'rows':{'row_count':'Rows'}, 'columns':{'col_count':'Columns'}, 'primary':'IceConc'}
 args = {'ncspec':ncspec, 'coords':coordVals, 'dimmap':dims, 'boundaries':[-60.0, -30.0, 30.0, 60.0], 'overlap':16, 'varmap':varmap, 'time_extents':granule_times}
