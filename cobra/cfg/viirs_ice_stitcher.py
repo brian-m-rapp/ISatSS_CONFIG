@@ -48,11 +48,19 @@ job['data']['log']['method']       = {'technique':'inplace'}
 job['data']['log']['schedule']     = {'interval':3600}
 job['data']['log']['activeonly']   = True
 
-job['loglevel']             = 5
+job['data']['cache']                = {}
+job['data']['cache']['location']    = {'node':157}
+job['data']['cache']['aging']       = {'window':86400, 'mode':'creationtime'}
+job['data']['cache']['method']      = {'technique':'inplace'}
+job['data']['cache']['activeonly']  = False
+job['data']['cache']['schedule']    = {'interval':3600}
+job['data']['cache']['cfgorder']    = 1
+
+job['loglevel']             = 6
 
 job['cntl_node']            = 153
 
-job['input_type']           = {'type':'infofile', 'node':151, 'delete_file':True, 'delete_info':True}
+job['input_type']           = {'type':'infofile', 'node':151, 'delete_file':False, 'delete_info':False}
 
 job['watcher_timeout']      = 1000
 job['files_per_cycle']      = 50
@@ -182,6 +190,6 @@ boundaries = {
 }
 
 #args = {'ncspec':ncspec, 'coords':coordVals, 'dimmap':dims, 'boundaries':boundaries, 'overlap':8, 'varmap':varmap, 'time_extents':granule_times}
-args = {'ncspec':ncspec, 'boundaries':boundaries, 'overlap':8, 'varmap':varmap}
-job['modclass'] = {'module':'viirs_stitcher','class':'ViirsStitcher','args':args}
+args = {'ncspec':ncspec, 'boundaries':boundaries, 'overlap':8, 'scan_width':16, 'varmap':varmap, 'cache_node':job['data']['cache']['location']['node']}
+job['modclass'] = {'module':'viirs_stitcher2','class':'ViirsStitcher','args':args}
 
