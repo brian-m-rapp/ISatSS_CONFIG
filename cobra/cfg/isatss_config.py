@@ -25,16 +25,34 @@ For openSUSE, use 'sudo -iu'.
 """
 sudocmd = 'sudo -iu'	# defaults to 'sudo -Su'
 
-'''
-import socket
-ipaddr = socket.gethostbyname(socket.gethostname())
-if ipaddr.startswith('140.90.141'):
-	site = 'NAPO'
-elif ipaddr.startswith('192.168'):
-	site = 'ROCK'
-else:
-	site = 'unknown'
-'''
+"""
+The sites list allows multiple ISatSS installations to be defined within a site.  This could apply
+if a site has separate 'dev', 'qa', and 'ops' installations covered by a single configuration tree.
+
+The 'sites' construct is a list of dictionaries, with each dictionary defining a 'site', and the 
+method to be used to determine a match.  Note that the same site can be listed more than once with
+multiple means of performing a match specified.  The first matching record is the winner.
+Dictionary fields:
+	site     (required)	Site specifier string.  This will be defined as 'isc.site' after processing by isatss_init.py
+	var      (optional) Dictionary of variables to be defined in isc.
+	method   (required)	Method for performing a match.  Values can be 'by_ip' or 'by_name'.  For 'by_ip', the IP address
+	                    of the interface specified by the 'intf' key is matched.  For 'by_name', the hose name of the
+	                    current machine is matched. 
+	intf     (optional) Defines the interface that will contain the matching IP address.  Only used for 'by_ip' method.
+	operator (required) Defines how to compare the value returned by the method with the 'value' key.  Possible values
+	                    are 'start_with', 'ends_with', 'contains', and 'is'.
+	value    (required) Defines the value that will determine a match
+	replace  (optional) Dictionary defining token replacements for hosts names.  A token string appearing in the host
+	                    hostname will be replaced with the isc variable content.  For instance 'replace':{'%tier%':'tier'}
+	                    will replace the token '%tier%' with the value of isc.tier.
+"""
+
+sites = [
+	{'site':'NAPO', 'vars':{'tier':'dev'}, 'method':'by_name', 'operator':'starts_with', 'value':'cobra'},
+	{'site':'NAPO', 'vars':{'tier':'dev'}, 'method':'by_ip',   'operator':'starts_with', 'value':'140.90.141', 'intf':'eno1'},
+	{'site':'ROCK', 'vars':{'tier':'dev'}, 'method':'by_name', 'operator':'starts_with', 'value':'chiark'},
+	{'site':'ROCK', 'vars':{'tier':'dev'}, 'method':'by_ip',   'operator':'starts_with', 'value':'192.168', 'intf':'eth0'}
+]
 
 """
 The host dictionary identifies all of the members of an ISatSS cluster, and defines the ports and nodes used by the agent86 control and communications app.
@@ -54,12 +72,6 @@ If no entries are provided, ISatSS assumes it is running on a non-clustered syst
 Example entry:
 hosts[2] = {'host':'grb01.nhc.noaa.gov','user':'ldm', 'ext':1336,'cmd':4,'resp':5}
 """
-sites = [
-	{'site':'NAPO', 'method':'by_name', 'operator':'starts_with', 'value':'cobra', 'tier':'dev'},
-	{'site':'NAPO', 'method':'by_ip',   'operator':'starts_with', 'value':'140.90.141', 'intf':'eno1', 'tier':'dev'},
-	{'site':'ROCK', 'method':'by_name', 'operator':'starts_with', 'value':'chiark', 'tier':'dev'},
-	{'site':'ROCK', 'method':'by_ip',   'operator':'starts_with', 'value':'192.168', 'intf':'eth0', 'tier':'dev'}
-]
 
 hosts = {}
 hosts['NAPO'] = {}
