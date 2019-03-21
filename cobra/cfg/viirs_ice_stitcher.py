@@ -48,14 +48,6 @@ job['data']['log']['method']       = {'technique':'inplace'}
 job['data']['log']['schedule']     = {'interval':3600}
 job['data']['log']['activeonly']   = True
 
-job['data']['cache']                = {}
-job['data']['cache']['location']    = {'node':157}
-job['data']['cache']['aging']       = {'window':86400, 'mode':'creationtime'}
-job['data']['cache']['method']      = {'technique':'inplace'}
-job['data']['cache']['activeonly']  = False
-job['data']['cache']['schedule']    = {'interval':3600}
-job['data']['cache']['cfgorder']    = 1
-
 job['loglevel']             = 6
 
 job['cntl_node']            = 153
@@ -177,19 +169,17 @@ varmap = {}
 boundaries = {
 	0: {'start':  0.0, 'end': 30.0, 'direction':0},
 	1: {'start': 30.0, 'end': 60.0, 'direction':0},
-	2: {'start': 60.0, 'end': 90.0, 'direction':0},
-	3: {'start': 90.0, 'end': 60.0, 'direction':1},
-	4: {'start': 60.0, 'end': 30.0, 'direction':1},
-	5: {'start': 30.0, 'end':  0.0, 'direction':1},
-	6: {'start':  0.0, 'end':-30.0, 'direction':1},
-	7: {'start':-30.0, 'end':-60.0, 'direction':1},
-	8: {'start':-60.0, 'end':-90.0, 'direction':1},
-	9: {'start':-90.0, 'end':-60.0, 'direction':0},
-	10:{'start':-60.0, 'end':-30.0, 'direction':0},
-	11:{'start':-30.0, 'end':  0.0, 'direction':0}
+	2: {'start': 60.0, 'end': 60.0, 'direction':2},
+	3: {'start': 60.0, 'end': 30.0, 'direction':1},
+	4: {'start': 30.0, 'end':  0.0, 'direction':1},
+	5: {'start':  0.0, 'end':-30.0, 'direction':1},
+	6: {'start':-30.0, 'end':-60.0, 'direction':1},
+	7: {'start':-60.0, 'end':-60.0, 'direction':3},
+	8 :{'start':-60.0, 'end':-30.0, 'direction':0},
+	9 :{'start':-30.0, 'end':  0.0, 'direction':0}
 }
 
 #args = {'ncspec':ncspec, 'coords':coordVals, 'dimmap':dims, 'boundaries':boundaries, 'overlap':8, 'varmap':varmap, 'time_extents':granule_times}
-args = {'ncspec':ncspec, 'boundaries':boundaries, 'overlap':8, 'scan_width':16, 'varmap':varmap, 'cache_node':job['data']['cache']['location']['node']}
+args = {'ncspec':ncspec, 'boundaries':boundaries, 'overlap':8, 'scan_width':16, 'varmap':varmap, 'latitude':'Latitude'}
 job['modclass'] = {'module':'viirs_stitcher2','class':'ViirsStitcher','args':args}
 
