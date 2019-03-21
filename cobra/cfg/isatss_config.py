@@ -25,6 +25,7 @@ For openSUSE, use 'sudo -iu'.
 """
 sudocmd = 'sudo -iu'	# defaults to 'sudo -Su'
 
+'''
 import socket
 ipaddr = socket.gethostbyname(socket.gethostname())
 if ipaddr.startswith('140.90.141'):
@@ -33,8 +34,7 @@ elif ipaddr.startswith('192.168'):
 	site = 'ROCK'
 else:
 	site = 'unknown'
-
-tier = 'dev'	# dev/qa/ops - unique to IDP deployment, not used outside of this configuration file
+'''
 
 """
 The host dictionary identifies all of the members of an ISatSS cluster, and defines the ports and nodes used by the agent86 control and communications app.
@@ -54,17 +54,20 @@ If no entries are provided, ISatSS assumes it is running on a non-clustered syst
 Example entry:
 hosts[2] = {'host':'grb01.nhc.noaa.gov','user':'ldm', 'ext':1336,'cmd':4,'resp':5}
 """
+sites = [
+	{'site':'NAPO', 'method':'by_name', 'operator':'starts_with', 'value':'cobra', 'tier':'dev'},
+	{'site':'NAPO', 'method':'by_ip',   'operator':'starts_with', 'value':'140.90.141', 'intf':'eno1', 'tier':'dev'},
+	{'site':'ROCK', 'method':'by_name', 'operator':'starts_with', 'value':'chiark', 'tier':'dev'},
+	{'site':'ROCK', 'method':'by_ip',   'operator':'starts_with', 'value':'192.168', 'intf':'eth0', 'tier':'dev'}
+]
+
 hosts = {}
-if site == 'NAPO':
-	hosts[1] = {'host':'cobra.napo.nws.noaa.gov', 'shortname':'cobra', 'sudocmd':'sudo -iu'}
-	hosts[2] = {'host':'cobra.napo.nws.noaa.gov', 'shortname':'ldm', 'sudocmd':'sudo -iu', 'user':'ldm', 'ext':1338, 'cmd':72, 'resp':73}
-elif site == 'ROCK':
-	hosts[1] = {'host':'chiark.dilireum.org', 'shortname':'chiark'}
-	hosts[2] = {'host':'masaq.dilireum.org',  'shortname':'masaq'}
-else:
-	print('Unknown site')
-	import sys
-	sys.exit(1)
+hosts['NAPO'] = {}
+hosts['NAPO'][1] = {'host':'cobra.napo.nws.noaa.gov', 'shortname':'cobra', 'sudocmd':'sudo -iu'}
+hosts['NAPO'][2] = {'host':'cobra.napo.nws.noaa.gov', 'shortname':'ldm', 'sudocmd':'sudo -iu', 'user':'ldm', 'ext':1338, 'cmd':72, 'resp':73}
+hosts['ROCK'] = {}
+hosts['ROCK'][1] = {'host':'chiark.dilireum.org', 'shortname':'chiark'}
+hosts['ROCK'][2] = {'host':'masaq.dilireum.org',  'shortname':'masaq'}
 
 hattr = {}
 hattr[1] = {'nics': [('netname', 'eth0')],   'filesystems': []}
