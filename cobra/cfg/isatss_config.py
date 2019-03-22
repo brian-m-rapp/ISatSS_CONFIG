@@ -27,7 +27,9 @@ sudocmd = 'sudo -iu'	# defaults to 'sudo -Su'
 
 """
 The sites list allows multiple ISatSS installations to be defined within a site.  This could apply
-if a site has separate 'dev', 'qa', and 'ops' installations covered by a single configuration tree.
+if a site has separate 'dev', 'qa', and 'ops' installations covered by a single configuration tree,
+or if sub-sites are defined within a single configuration tree (see SPC).  It can also be used to
+allows the same configuration tree to be used across multiple physical locations.
 
 The 'sites' construct is a list of dictionaries, with each dictionary defining a 'site', and the 
 method to be used to determine a match.  Note that the same site can be listed more than once with
@@ -49,9 +51,7 @@ Dictionary fields:
 
 sites = [
 	{'site':'NAPO', 'vars':{'tier':'dev'}, 'method':'by_name', 'operator':'starts_with', 'value':'cobra'},
-	{'site':'NAPO', 'vars':{'tier':'dev'}, 'method':'by_ip',   'operator':'starts_with', 'value':'140.90.141', 'intf':'eno1'},
-	{'site':'ROCK', 'vars':{'tier':'dev'}, 'method':'by_name', 'operator':'starts_with', 'value':'chiark'},
-	{'site':'ROCK', 'vars':{'tier':'dev'}, 'method':'by_ip',   'operator':'starts_with', 'value':'192.168', 'intf':'eth0'}
+	{'site':'ROCK', 'vars':{'tier':'dev'}, 'method':'by_name', 'operator':'starts_with', 'value':'chiark'}
 ]
 
 """
