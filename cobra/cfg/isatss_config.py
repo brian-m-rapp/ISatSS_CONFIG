@@ -49,10 +49,9 @@ Dictionary fields:
 	                    will replace the token '%tier%' with the value of isc.tier.
 """
 
-sites = [
-	{'site':'NAPO', 'vars':{'tier':'dev'}, 'method':'by_name', 'operator':'starts_with', 'value':'cobra'},
-	{'site':'ROCK', 'vars':{'tier':'dev'}, 'method':'by_name', 'operator':'starts_with', 'value':'chiark'}
-]
+site_attributes = {}
+site_attributes['NAPO'] = {'site':'NAPO', 'tier':'dev'}
+site_attributes['ROCK'] = {'site':'ROCK', 'tier':'dev'}
 
 """
 The host dictionary identifies all of the members of an ISatSS cluster, and defines the ports and nodes used by the agent86 control and communications app.
