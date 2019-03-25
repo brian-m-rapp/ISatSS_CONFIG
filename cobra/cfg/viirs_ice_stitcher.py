@@ -181,5 +181,5 @@ boundaries = {
 
 #args = {'ncspec':ncspec, 'coords':coordVals, 'dimmap':dims, 'boundaries':boundaries, 'overlap':8, 'varmap':varmap, 'time_extents':granule_times}
 args = {'ncspec':ncspec, 'boundaries':boundaries, 'overlap':8, 'scan_width':16, 'varmap':varmap, 'latitude':'Latitude'}
-job['modclass'] = {'module':'viirs_stitcher2','class':'ViirsStitcher','args':args}
+job['modclass'] = {'module':'viirs_stitcher3','class':'ViirsStitcher','args':args}
 
