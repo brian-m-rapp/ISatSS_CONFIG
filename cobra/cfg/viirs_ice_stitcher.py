@@ -73,12 +73,12 @@ ncspec['globalmeta'] = {}
 #													'in':'%Y-%m-%dT%H:%M:%S','out':'%Y-%m-%dT%H:%M:%SZ','start':0,'nchar':19}}
 #ncspec['globalmeta']['time_coverage_end']       = {'src':'inncf/globalmeta/time_coverage_end', 'timereformat':{'truncate':3600, 
 #													'in':'%Y-%m-%dT%H:%M:%S','out':'%Y-%m-%dT%H:%M:%SZ','start':0,'nchar':19}}
-ncspec['globalmeta']['time_coverage_start']     = {'src':'inncf/globalmeta/time_coverage_start'}
-ncspec['globalmeta']['time_coverage_end']       = {'src':'inncf/globalmeta/time_coverage_end'}
+ncspec['globalmeta']['time_coverage_start']     = {'src':'meta/time_coverage_start'}
+ncspec['globalmeta']['time_coverage_end']       = {'src':'meta/time_coverage_end'}
 ncspec['globalmeta']['production_site']         = {'src':'isatss/site'}
 ncspec['globalmeta']['Metadata_Link']           = {'src':'isatss/filename'}
-ncspec['globalmeta']['instrument_name']         = {'src':'inncf/globalmeta/instrument_name'}
-ncspec['globalmeta']['satellite_name']          = {'src':'inncf/globalmeta/satellite_name'}
+ncspec['globalmeta']['instrument_name']         = {'src':'meta/instrument_name'}
+ncspec['globalmeta']['satellite_name']          = {'src':'meta/satellite_name'}
 
 ncspec['variables']   = {}
 ncspec['variables']['Latitude']   = {}
