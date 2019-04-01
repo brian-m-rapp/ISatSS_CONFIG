@@ -57,28 +57,22 @@ job['input_type']           = {'type':'infofile', 'node':151, 'delete_file':Fals
 job['watcher_timeout']      = 1000
 job['files_per_cycle']      = 50
 
-#inncf
 ncspec = {}
 ncspec['destination'] = job['data']['output']
-ncspec['namedef']     = [{'src':'isatss/filename'}]
-
-# filename = viirs_ice-<orbit>-
+ncspec['namedef']     = [{'src':'meta/filename'}]
 
 ncspec['dimensions'] = {}
-ncspec['dimensions']['Rows']        = {'src':'inncf/dimensions/Rows'}
-ncspec['dimensions']['Columns']     = {'src':'inncf/dimensions/Columns'}
+ncspec['dimensions']['Rows']        = {'src':'meta/rows'}
+ncspec['dimensions']['Columns']     = {'src':'meta/columns'}
 
 ncspec['globalmeta'] = {}
-#ncspec['globalmeta']['time_coverage_start']     = {'src':'inncf/globalmeta/time_coverage_start', 'timereformat':{'truncate':3600, 
-#													'in':'%Y-%m-%dT%H:%M:%S','out':'%Y-%m-%dT%H:%M:%SZ','start':0,'nchar':19}}
-#ncspec['globalmeta']['time_coverage_end']       = {'src':'inncf/globalmeta/time_coverage_end', 'timereformat':{'truncate':3600, 
-#													'in':'%Y-%m-%dT%H:%M:%S','out':'%Y-%m-%dT%H:%M:%SZ','start':0,'nchar':19}}
+ncspec['globalmeta']['production_site']         = {'src':'meta/site'}
+ncspec['globalmeta']['Metadata_Link']           = {'src':'meta/filename'}
+ncspec['globalmeta']['satellite_name:']		    = {'default':'NPP'}
+ncspec['globalmeta']['instrument_name']		    = {'default':'VIIRS'}
 ncspec['globalmeta']['time_coverage_start']     = {'src':'meta/time_coverage_start'}
 ncspec['globalmeta']['time_coverage_end']       = {'src':'meta/time_coverage_end'}
-ncspec['globalmeta']['production_site']         = {'src':'isatss/site'}
-ncspec['globalmeta']['Metadata_Link']           = {'src':'isatss/filename'}
-ncspec['globalmeta']['instrument_name']         = {'src':'meta/instrument_name'}
-ncspec['globalmeta']['satellite_name']          = {'src':'meta/satellite_name'}
+
 
 ncspec['variables']   = {}
 ncspec['variables']['Latitude']   = {}
