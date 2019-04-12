@@ -49,9 +49,9 @@ Dictionary fields:
 	                    will replace the token '%tier%' with the value of isc.tier.
 """
 
-site_attributes = {}
-site_attributes['NAPO'] = {'site':'NAPO', 'tier':'dev'}
-site_attributes['ROCK'] = {'site':'ROCK', 'tier':'dev'}
+instance_attrs = {}
+instance_attrs['NAPO'] = {'site':'NAPO', 'tier':'dev'}
+instance_attrs['ROCK'] = {'site':'ROCK', 'tier':'dev'}
 
 """
 The host dictionary identifies all of the members of an ISatSS cluster, and defines the ports and nodes used by the agent86 control and communications app.
@@ -362,11 +362,12 @@ Jobs for configuring and managing LDM instances
 groups[4]['jobs']        = {}
 groups[4]['jobs'][1]     = {'host':2, 'cfg':'isatss_ldm_manager'}
 groups[4]['jobs'][2]     = {'host':1, 'cfg':'ldm_in_dispatcher'}
-groups[4]['jobs'][3]     = {'host':1, 'cfg':'goes_stats_processor'}
+#groups[4]['jobs'][3]     = {'host':1, 'cfg':'goes_stats_processor'}
 
 
 groups[5]                = {}
 groups[5]['name']        = 'FLS Processing'
+groups[5]['instance']    = ['ROCK', 'NAPO']
 groups[5]['description'] = """
 Job processing Fog and Low Stratus products 
 """
@@ -382,14 +383,6 @@ groups[6]['jobs']        = {}
 groups[6]['jobs'][1]     = {'host':1, 'cfg':'amsr2_ocean_puller'}
 groups[6]['jobs'][2]     = {'host':1, 'cfg':'amsr2_ocean_processor', 'icfg':{'io':{'x':2000,'y':3200}}}
 '''
-groups[7]                = {}
-groups[7]['name']        = 'Cryosat Altimetry Processing'
-groups[7]['description'] = """
-Jobs for ingesting, processing, and pushing Cryosat altimetry products
-"""
-groups[7]['jobs']        = {}
-groups[7]['jobs'][1]     = {'host':1, 'cfg':'cryosat_dispatcher'}
-groups[7]['jobs'][2]     = {'host':1, 'cfg':'cryosat_processor'}
 
 groups[8]                = {}
 groups[8]['name']        = 'Himawari Tile Processing'
@@ -486,5 +479,3 @@ VIIRS ice concentration processing chain
 groups[17]['jobs']     = {}
 groups[17]['jobs'][2]  = {'host':1,'cfg':'viirs_ice_stitcher'}
 groups[17]['jobs'][3]  = {'host':1,'cfg':'viirs_ice_projector'}
-
-
