@@ -49,7 +49,10 @@ hosts[2] = {'host':'grb01.nhc.noaa.gov','user':'ldm', 'ext':1336,'cmd':4,'resp':
 """
 hosts = {}
 
-hosts[1] = {'host':'lwib.napo.nws.gov', 'shortname':'lwib', 'sudocmd':'sudo -iu'}
+"""hosts[1] = {'host':'lwib.napo.nws.gov', 'shortname':'lwib', 'sudocmd':'sudo -iu'}
+"""
+
+hosts[1] = {'host':'unallocated.barefruit.co.uk', 'shortname':'lwib', 'sudocmd':'sudo -iu'}
 
 hattr = {}
 hattr[1] = {'nics': [('netname', 'eth0')],   'filesystems': []}
@@ -123,7 +126,18 @@ nodes[272] = {'path':'/dev/shm/isatss_data/info/272_ascat_dispatch_cntl',       
 nodes[273] = {'path':'/dev/shm/isatss_data/info/273_ascat_dispatch_info',                 'filesystem':'/dev/shm',    'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[274] = {'path':'/home/lbyerle/isatss_data/274_ascat_dispatch_data',                 'filesystem':'/home',       'ctype':'data','stype':'attached','root':'/home/lbyerle/isatss_data'}
 
-# system defaults
+nodes[90] = {'path':'/dev/shm/isatss_data/info/90_jason_disp_cntl',     'filesystem':'/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[91] = {'path':'/home/lbyerle/isatss_data/91_jason_disp_data',       'filesystem':'/home',   'ctype':'data','stype':'attached','root':'/home/lbyerle/isatss_data'}
+nodes[92] = {'path':'/dev/shm/isatss_data/info/92_jason_disp_info',     'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[93] = {'path':'/dev/shm/isatss_data/info/93_jason_proc_cntl',     'filesystem':'/home', 'ctype':'cntl','stype':'attached','root':'/home/lbyerle/isatss_data'}
+
+nodes[135] = {'path':'/dev/shm/isatss_data/info/135_S3A_disp_cntl',     'filesystem':'/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[136] = {'path':'/home/lbyerle/isatss_data/136_S3A_disp_data',       'filesystem':'/home',   'ctype':'data','stype':'attached','root':'/home/lbyerle/isatss_data'}
+nodes[137] = {'path':'/dev/shm/isatss_data/info/137_S3A_disp_info',     'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[138] = {'path':'/dev/shm/isatss_data/info/138_S3A_proc_cntl',     'filesystem':'/home', 'ctype':'cntl','stype':'attached','root':'/home/lbyerle/isatss_data'}
+
+# system default
+
 defaults = {}
 defaults['log']             = 'isatss_log'	  			# default log file name
 defaults['log_node']        = 1							# path to storage area for log files
@@ -219,3 +233,21 @@ Job processing ASCAT products
 """
 groups[6]['jobs']        = {}
 groups[6]['jobs'][1]     = {'host':1,'cfg':'ascat_dispatcher'}
+
+groups[7]                = {}
+groups[7]['name']        = 'Jason2/3 Altimetry Processing'
+groups[7]['description'] = """
+Jobs for ingesting, processing, and pushing Altimetry data from Jason2/3
+"""
+groups[7]['jobs']        = {}
+groups[7]['jobs'][1]     = {'host':1, 'cfg':'jason_dispatcher'}
+groups[7]['jobs'][2]     = {'host':1, 'cfg':'jason_processor'}
+
+groups[8]                = {}
+groups[8]['name']        = 'Sentinel 3A Altimetry Processing'
+groups[8]['description'] = """
+Jobs for ingesting, processing, and pushing Altimetry data from Sentinel 3A
+"""
+groups[8]['jobs']        = {}
+groups[8]['jobs'][1]     = {'host':1, 'cfg':'S3A_dispatcher_placeholder'}
+groups[8]['jobs'][2]     = {'host':1, 'cfg':'S3A_processor'}

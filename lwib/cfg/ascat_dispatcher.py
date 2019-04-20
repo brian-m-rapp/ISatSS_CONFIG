@@ -58,9 +58,6 @@ job['data']['log']['activeonly']      = True
 job['notifications']   = {}
 job['notifications']['nhc']   = {'node':273, 'enabled':True, 'fields':['file', 'node'], 'prefix':'ascat_'}
 
-job['notifications']   = {}
-job['notifications']['nhc']   = {'node':273, 'enabled':True, 'fields':['file', 'node'], 'prefix':'ascat_'}
-
 job['sources'] = {}
 job['sources']['ascat'] =  {'protocol':'CP', 'timeout':10, 'retry':10,'paths':{},'sessions':1}
 
