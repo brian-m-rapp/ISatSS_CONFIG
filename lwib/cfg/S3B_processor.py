@@ -27,16 +27,16 @@
 
     These files do not flow over SBN, but can be found at:
     ftp://ftp.star.nesdis.noaa.gov/pub/socd3/coastwatch/sral/L2/S3A_SR_2_WAT_NRT_manifest
-    example: S3A_SR_2_WAT____20190216T210812_20190216T210840_20190216T232206_0028_041_257______MAR_O_NR_003.SEN3.tar 
+    example: S3B_SR_2_WAT____20190216T210812_20190216T210840_20190216T232206_0028_041_257______MAR_O_NR_003.SEN3.tar 
     use standard_measurement.nc
     
 """
 
 job = {}
-job['name']     = 'S3A_processing'
+job['name']     = 'S3B_processing'
 job['cmd']      = 'mojo'
 job['class']    = 'MOJO'
-job['log']      = 'S3A_processing_log'
+job['log']      = 'S3B_processing_log'
 job['log_node'] = 1
 
 job['data'] = {}
@@ -66,9 +66,9 @@ job['data']['log']['activeonly']   = True
 
 job['loglevel']             = 5
 
-job['cntl_node']            = 138
+job['cntl_node']            = 143
 
-job['input_type']           = {'type':'infofile','node':137,'delete_file':True, 'delete_info':True}
+job['input_type']           = {'type':'infofile','node':142,'delete_file':True, 'delete_info':True}
 
 job['watcher_timeout']      = 1000
 job['files_per_cycle']      = 50
@@ -77,7 +77,7 @@ job['files_per_cycle']      = 50
 ncspec = {}
 ncspec['destination'] = job['data']['output']
 ncspec['namedef']     = []
-ncspec['namedef'].append({'default':'isatss_Sentinel3A_napo','delimiter':'_'})
+ncspec['namedef'].append({'default':'isatss_Sentinel3B_napo','delimiter':'_'})
 ncspec['namedef'].append({'src':'inncf/globalmeta/cycle_number','delimiter':'_'})
 ncspec['namedef'].append({'src':'inncf/globalmeta/pass_number','delimiter':'.nc'})
 
@@ -86,7 +86,7 @@ ncspec['dimensions']['time_01']        = {'src':'inncf/dimensions/time_01'}
 ncspec['dimensions']['dmw_band']     = {'default':1}
 
 ncspec['globalmeta'] = {}
-ncspec['globalmeta']['mission_name']                = {'default':'Sentinel-3A'}
+ncspec['globalmeta']['mission_name']                = {'default':'Sentinel-3B'}
 ncspec['globalmeta']['first_meas_time']             = {'src':'inncf/globalmeta/first_meas_time'}
 ncspec['globalmeta']['last_meas_time']              = {'src':'inncf/globalmeta/last_meas_time'}
 ncspec['globalmeta']['production_site']             = {'default':'NAPO'}
@@ -150,7 +150,7 @@ ncspec['variables']['time_01']['shuffle']                = {'default':True}
 ncspec['variables']['time_01']['data']                   = {'src':'data/time_01', 'truncate':1800}
 ncspec['variables']['time_01']['attrs'] = {}
 ncspec['variables']['time_01']['attrs']['standard_name'] = {'default':'time'}
-ncspec['variables']['time_01']['attrs']['long_name']     = {'default':'Sentinel-3A scan start time, seconds since 2000-01-01 00:00:00'}
+ncspec['variables']['time_01']['attrs']['long_name']     = {'default':'Sentinel-3B scan start time, seconds since 2000-01-01 00:00:00'}
 ncspec['variables']['time_01']['attrs']['units']         = {'default':'s'}
 
 ncspec['variables']['DQF']   = {}

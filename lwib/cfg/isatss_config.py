@@ -136,6 +136,11 @@ nodes[136] = {'path':'/home/lbyerle/isatss_data/136_S3A_disp_data',       'files
 nodes[137] = {'path':'/dev/shm/isatss_data/info/137_S3A_disp_info',     'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[138] = {'path':'/dev/shm/isatss_data/info/138_S3A_proc_cntl',     'filesystem':'/home', 'ctype':'cntl','stype':'attached','root':'/home/lbyerle/isatss_data'}
 
+nodes[140] = {'path':'/dev/shm/isatss_data/info/140_S3B_disp_cntl',     'filesystem':'/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[141] = {'path':'/home/lbyerle/isatss_data/141_S3B_disp_data',       'filesystem':'/home',   'ctype':'data','stype':'attached','root':'/home/lbyerle/isatss_data'}
+nodes[142] = {'path':'/dev/shm/isatss_data/info/142_S3B_disp_info',     'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[143] = {'path':'/dev/shm/isatss_data/info/143_S3B_proc_cntl',     'filesystem':'/home', 'ctype':'cntl','stype':'attached','root':'/home/lbyerle/isatss_data'}
+
 # system default
 
 defaults = {}
@@ -251,3 +256,12 @@ Jobs for ingesting, processing, and pushing Altimetry data from Sentinel 3A
 groups[8]['jobs']        = {}
 groups[8]['jobs'][1]     = {'host':1, 'cfg':'S3A_dispatcher_placeholder'}
 groups[8]['jobs'][2]     = {'host':1, 'cfg':'S3A_processor'}
+
+groups[9]                = {}
+groups[9]['name']        = 'Sentinel 3B Altimetry Processing'
+groups[9]['description'] = """
+Jobs for ingesting, processing, and pushing Altimetry data from Sentinel 3B
+"""
+groups[9]['jobs']        = {}
+groups[9]['jobs'][1]     = {'host':1, 'cfg':'S3B_dispatcher_placeholder'}
+groups[9]['jobs'][2]     = {'host':1, 'cfg':'S3B_processor'}
