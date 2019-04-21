@@ -141,6 +141,11 @@ nodes[141] = {'path':'/home/lbyerle/isatss_data/141_S3B_disp_data',       'files
 nodes[142] = {'path':'/dev/shm/isatss_data/info/142_S3B_disp_info',     'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[143] = {'path':'/dev/shm/isatss_data/info/143_S3B_proc_cntl',     'filesystem':'/home', 'ctype':'cntl','stype':'attached','root':'/home/lbyerle/isatss_data'}
 
+nodes[145] = {'path':'/dev/shm/isatss_data/info/145_blend_tpw_disp_cntl',     'filesystem':'/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[146] = {'path':'/home/lbyerle/isatss_data/146_blend_tpw_disp_data',       'filesystem':'/home',   'ctype':'data','stype':'attached','root':'/home/lbyerle/isatss_data'}
+nodes[147] = {'path':'/dev/shm/isatss_data/info/147_blend_tpw_disp_info',     'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[148] = {'path':'/dev/shm/isatss_data/info/148_blend_tpw_proc_cntl',     'filesystem':'/home', 'ctype':'cntl','stype':'attached','root':'/home/lbyerle/isatss_data'}
+
 # system default
 
 defaults = {}
@@ -265,3 +270,12 @@ Jobs for ingesting, processing, and pushing Altimetry data from Sentinel 3B
 groups[9]['jobs']        = {}
 groups[9]['jobs'][1]     = {'host':1, 'cfg':'S3B_dispatcher_placeholder'}
 groups[9]['jobs'][2]     = {'host':1, 'cfg':'S3B_processor'}
+
+groups[10]                = {}
+groups[10]['name']        = 'Blended hydro TPW Processing'
+groups[10]['description'] = """
+Jobs for ingesting, processing, and pushing Blended hydro TPW products
+"""
+groups[10]['jobs']        = {}
+groups[10]['jobs'][1]     = {'host':1, 'cfg':'blended_tpw_dispatcher'}
+groups[10]['jobs'][2]     = {'host':1, 'cfg':'blended_tpw_processor'}
