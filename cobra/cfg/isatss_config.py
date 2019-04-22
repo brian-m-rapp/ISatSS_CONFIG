@@ -49,6 +49,15 @@ Dictionary fields:
 	                    will replace the token '%tier%' with the value of isc.tier.
 """
 
+"""
+The instance_attrs dictionary allows arbitrary variables to be defined based on an 'instance'
+key.  This can be useful for defining multiple isatss instances within a given 'site'; if you
+have a laptop with different environments on different networks; or if you want to use the same
+configuration set at different locations (which is the case here).  The instance applied is
+determined by resolving the host name at runtime and matching it against the hosts defined in
+the 'hosts' dictionary.  This in turn determines the instance_id to be applied to define the
+hosts, groups, jobs, site ID, and tier in the current instance.
+"""
 instance_attrs = {}
 instance_attrs['NAPO'] = {'site':'NAPO', 'tier':'dev'}
 instance_attrs['ROCK'] = {'site':'ROCK', 'tier':'dev'}
