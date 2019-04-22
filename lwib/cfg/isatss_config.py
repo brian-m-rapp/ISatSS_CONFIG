@@ -25,10 +25,6 @@ For openSUSE, use 'sudo -iu'.
 """
 sudocmd = 'sudo -iu'	# defaults to 'sudo -Su'
 
-site = 'NAPO'
-
-tier = 'dev'	# dev/qa/ops - unique to IDP deployment, not used outside of this configuration file
-
 """
 The host dictionary identifies all of the members of an ISatSS cluster, and defines the ports and nodes used by the agent86 control and communications app.
 Host IDs are referenced in the isatss_config.groups dictionary to identify on what machine and by which account an application is to be run.
@@ -47,12 +43,25 @@ If no entries are provided, ISatSS assumes it is running on a non-clustered syst
 Example entry:
 hosts[2] = {'host':'grb01.nhc.noaa.gov','user':'ldm', 'ext':1336,'cmd':4,'resp':5}
 """
-hosts = {}
 
-"""hosts[1] = {'host':'lwib.napo.nws.gov', 'shortname':'lwib', 'sudocmd':'sudo -iu'}
 """
+The instance_attrs dictionary allows arbitrary variables to be defined based on an 'instance'
+key.  This can be useful for defining multiple isatss instances within a given 'site'; if you
+have a laptop with different environments on different networks (which is the case here); or 
+if you want to use the same configuration set at different locations.  The instance applied is
+determined by resolving the host name at runtime and matching it against the hosts defined in
+the 'hosts' dictionary.  This in turn determines the instance_id to be applied to define the
+hosts, groups, jobs, site ID, and tier in the current instance.
+"""
+instance_attrs = {}
+instance_attrs['WORK'] = {'site':'NAPO', 'tier':'dev'}
+instance_attrs['HOME'] = {'site':'LEE', 'tier':'dev'}
 
-hosts[1] = {'host':'unallocated.barefruit.co.uk', 'shortname':'lwib', 'sudocmd':'sudo -iu'}
+hosts = {}
+hosts['WORK'] = {}
+hosts['WORK'][1] = {'host':'lwib.napo.nws.gov', 'shortname':'lwib', 'sudocmd':'sudo -iu'}
+hosts['HOME'] = {}
+hosts['HOME'][1] = {'host':'unallocated.barefruit.co.uk', 'shortname':'lwib', 'sudocmd':'sudo -iu'}
 
 hattr = {}
 hattr[1] = {'nics': [('netname', 'eth0')],   'filesystems': []}
