@@ -1,6 +1,0 @@
-#!/bin/bash
-source ~/bin/vlab_deployer_config.sh
-cd $REPODIR
-git checkout blackoutApp
-git pull
-vlabloader $@ cfg=vlabdev_blackout
