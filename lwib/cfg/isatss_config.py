@@ -151,6 +151,11 @@ nodes[151] = {'path':'/home/lbyerle/isatss_data/151_blend_rr_disp_data',       '
 nodes[152] = {'path':'/dev/shm/isatss_data/info/152_blend_rr_disp_info',     'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[153] = {'path':'/dev/shm/isatss_data/info/153_blend_rr_proc_cntl',     'filesystem':'/home', 'ctype':'cntl','stype':'attached','root':'/home/lbyerle/isatss_data'}
 
+nodes[155] = {'path':'/dev/shm/isatss_data/info/155_blend_pct_disp_cntl',     'filesystem':'/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[156] = {'path':'/home/lbyerle/isatss_data/156_blend_pct_disp_data',       'filesystem':'/home',   'ctype':'data','stype':'attached','root':'/home/lbyerle/isatss_data'}
+nodes[157] = {'path':'/dev/shm/isatss_data/info/157_blend_pct_disp_info',     'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[158] = {'path':'/dev/shm/isatss_data/info/158_blend_pct_proc_cntl',     'filesystem':'/home', 'ctype':'cntl','stype':'attached','root':'/home/lbyerle/isatss_data'}
+
 # system default
 
 defaults = {}
@@ -293,3 +298,12 @@ Jobs for ingesting, processing, and pushing Blended hydro Rain Rate products
 groups[11]['jobs']        = {}
 groups[11]['jobs'][1]     = {'host':1, 'cfg':'blended_rr_dispatcher'}
 groups[11]['jobs'][2]     = {'host':1, 'cfg':'blended_rr_processor'}
+
+groups[12]                = {}
+groups[12]['name']        = 'Blended hydro Percent TPW Normal Processing'
+groups[12]['description'] = """
+Jobs for ingesting, processing, and pushing Blended hydro Rain PCT products
+"""
+groups[12]['jobs']        = {}
+groups[12]['jobs'][1]     = {'host':1, 'cfg':'blended_pct_dispatcher'}
+groups[12]['jobs'][2]     = {'host':1, 'cfg':'blended_pct_processor'}
