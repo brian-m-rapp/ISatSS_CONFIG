@@ -54,7 +54,7 @@ Dictionary fields:
 If no entries are provided, ISatSS assumes it is running on a non-clustered system.
 
 Example entry:
-hosts[2] = {'host':'grb01.nhc.noaa.gov','user':'ldm', 'ext':1336,'cmd':4,'resp':5}
+hosts['<instance>'][2] = {'host':'grb01.nhc.noaa.gov','user':'ldm', 'ext':1336,'cmd':4,'resp':5}
 """
 
 hosts = {}
