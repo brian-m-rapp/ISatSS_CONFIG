@@ -165,6 +165,11 @@ nodes[156] = {'path':'/home/lbyerle/isatss_data/156_blend_pct_disp_data',       
 nodes[157] = {'path':'/dev/shm/isatss_data/info/157_blend_pct_disp_info',     'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[158] = {'path':'/dev/shm/isatss_data/info/158_blend_pct_proc_cntl',     'filesystem':'/home', 'ctype':'cntl','stype':'attached','root':'/home/lbyerle/isatss_data'}
 
+nodes[160] = {'path':'/dev/shm/isatss_data/info/160_AF_disp_cntl',     'filesystem':'/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[161] = {'path':'/home/lbyerle/isatss_data/161_AF_disp_data',       'filesystem':'/home',   'ctype':'data','stype':'attached','root':'/home/lbyerle/isatss_data'}
+nodes[162] = {'path':'/dev/shm/isatss_data/info/162_AF_disp_info',     'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[163] = {'path':'/dev/shm/isatss_data/info/163_AF_proc_cntl',     'filesystem':'/home', 'ctype':'cntl','stype':'attached','root':'/home/lbyerle/isatss_data'}
+
 # system default
 
 defaults = {}
