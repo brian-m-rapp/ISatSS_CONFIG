@@ -59,8 +59,8 @@ the 'hosts' dictionary.  This in turn determines the instance_id to be applied t
 hosts, groups, jobs, site ID, and tier in the current instance.
 """
 instance_attrs = {}
-instance_attrs['NAPO'] = {'site':'NAPO', 'tier':'dev'}
-instance_attrs['ROCK'] = {'site':'ROCK', 'tier':'dev'}
+instance_attrs['NAPO'] = {'site':'NAPO', 'tier':'dev', 'instance_keys':['NAPO']}
+instance_attrs['ROCK'] = {'site':'ROCK', 'tier':'dev', 'instance_keys':['ROCK']}
 
 """
 The host dictionary identifies all of the members of an ISatSS cluster, and defines the ports and nodes used by the agent86 control and communications app.
@@ -78,16 +78,16 @@ Dictionary fields:
 If no entries are provided, ISatSS assumes it is running on a non-clustered system.
 
 Example entry:
-hosts[2] = {'host':'grb01.nhc.noaa.gov','user':'ldm', 'ext':1336,'cmd':4,'resp':5}
+hosts[2] = {'host':['grb01.nhc.noaa.gov'],'user':'ldm', 'ext':1336,'cmd':4,'resp':5}
 """
 
 hosts = {}
 hosts['NAPO'] = {}
-hosts['NAPO'][1] = {'host':'cobra.napo.nws.noaa.gov', 'shortname':'cobra', 'sudocmd':'sudo -iu'}
-hosts['NAPO'][2] = {'host':'cobra.napo.nws.noaa.gov', 'shortname':'ldm', 'sudocmd':'sudo -iu', 'user':'ldm', 'ext':1338, 'cmd':72, 'resp':73}
+hosts['NAPO'][1] = {'host':['cobra.napo.nws.noaa.gov'], 'shortname':'cobra', 'sudocmd':'sudo -iu'}
+hosts['NAPO'][2] = {'host':['cobra.napo.nws.noaa.gov'], 'shortname':'ldm',   'sudocmd':'sudo -iu', 'user':'ldm', 'ext':1338, 'cmd':72, 'resp':73, 'shell':'csh'}
 hosts['ROCK'] = {}
-hosts['ROCK'][1] = {'host':'chiark.dilireum.org', 'shortname':'chiark'}
-hosts['ROCK'][2] = {'host':'masaq.dilireum.org',  'shortname':'masaq'}
+hosts['ROCK'][1] = {'host':['chiark.dilireum.org'], 'shortname':'chiark'}
+hosts['ROCK'][2] = {'host':['masaq.dilireum.org'],  'shortname':'masaq'}
 
 hattr = {}
 hattr[1] = {'nics': [('netname', 'eth0')],   'filesystems': []}
@@ -315,7 +315,7 @@ defaults['vlab']['url']     = 'https://vlab.ncep.noaa.gov'
 defaults['vlab']['company'] = 10132
 defaults['vlab']['group']   = 1334496		# ISatSS community group ID
 defaults['sudocmd']         = 'sudo -Su'
-defaults['cluster_log']     = False
+defaults['cluster_log']     = True
 
 #groups
 groups = {}
