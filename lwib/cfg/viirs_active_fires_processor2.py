@@ -80,9 +80,11 @@ ncspec['dimensions'] = {}
 ncspec['dimensions']['nfire']        = {'src':'inncf/dimensions/(Fire Pixels)nfire'}
 
 pnamestack= []
-pnamestack.append({'default':'E','delimiter':''})
-pnamestack.append({'default':'FD','delimiter':'-020-B12-M'})
-pnamestack.append({'default':'6','fmt':'str','delimiter:':'C17'})
+pnamestack.append({'src':'inncf/globalmeta/instrument_name','translate':{'VIIRS':'E','GOES-17':'W'},'delimiter':''})
+pnamestack.append({'src':'inncf/globalmeta/instrument_name','translate':{'VIIRS':'FD','CONUS':'CONUS'},'delimiter':''})
+pnamestack.append({'default':'-020-B12-M','delimiter':''})
+pnamestack.append({'src':'inncf/globalmeta/instrument_name','translate':{'VIIRS':'6','CONUS':'CONUS'},'fmt':'str','delimiter':''})
+pnamestack.append({'default':'C17','delimiter:':''})
 
 ncspec['globalmeta'] = {}
 ncspec['globalmeta']['instrument_name']             = {'src':'inncf/globalmeta/instrument_name'}
