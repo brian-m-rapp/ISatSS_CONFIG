@@ -64,8 +64,8 @@ job['sources']['satepsanone']['decompress'] = {'method':'byext'}
 
 atms_args = {'window':86400}
 atms_args['target'] = {'data':job['data']['afiles'], 'notifications':job['notifications']}
-atms_args['ledger'] = {'node':job['data']['aledger']['location']['node'],'name':job['name']+'.ledger'}
-atms_args['filter'] = {'filt':'substring','target':'name','startswith':'NPR-MIRS','name':'NPP ATMS Imagery'}
+atms_args['ledger'] = {'node':job['data']['aledger']['location']['node'], 'name':job['name']+'.ledger'}
+atms_args['filter'] = {'filt':'substring', 'target':'name', 'startswith':'NPR-MIRS', 'name':'NPP ATMS Imagery', 'dateformats':['%d-%b-%Y %H:%M', '%Y-%m-%d %H:%M']}
 
 job['sources']['satepsanone']['paths']['atms'] = {'path':'/pub/product/mirs/nde', 'dirs':{}, 'special':{}}
 job['sources']['satepsanone']['paths']['atms']['special'] = {'module':'satepsanone_puller','class':'FilePuller','args':atms_args}

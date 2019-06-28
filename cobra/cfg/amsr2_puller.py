@@ -64,8 +64,8 @@ job['sources']['satepsanone']['decompress'] = {'method':'byext'}
 
 amsr2_args = {'window':86400}
 amsr2_args['target'] = {'data':job['data']['afiles'], 'notifications':job['notifications']}
-amsr2_args['ledger'] = {'node':job['data']['aledger']['location']['node'],'name':job['name']+'.ledger'}
-amsr2_args['filter'] = {'filt':'substring','target':'name','startswith':'AMSR2-MBT','name':'AMSR2 Imagery'}
+amsr2_args['ledger'] = {'node':job['data']['aledger']['location']['node'], 'name':job['name']+'.ledger'}
+amsr2_args['filter'] = {'filt':'substring', 'target':'name', 'startswith':'AMSR2-MBT', 'name':'AMSR2 Imagery', 'dateformats':['%d-%b-%Y %H:%M', '%Y-%m-%d %H:%M']}
 
 job['sources']['satepsanone']['paths']['amsr2'] = {'path':'/pub/product/nde/amsr2/L2', 'dirs':{}, 'special':{}}
 job['sources']['satepsanone']['paths']['amsr2']['special'] = {'module':'satepsanone_puller','class':'FilePuller','args':amsr2_args}

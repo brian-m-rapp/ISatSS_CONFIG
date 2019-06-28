@@ -61,8 +61,8 @@ job['sources']['satepsanone'] =  {'protocol':'HTTPS', 'host':'satepsanone.nesdis
 
 gpm_args = {'window':86400}
 gpm_args['target'] = {'data':job['data']['afiles'], 'notifications':job['notifications']}
-gpm_args['ledger'] = {'node':job['data']['aledger']['location']['node'],'name':job['name']+'.ledger'}
-gpm_args['filter'] = {'filt':'substring','target':'name','startswith':'1B.GPM.GMI.','name':'GPM GIM imagery'}
+gpm_args['ledger'] = {'node':job['data']['aledger']['location']['node'], 'name':job['name']+'.ledger'}
+gpm_args['filter'] = {'filt':'substring', 'target':'name', 'startswith':'1B.GPM.GMI.','name':'GPM GIM imagery', 'dateformats':['%d-%b-%Y %H:%M', '%Y-%m-%d %H:%M']}
 
 job['sources']['satepsanone']['paths']['gpm'] = {'path':'/pub/product/gpm/gmi/L1B', 'dirs':{}, 'special':{}}
 job['sources']['satepsanone']['paths']['gpm']['special'] = {'module':'satepsanone_puller','class':'FilePuller','args':gpm_args}
