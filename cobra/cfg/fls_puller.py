@@ -66,7 +66,7 @@ fls_args = {'window':2*86400, 'cyclecount':5}
 fls_args['target'] = {'data':job['data']['flsfiles'], 'notifications':job['notifications']}
 fls_args['ledger'] = {'node':job['data']['flsledger']['location']['node'],'name':job['name']+'.ledger'}
 job['sources']['star']['paths']['fls'] = {'path':'/pub/smcd/spb/kurtis.pinkney/goes16_fls/CONUS', 'dirs':{}, 'special':{}}
-job['sources']['star']['paths']['fls']['special'] = {'module':'remote_puller','class':'FilePuller','args':fls_args}
+job['sources']['star']['paths']['fls']['special'] = {'module':'im_file_retriever','class':'FilePuller','args':fls_args}
 
 job['monitor'] = {'agents':{},'mi6':{}}
 job['monitor']['agents']['pmd_admin']                = {'enabled':True, 'module':'im_daemon', 'class':'PMDAdmin', 'args':{'alerts':[27,28], 'telemetry':[26,27,28]}}

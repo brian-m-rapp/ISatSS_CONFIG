@@ -65,13 +65,13 @@ ascata_args = {'window':3600, 'cyclecount':None}
 ascata_args['target'] = {'data':job['data']['afiles'], 'notifications':job['notifications']}
 ascata_args['ledger'] = {'node':job['data']['aledger']['location']['node'],'name':'ascata.ledger'}
 job['sources']['ascat']['paths']['ascata'] = {'node':270, 'dirs':{}, 'special':{}}
-job['sources']['ascat']['paths']['ascata']['special'] = {'module':'remote_puller','class':'FilePuller','args':ascata_args}
+job['sources']['ascat']['paths']['ascata']['special'] = {'module':'im_file_retriever','class':'FilePuller','args':ascata_args}
 
 ascatb_args = {'window':3600, 'cyclecount':None}
 ascatb_args['target'] = {'data':job['data']['afiles'], 'notifications':job['notifications']}
 ascatb_args['ledger'] = {'node':job['data']['aledger']['location']['node'],'name':'ascatb.ledger'}
 job['sources']['ascat']['paths']['ascatb'] = {'node':271, 'dirs':{}, 'special':{}}
-job['sources']['ascat']['paths']['ascatb']['special'] = {'module':'remote_puller','class':'FilePuller','args':ascatb_args}
+job['sources']['ascat']['paths']['ascatb']['special'] = {'module':'im_file_retriever','class':'FilePuller','args':ascatb_args}
 
 
 job['monitor'] = {'agents':{},'mi6':{}}

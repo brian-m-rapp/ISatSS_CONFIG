@@ -67,7 +67,7 @@ altika_args = {'window':43200, 'cyclecount':20}
 altika_args['target'] = {'data':job['data']['altfiles'], 'notifications':job['notifications']}
 altika_args['ledger'] = {'node':job['data']['altledger']['location']['node'],'name':job['name']+'.ledger'}
 job['sources']['altika']['paths']['altika'] = {'path':'AVISO/pub/saral/ssha_ogdr_t', 'dirs':{}, 'special':{}}
-job['sources']['altika']['paths']['altika']['special'] = {'module':'remote_puller','class':'FilePuller','args':altika_args}
+job['sources']['altika']['paths']['altika']['special'] = {'module':'im_file_retriever','class':'FilePuller','args':altika_args}
 
 job['monitor'] = {'agents':{},'mi6':{}}
 job['monitor']['agents']['pmd_admin']                = {'enabled':True, 'module':'im_daemon', 'class':'PMDAdmin', 'args':{'alerts':[27,28], 'telemetry':[26,27,28]}}

@@ -66,7 +66,7 @@ job['sources']['sentinel']['paths']['sentinel'] = {'path':'/pub/socd3/coastwatch
 manifest_desc = {'name':'S3A_SR_2_WAT_NRT_manifest', 'node':61, 'fields':{'filename':{'index':0}, 'date':{'index':1, 'format':'%Y-%m-%d'}, 'time':{'index':2, 'format':'%H:%M:%S'}}}
 job['sources']['sentinel']['paths']['sentinel']['manifest']['sentinel'] = manifest_desc
 job['sources']['sentinel']['paths']['sentinel']['decompress'] = {'method':False}
-job['sources']['sentinel']['paths']['sentinel']['special'] = {'module':'remote_puller','class':'FilePuller','args':sentinel_args}
+job['sources']['sentinel']['paths']['sentinel']['special'] = {'module':'im_file_retriever','class':'FilePuller','args':sentinel_args}
 
 job['monitor'] = {'agents':{},'mi6':{}}
 job['monitor']['agents']['pmd_admin']                = {'enabled':True, 'module':'im_daemon', 'class':'PMDAdmin', 'args':{'alerts':[27,28], 'telemetry':[26,27,28]}}

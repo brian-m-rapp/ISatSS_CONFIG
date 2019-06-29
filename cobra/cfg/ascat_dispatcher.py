@@ -69,7 +69,7 @@ ascat_args['target'] = {'data':job['data']['afiles'], 'notifications':job['notif
 ascat_args['ledger'] = {'node':job['data']['aledger']['location']['node'],'name':job['name']+'.ledger'}
 
 job['sources']['nhc']['paths']['ascata'] = {'path':'/appdata/ascat', 'dirs':{}, 'special':{}}
-job['sources']['nhc']['paths']['ascata']['special'] = {'module':'remote_puller','class':'FilePuller','args':ascat_args}
+job['sources']['nhc']['paths']['ascata']['special'] = {'module':'im_file_retriever','class':'FilePuller','args':ascat_args}
 
 
 job['monitor'] = {'agents':{},'mi6':{}}

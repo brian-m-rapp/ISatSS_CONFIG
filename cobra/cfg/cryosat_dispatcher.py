@@ -62,7 +62,7 @@ cryo_args = {'window':43200, 'cyclecount':20}
 cryo_args['target'] = {'data':job['data']['cryfiles'], 'notifications':job['notifications']}
 cryo_args['ledger'] = {'node':job['data']['cryledger']['location']['node'],'name':job['name']+'.ledger'}
 job['sources']['star']['paths']['cryosat'] = {'path':'/pub/socd/lsa/johnl/c2', 'dirs':{}, 'special':{}}
-job['sources']['star']['paths']['cryosat']['special'] = {'module':'remote_puller','class':'FilePuller','args':cryo_args}
+job['sources']['star']['paths']['cryosat']['special'] = {'module':'im_file_retriever','class':'FilePuller','args':cryo_args}
 
 job['monitor'] = {'agents':{},'mi6':{}}
 job['monitor']['agents']['pmd_admin']                = {'enabled':True, 'module':'im_daemon', 'class':'PMDAdmin', 'args':{'alerts':[27,28], 'telemetry':[26,27,28]}}
