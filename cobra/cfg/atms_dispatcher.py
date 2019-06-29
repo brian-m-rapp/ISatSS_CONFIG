@@ -67,7 +67,7 @@ atms_args['target'] = {'data':job['data']['afiles'], 'notifications':job['notifi
 atms_args['ledger'] = {'node':job['data']['aledger']['location']['node'], 'name':job['name']+'.ledger'}
 atms_args['filter'] = {'filt':'substring', 'target':'name', 'startswith':'NPR-MIRS', 'name':'NPP ATMS Imagery', 'dateformats':['%d-%b-%Y %H:%M', '%Y-%m-%d %H:%M']}
 
-job['sources']['satepsanone']['paths']['atms'] = {'path':'/pub/product/mirs/nde', 'dirs':{}, 'special':{}}
+job['sources']['satepsanone']['paths']['atms'] = {'path':'/pub/product/mirs/HighRes/nde/snpp/33min', 'dirs':{}, 'special':{}}
 job['sources']['satepsanone']['paths']['atms']['special'] = {'module':'satepsanone_puller','class':'FilePuller','args':atms_args}
 
 job['monitor'] = {'agents':{},'mi6':{}}

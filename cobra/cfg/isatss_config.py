@@ -488,3 +488,11 @@ VIIRS ice concentration processing chain
 groups[17]['jobs']     = {}
 groups[17]['jobs'][2]  = {'host':1,'cfg':'viirs_ice_stitcher'}
 groups[17]['jobs'][3]  = {'host':1,'cfg':'viirs_ice_projector'}
+
+groups[18] = {}
+groups[18]['name']        = 'h8-tileproc'
+groups[18]['description'] = """
+The h8-tileproc group archives incoming h8 tiles, forwards them to ldm, and creates area files
+"""
+groups[18]['jobs']     = {}
+groups[18]['jobs'][1]  = {'host':1,'cfg':'star_dispatcher'}
