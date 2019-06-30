@@ -273,10 +273,6 @@ nodes[143] = {'path':'/dev/shm/isatss_data/info/143_sentinel_proc_cntl',  'files
 nodes[144] = {'path':'/data/isatss_data/data/144_sentinel_proc_data',     'filesystem':'/data',    'ctype':'data','stype':'attached','root':'/data/isatss_data'}
 nodes[145] = {'path':'/dev/shm/isatss_data/info/145_sentinel_proc_info',  'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
 
-nodes[143] = {'path':'/dev/shm/isatss_data/info/143_sentinel_proc_cntl',  'filesystem':'/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[144] = {'path':'/data/isatss_data/data/144_sentinel_proc_data',     'filesystem':'/data',    'ctype':'data','stype':'attached','root':'/data/isatss_data'}
-nodes[145] = {'path':'/dev/shm/isatss_data/info/145_sentinel_proc_info',  'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
-
 nodes[150] = {'path':'/dev/shm/isatss_data/info/150_vice_puller_cntl',    'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[151] = {'path':'/dev/shm/isatss_data/info/151_vice_puller_info',    'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[152] = {'path':'/data/isatss_data/data/152_vice_puller_data',       'filesystem':'/data',   'ctype':'data','stype':'attached','root':'/data/isatss_data'}
