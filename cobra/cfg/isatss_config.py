@@ -269,6 +269,9 @@ nodes[135] = {'path':'/dev/shm/isatss_data/info/135_altika_proc_info',    'files
 nodes[140] = {'path':'/dev/shm/isatss_data/info/140_sentinel_disp_cntl',  'filesystem':'/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[141] = {'path':'/data/isatss_data/data/141_sentinel_disp_data',     'filesystem':'/data',    'ctype':'data','stype':'attached','root':'/data/isatss_data'}
 nodes[142] = {'path':'/dev/shm/isatss_data/info/142_sentinel_disp_info',  'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[143] = {'path':'/dev/shm/isatss_data/info/143_sentinel_proc_cntl',  'filesystem':'/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[144] = {'path':'/data/isatss_data/data/144_sentinel_proc_data',     'filesystem':'/data',    'ctype':'data','stype':'attached','root':'/data/isatss_data'}
+nodes[145] = {'path':'/dev/shm/isatss_data/info/145_sentinel_proc_info',  'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
 
 nodes[143] = {'path':'/dev/shm/isatss_data/info/143_sentinel_proc_cntl',  'filesystem':'/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
 nodes[144] = {'path':'/data/isatss_data/data/144_sentinel_proc_data',     'filesystem':'/data',    'ctype':'data','stype':'attached','root':'/data/isatss_data'}
@@ -478,7 +481,7 @@ Sentinel-3 processing chain
 """
 groups[16]['jobs']     = {}
 groups[16]['jobs'][1]  = {'host':1,'cfg':'sentinel_dispatcher'}
-#groups[16]['jobs'][2]  = {'host':1,'cfg':'sentinel_processor'}
+groups[16]['jobs'][2]  = {'host':1,'cfg':'sentinel_processor'}
 
 groups[17] = {}
 groups[17]['name']     = 'VIIRS ice concentration processing'
