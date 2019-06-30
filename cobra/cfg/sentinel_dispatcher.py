@@ -56,17 +56,27 @@ job['max_sleep']        = 10
 job['work_time']        = 60
 
 job['sources'] = {}
-job['sources']['sentinel'] =  {'protocol':'FTP', 'host':'ftp.star.nesdis.noaa.gov', 'timeout':10, 'retry':10,'paths':{},'sessions':1}
+job['sources']['star'] =  {'protocol':'FTP', 'host':'ftp.star.nesdis.noaa.gov', 'timeout':10, 'retry':10,'paths':{},'sessions':1}
 
-sentinel_args = {'window':43200, 'cyclecount':20}
-sentinel_args['target']  = {'data':job['data']['sentinel_files'], 'notifications':job['notifications']}
-sentinel_args['ledger']  = {'node':job['data']['sentinel_ledger']['location']['node'],'name':job['name']+'.ledger'}
-sentinel_args['extract'] = {'method':'tar', 'delete_archive':True, 'files':[{'dirname_is_sourcename':True, 'add_dname_to_fname':True, 'filename':{'is':'standard_measurement.nc'}}]}
-job['sources']['sentinel']['paths']['sentinel'] = {'path':'/pub/socd3/coastwatch/sral/L2', 'dirs':{}, 'special':{}, 'manifest':{}}
-manifest_desc = {'name':'S3A_SR_2_WAT_NRT_manifest', 'node':61, 'fields':{'filename':{'index':0}, 'date':{'index':1, 'format':'%Y-%m-%d'}, 'time':{'index':2, 'format':'%H:%M:%S'}}}
-job['sources']['sentinel']['paths']['sentinel']['manifest']['sentinel'] = manifest_desc
-job['sources']['sentinel']['paths']['sentinel']['decompress'] = {'method':False}
-job['sources']['sentinel']['paths']['sentinel']['special'] = {'module':'im_file_retriever','class':'FilePuller','args':sentinel_args}
+sentinel3A_args = {'window':7200, 'cyclecount':40}
+sentinel3A_args['target']  = {'data':job['data']['sentinel_files'], 'notifications':job['notifications']}
+sentinel3A_args['ledger']  = {'node':job['data']['sentinel_ledger']['location']['node'],'name':'sentinel3A.ledger'}
+sentinel3A_args['extract'] = {'method':'tar', 'delete_archive':True, 'files':[{'dirname_is_sourcename':True, 'add_dname_to_fname':True, 'filename':{'is':'standard_measurement.nc'}}]}
+job['sources']['star']['paths']['sentinel3A'] = {'path':'/pub/socd3/coastwatch/sral/L2', 'dirs':{}, 'special':{}, 'manifest':{}}
+manifest3A_desc = {'name':'S3A_SR_2_WAT_NRT_manifest', 'node':61, 'fields':{'filename':{'index':0}, 'date':{'index':1, 'format':'%Y-%m-%d'}, 'time':{'index':2, 'format':'%H:%M:%S'}}}
+job['sources']['star']['paths']['sentinel3A']['manifest']['sentinel'] = manifest3A_desc
+#job['sources']['star']['paths']['sentinel3A']['decompress'] = {'method':None}
+job['sources']['star']['paths']['sentinel3A']['special'] = {'module':'im_file_retriever','class':'FilePuller','args':sentinel3A_args}
+
+sentinel3B_args = {'window':7200, 'cyclecount':40}
+sentinel3B_args['target']  = {'data':job['data']['sentinel_files'], 'notifications':job['notifications']}
+sentinel3B_args['ledger']  = {'node':job['data']['sentinel_ledger']['location']['node'],'name':'sentinel3B.ledger'}
+sentinel3B_args['extract'] = {'method':'tar', 'delete_archive':True, 'files':[{'dirname_is_sourcename':True, 'add_dname_to_fname':True, 'filename':{'is':'standard_measurement.nc'}}]}
+job['sources']['star']['paths']['sentinel3B'] = {'path':'/pub/socd3/coastwatch/sral/s3b/L2', 'dirs':{}, 'special':{}, 'manifest':{}}
+manifest3B_desc = {'name':'S3B_SR_2_WAT_NRT_manifest', 'node':61, 'fields':{'filename':{'index':0}, 'date':{'index':1, 'format':'%Y-%m-%d'}, 'time':{'index':2, 'format':'%H:%M:%S'}}}
+job['sources']['star']['paths']['sentinel3B']['manifest']['sentinel'] = manifest3B_desc
+#job['sources']['star']['paths']['sentinel3B']['decompress'] = {'method':None}
+job['sources']['star']['paths']['sentinel3B']['special'] = {'module':'im_file_retriever','class':'FilePuller','args':sentinel3B_args}
 
 job['monitor'] = {'agents':{},'mi6':{}}
 job['monitor']['agents']['pmd_admin']                = {'enabled':True, 'module':'im_daemon', 'class':'PMDAdmin', 'args':{'alerts':[27,28], 'telemetry':[26,27,28]}}
