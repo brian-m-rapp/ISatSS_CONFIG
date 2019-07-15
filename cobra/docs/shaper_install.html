@@ -1,0 +1,310 @@
+<h1 style="text-align:center">AWIPS Shapefile RPM&nbsp;Installation</h1>
+
+<p>&nbsp;</p>
+
+<h2>1. Introduction</h2>
+
+<p>This document details configuring&nbsp;a Linux system to host the AWIPS Shapefile RPM deployment application.</p>
+
+<p><strong>1.1.&nbsp;Assumptions</strong></p>
+
+<ul>
+	<li>Target machine has direct access to the Internet.</li>
+	<li>The user performing the installation has an account on VLab and is a member of&nbsp;the&nbsp;<a href="/group/isatss/home" onclick="window.open(this.href, 'VLabISatSSCommunity', 'resizable=yes,status=no,location=no,toolbar=no,menubar=no,fullscreen=no,scrollbars=yes,dependent=no,width=1000,left=10,height=1000,top=10'); return false;">VLab ISatSS Community</a>, the&nbsp;<a href="https://vlab.ncep.noaa.gov/redmine/projects/isatss" onclick="window.open(this.href, 'ISatSSRedmineProject', 'resizable=yes,status=no,location=no,toolbar=no,menubar=no,fullscreen=no,scrollbars=yes,dependent=no,width=1000,left=10,height=1000,top=10'); return false;">VLab ISatSS Redmine Project</a>, and the&nbsp;<a href="https://vlab.ncep.noaa.gov/code-review/#/admin/projects/ISatSS" onclick="window.open(this.href, 'ISatSSGerritPage', 'resizable=yes,status=no,location=no,toolbar=no,menubar=no,fullscreen=no,scrollbars=yes,dependent=no,width=1000,left=10,height=1000,top=10'); return false;">VLab ISatSS Gerrit Project</a>&nbsp;(in a role that provides at a minimum &#39;read&#39; access to the git repositories).</li>
+</ul>
+
+<h3><strong>1.2. Requirements</strong></h3>
+
+<ul>
+	<li>64-bit Redhat or CentOS 6 or higher</li>
+	<li>Python (v2.7 minimum)</li>
+	<li>rpm-build</li>
+	<li>subversion</li>
+	<li>git</li>
+	<li>bunzip2, unzip, gcc, gcc-c++</li>
+	<li>If the Shapefile RPM will be generated monthly automatically,&nbsp;cron must be enabled for the target user account</li>
+</ul>
+
+<h3><strong>1.3. Preparation</strong></h3>
+
+<ol>
+	<li>Become the root user (&quot;sudo -iu root&quot;, &quot;su -&quot;, etc.).</li>
+	<li>Verify that python 2.7 or greater is installed by type &quot;rpm -q python&quot;.</li>
+	<li>If python is not installed, install it by typing &quot;yum install python&quot;.</li>
+	<li>If python is installed, but the version is older than 2.7, upgrade by typing &quot;yum update python&quot;.</li>
+	<li>Install any missing required packages using the command &quot;yum install &lt;package name&gt;&quot;.</li>
+</ol>
+
+<h2>&nbsp;</h2>
+
+<h2>2. Python Environment Installation</h2>
+
+<p>This system makes use of the NWSPY environment hosted by the NWS Python Support Community on VLab.&nbsp; Follow the instructions for the latest revision (currently p37_n116_2) found in the tab at the top of the community home page (<a href="https://vlab.ncep.noaa.gov/group/nws-python-support">https://vlab.ncep.noaa.gov/group/nws-python-support</a>).&nbsp; For an&nbsp;installation that will be run from a personal Linux account, the ssh protocol is recommended over https for cloning the git repository.</p>
+
+<p>&nbsp;</p>
+
+<h2>3. ISatSS Installation</h2>
+
+<p>The AWIPS Shapefile RPM creator is an ISatSS application requiring installation and configuration of the ISatSS software.&nbsp; Determine a suitable installation directory.&nbsp; The installation&nbsp;path you decide will be denoted as ISATSS_HOME in this document.</p>
+
+<p>1. Create the installation directory path:</p>
+
+<p><code>$ mkdir ISATSS_HOME</code></p>
+
+<p><code>$ cd ISATSS_HOME</code></p>
+
+<p>2. Clone the ISatSS baseline repository.</p>
+
+<p><code>ISATSS_HOME&gt; git clone ssh://Your.Name@vlab.ncep.noaa.gov:29418/ISatSS</code></p>
+
+<p>3. Change directory into the root of the repository.&nbsp; Going forward, this path will be denoded as ISATSS_CODE in this document.</p>
+
+<p><code>ISATSS_HOME&gt; cd ISatSS</code></p>
+
+<p>4. Check out the latest branch from the repository (currently p37_n116_v3.0).&nbsp; Branch names are based on three components: the python version, the numpy version, and the source code version.</p>
+
+<p><code>ISATSS_CODE&gt; git checkout p37_n116_v3.0</code></p>
+
+<p>5. Change to the apps sub-directory.</p>
+
+<p><code>ISATSS_CODE&gt; cd apps</code></p>
+
+<p>6. Using the editor of your choice, create the file isatss_setup.py and populate it with the following:</p>
+
+<p><code># isatss configuration<br />
+import os</code></p>
+
+<p><code># path to instance of isatss_support directory. &nbsp;If not using isatss_support, set to None<br />
+conda_home &nbsp; &nbsp; = None<br />
+# path to installed anaconda install. &nbsp;If not using a local anaconda install, set to None<br />
+conda_path &nbsp; &nbsp; = &#39;&lt;NWSPY&gt;/anaconda&#39;</code></p>
+
+<p><code># path to the python binary to be used by ISatSS<br />
+python&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp; = conda_path+&#39;/bin/python&#39;</code></p>
+
+<p><code>isatss_home &nbsp; &nbsp;= &#39;&lt;ISATSS_CODE&gt;&#39;</code></p>
+
+<p><code>import_tracebacks = True</code></p>
+
+<p><code>add_ons = {&#39;top&#39;:&#39;&#39;,&#39;packages&#39;:{},&#39;authid&#39;:0,&#39;protocol&#39;:&#39;ssh&#39;}<br />
+add_ons[&#39;top&#39;] = &#39;&lt;NWSPY&gt;/addons&#39;<br />
+add_ons[&#39;packages&#39;][&#39;svn&#39;] = {&#39;stype&#39;:&#39;pypi&#39;, &#39;src&#39;:&#39;https://files.pythonhosted.org/packages/a1/e7/79a64af11e5d2a1e0996e1e2ce781e297ce711d9835fbe37b43dd6134343/svn-0.3.46.tar.gz&#39;}</code><br />
+&nbsp;</p>
+
+<p>7. Modify the references to &lt;NWSPY&gt; and &lt;ISATSS_CODE&gt; with the actual full paths for the NWS Python and ISatSS git repo directories as previously defined.</p>
+
+<p>8. Execute the update_rc.py program, which updates the shell .rc file (.bashrc, .cshrc, or .tcshrc) file with an alias for each ISatSS application.</p>
+
+<p><code>ISATSS_CODE/apps&gt; npy update_rc.py</code></p>
+
+<p>9. Source the shell .rc file.</p>
+
+<p><code>source ~/.bashrc</code> (or ~/.cshrc) depending on your default shell</p>
+
+<p>10. Confirm the installation by running the isatss command with no arguments.&nbsp; A commandline help summary should be displayed.</p>
+
+<p><code>ISATSS_CODE/apps&gt; cd</code></p>
+
+<p><code>$ isatss<br />
+isatss - ISatSS Utility Functions<br />
+<br />
+Syntax:<br />
+&nbsp;&nbsp;isatss &lt;cmd&gt; &lt;tgt&gt; &lt;gid=&gt; &lt;jid=&gt; &lt;ndx=&gt; &lt;--cfg=&gt; &lt;--force&gt; &lt;--service&gt; &lt;--preview&gt;<br />
+<br />
+Positional arguments:<br />
+&nbsp;&nbsp;cmd - admin action (default: list)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;apps &nbsp;&nbsp;&nbsp;&nbsp;- list available applications<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;check &nbsp;&nbsp;&nbsp;- check required modules for application &lt;tgt&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;checkfs &nbsp;- check that all nodes can be written/read/cleaned &lt;read/write&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;circular - check for circular module imports<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clean &nbsp;&nbsp;&nbsp;- clean out all dynamic data areas<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cluster &nbsp;- cluster shell for group &lt;tgt&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;codeup &nbsp;&nbsp;- automated code update tool<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;creds &nbsp;&nbsp;&nbsp;- manage ISatSS external credentials (add,delete &lt;ndx&gt;,update &lt;ndx&gt;,show &lt;ndx&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;deploy &nbsp;&nbsp;- deploy instance of isatss on a node per &lt;cfg&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;docs &nbsp;&nbsp;&nbsp;&nbsp;- documentation for module &lt;tgt&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;groups &nbsp;&nbsp;- list processing groups<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;init &nbsp;&nbsp;&nbsp;&nbsp;- initialize an ISatSS host<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;list &nbsp;&nbsp;&nbsp;&nbsp;- list tables from isatss_config (nodes, hosts)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;logmerge - merge log files listed in &lt;tgt&gt; (g1.j1/g2.j2/g3.j3...<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pydoc &nbsp;&nbsp;&nbsp;- print pydoc for module &lt;tgt&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;start &nbsp;&nbsp;&nbsp;- start processing group or job<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stop &nbsp;&nbsp;&nbsp;&nbsp;- stop processing group or job<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reload &nbsp;&nbsp;- restart system-wide agent86 instances<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shutdown - forced shutdown of all ISatSS process<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;status &nbsp;&nbsp;- determine status of processing group or job<br />
+&nbsp;&nbsp;tgt - command target<br />
+<br />
+Keyword-only arguments:<br />
+&nbsp;&nbsp;gid - group id for start/stop/status (default: 0)<br />
+&nbsp;&nbsp;jid - id of job definition for start/stop/status (default: 0)<br />
+&nbsp;&nbsp;ndx - Credential Index (default: 0)<br />
+<br />
+Switches:<br />
+&nbsp;&nbsp;brief &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- indicates that detailed output to console should be supressed (default: False)<br />
+&nbsp;&nbsp;cfg &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- full path to configuration area<br />
+&nbsp;&nbsp;configuration - Print command configuration options (default: False)<br />
+&nbsp;&nbsp;description &nbsp;&nbsp;- Print command description (default: False)<br />
+&nbsp;&nbsp;details &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Print full detailed documentation on command (default: False)<br />
+&nbsp;&nbsp;force &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- terminate non-responding daemon applications (default: False)<br />
+&nbsp;&nbsp;help &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Get command line help (default: False)<br />
+&nbsp;&nbsp;host &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- host id force, use with --instance<br />
+&nbsp;&nbsp;instance &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- instance force, use with --host<br />
+&nbsp;&nbsp;interfaces &nbsp;&nbsp;&nbsp;- Print command interfaces (default: False)<br />
+&nbsp;&nbsp;license &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Print license header for command (default: False)<br />
+&nbsp;&nbsp;log &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- provide job fullpath log file with listing (default: False)<br />
+&nbsp;&nbsp;loglevel &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Force log level (default: Default)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Default - Default log level from configuration file chain<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Always &nbsp;- Fatal errors, or items that should always be logged<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Error &nbsp;&nbsp;- Recoverable errors<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Warning - Warnings<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Task &nbsp;&nbsp;&nbsp;- High-level task messages (task completed, etc.)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Info &nbsp;&nbsp;&nbsp;- Informational messages lower than task-level<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Status &nbsp;- Status messages that are lower than info<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Debug &nbsp;&nbsp;- Detailed, debugging-level messages<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Trace &nbsp;&nbsp;- Lowest level detailing entry/exit to/from each function<br />
+&nbsp;&nbsp;option &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- for clean directive: &nbsp;optional deletion filter - attached/network<br />
+&nbsp;&nbsp;preview &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- preview action instead of executing (default: False)<br />
+&nbsp;&nbsp;service &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- indicates that cluster should authenticate as service user (default: False)<br />
+&nbsp;&nbsp;status &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- provide job status with listing (default: False)<br />
+&nbsp;&nbsp;theory &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Print command theory of operation (default: False)<br />
+&nbsp;&nbsp;traceback &nbsp;&nbsp;&nbsp;&nbsp;- Print full traceback on handled exception (default: False)<br />
+&nbsp;&nbsp;usage &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Print usage description for command (default: False)</code><br />
+<br />
+11. Install the add-on python libraries (svn) defined in isatss_setup.py earlier.</p>
+
+<p>$ addons install</p>
+
+<p>12. Verify that the subversion library is now available from python.</p>
+
+<p><code>brapp@chiark $ npy<br />
+Python 3.7.2 (default, Dec 29 2018, 06:19:36) &nbsp;<br />
+[GCC 7.3.0] :: Anaconda, Inc. on linux<br />
+Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.<br />
+&gt;&gt;&gt; import svn<br />
+&gt;&gt;&gt; ^D</code><br />
+<br />
+13. Use the &quot;isatss check&quot; command to confirm that all python modules are avilable and can be successfully imported.</p>
+
+<p><code>$ isatss check<br />
+Module &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ver &nbsp;&nbsp;&nbsp;Ck &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Imported By<br />
+<br />
+baseline/_strptime &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(ncm)<br />
+baseline/atexit &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(im_daemon)<br />
+baseline/base64 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(im_cred,im_vlab)<br />
+baseline/cProfile &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(im_profiler)<br />
+baseline/calendar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(im_utils,im_log,incinerator,im_dataclient,im_luts,im_ncfile,im_projections,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mojo)<br />
+baseline/copy &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(george,ncm)<br />
+baseline/ctypes &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.1.0 &nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(im_ldm)<br />
+baseline/datetime &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(im_dataclient,george,im_ncfile,im_wmo,ncm,mojo)<br />
+baseline/elasticsearch &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK (Dyn) (gchq)<br />
+baseline/email &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(gchq)<br />
+baseline/email.mime.multipart &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(gchq)<br />
+baseline/email.mime.text &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(gchq)<br />
+baseline/errno &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(im_utils,im_log,im_daemon,im_shoephone,im_ldm)<br />
+baseline/ftplib &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(im_dataclient)<br />
+baseline/functools &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(mojo)<br />
+baseline/getpass &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(im_cred,im_cssh,im_vlab,im_dataclient)<br />
+baseline/gzip &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(im_utils,im_dataclient)<br />
+baseline/hashlib &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(im_vlab,im_ldm,george)<br />
+baseline/imp &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(im_utils)<br />
+baseline/inspect &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(isatss)<br />
+baseline/io &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(im_profiler,im_vlab,im_dataclient)<br />
+baseline/json &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.0.9 &nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(isatss,im_cred,im_utils,im_cssh,im_info,agent86,im_shoephone,mi6,gchq,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;im_vlab)<br />
+baseline/math &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(im_gridtrans,im_luts,im_projections)<br />
+baseline/mimetypes &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(im_vlab)<br />
+baseline/numbers &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(im_utils)<br />
+baseline/os &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(isatss,im_code,im_cred,im_utils,im_threading,xmcron,im_info,im_log,im_configure,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;agent86,im_daemon,im_shoephone,incinerator,mi6,gchq,im_vlab,ldmer,im_ldm,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dispatcher,im_dataclient,replicator,george,im_gridtrans,im_luts,im_ncfile,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ncm,mojo)<br />
+baseline/paramiko &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.4.2 &nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(im_cssh,im_dataclient)<br />
+baseline/pickle &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(im_utils)<br />
+baseline/pstats &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(im_profiler)<br />
+baseline/psutil &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5.4.8 &nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(isatss,im_daemon)<br />
+baseline/pycurl &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(im_vlab)<br />
+baseline/pyinotify &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0.9.6 &nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(im_notifier)<br />
+baseline/queue &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(im_agent13,im_agent99,im_shoephone,gchq)<br />
+baseline/readline &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(im_utils)<br />
+baseline/requests &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.19.1 OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(im_dataclient)<br />
+baseline/select &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(im_cssh,mi6)<br />
+baseline/shlex &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(isatss,im_utils,xmcron,im_daemon,im_shoephone,mi6,ldmer,replicator)<br />
+baseline/shutil &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(isatss,im_code,im_utils,incinerator,im_vlab,im_dataclient,replicator)<br />
+baseline/signal &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(isatss,im_utils,im_threading,agent86,im_daemon,mi6,gchq)<br />
+baseline/smtplib &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(gchq)<br />
+baseline/socket &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(agent86,im_shoephone,im_ldm,im_dataclient)<br />
+baseline/struct &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(im_shoephone,im_mcfile)<br />
+baseline/subprocess &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(im_utils,xmcron,im_log,mi6,ldmer,replicator)<br />
+baseline/sys &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(im_utils,im_threading,xmcron,im_cssh,im_info,im_log,im_job,agent86,im_daemon,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;im_agent99,im_shoephone,incinerator,mi6,gchq,im_vlab,ldmer,dispatcher,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;im_dataclient,replicator,george,im_ncfile,ncm,mojo)<br />
+baseline/threading &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(im_threading,im_log,im_shoephone,gchq)<br />
+baseline/time &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(isatss,im_code,im_utils,xmcron,im_cssh,im_info,im_log,im_configure,agent86,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;im_daemon,im_agent13,im_agent99,im_shoephone,incinerator,mi6,gchq,im_vlab,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ldmer,dispatcher,im_dataclient,replicator,george,im_gridtrans,im_luts,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;im_mcfile,im_ncfile,im_projections,ncm,mojo)<br />
+baseline/traceback &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(isatss,im_threading,im_cssh,im_log,agent86,im_agent99,im_shoephone,incinerator,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mi6,gchq,ldmer,im_ldm,dispatcher,im_dataclient,replicator,im_ncfile,mojo)<br />
+baseline/urllib &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(im_vlab,im_dataclient)<br />
+baseline/urllib.request &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(im_vlab)<br />
+baseline/warnings &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(im_cssh)<br />
+baseline/xml.etree &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(im_ncfile)<br />
+baseline/xml.etree.ElementTree &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(im_vlab)<br />
+baseline/zipfile &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(im_dataclient)<br />
+isatss/agent86 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(agent86)<br />
+isatss/dispatcher &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(dispatcher)<br />
+isatss/gchq &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(gchq)<br />
+isatss/george &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(george)<br />
+isatss/im_agent13 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(im_daemon,mi6,gchq)<br />
+isatss/im_agent99 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(im_daemon,agent86,im_shoephone,incinerator,mi6,gchq,ldmer,replicator,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;george)<br />
+isatss/im_code &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(isatss)<br />
+isatss/im_commands &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(im_utils,im_log)<br />
+isatss/im_configure &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(im_job,ldmer,mojo)<br />
+isatss/im_cred &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(isatss,gchq,im_vlab,im_dataclient)<br />
+isatss/im_cssh &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(isatss)<br />
+isatss/im_daemon &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(agent86,incinerator,mi6,gchq,ldmer,dispatcher,replicator,george,ncm,mojo)<br />
+isatss/im_dataclient &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(dispatcher)<br />
+isatss/im_exceptions &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(im_code,im_cred,im_utils,xmcron,im_cssh,isatss,im_info,im_notifier,im_log,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;im_job,im_configure,im_daemon,im_agent13,im_agent99,im_profiler,agent86,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;im_shoephone,incinerator,mi6,gchq,im_vlab,ldmer,im_ldm,im_dataclient,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dispatcher,replicator,george,im_gridtrans,im_luts,im_mcfile,im_ncfile,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;im_projections,im_wmo,ncm,mojo)<br />
+isatss/im_gridtrans &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(george)<br />
+isatss/im_info &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(isatss,im_agent13,im_agent99,im_daemon,im_shoephone,agent86,incinerator,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mi6,gchq,ldmer,im_dataclient,dispatcher,replicator,george,ncm,mojo)<br />
+isatss/im_job &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(isatss,im_configure,im_daemon,im_shoephone,agent86,mi6,gchq,ldmer,replicator)<br />
+isatss/im_ldm &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(ldmer,replicator)<br />
+isatss/im_log &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(isatss,im_job,im_agent13,im_agent99,im_daemon,im_shoephone,agent86,incinerator,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mi6,gchq,ldmer,dispatcher,replicator,george,ncm)<br />
+isatss/im_luts &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(george)<br />
+isatss/im_mcfile &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(george,ncm)<br />
+isatss/im_ncfile &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(george,ncm)<br />
+isatss/im_notifier &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(im_info,isatss,agent86,im_shoephone,gchq,ldmer,replicator,mojo)<br />
+isatss/im_profiler &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(im_daemon)<br />
+isatss/im_projections &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(george,ncm)<br />
+isatss/im_shoephone &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(agent86)<br />
+isatss/im_threading &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(im_utils,isatss,im_shoephone,mi6,gchq)<br />
+isatss/im_utils &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(im_cred,im_cssh,im_info,im_log,im_configure,im_job,isatss,im_agent99,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;im_daemon,im_shoephone,agent86,incinerator,mi6,im_vlab,gchq,ldmer,im_dataclient,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dispatcher,replicator,im_gridtrans,im_luts,im_mcfile,im_ncfile,george,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ncm,mojo)<br />
+isatss/im_vlab &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(gchq)<br />
+isatss/im_wmo &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(george)<br />
+isatss/incinerator &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(incinerator)<br />
+isatss/isatss &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(isatss)<br />
+isatss/isatss_config &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(im_dataclient,dispatcher)<br />
+isatss/jdcal &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.3 &nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(im_utils)<br />
+isatss/ldmer &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(ldmer)<br />
+isatss/mi6 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(mi6)<br />
+isatss/mojo &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(mojo)<br />
+isatss/ncm &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(ncm)<br />
+isatss/replicator &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(replicator)<br />
+isatss/scp &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0.10.2 OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(im_dataclient)<br />
+isatss/xmcron &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(im_utils,isatss,im_daemon,im_shoephone)<br />
+netCDF4/netCDF4 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.4.2 &nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(im_ncfile)<br />
+numpy/numpy &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.15.3 OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(george,im_gridtrans,im_luts,im_mcfile,im_ncfile,im_projections,ncm,mojo)</code><br />
+<br />
+&nbsp;</p>

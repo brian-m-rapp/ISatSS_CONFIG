@@ -315,6 +315,7 @@ defaults['vlab']['company'] = 10132
 defaults['vlab']['group']   = 1334496		# ISatSS community group ID
 defaults['sudocmd']         = 'sudo -Su'
 defaults['cluster_log']     = True
+defaults['doc_cfg']         = 'doc_cfg'                  # documentation configuration file
 
 #groups
 groups = {}
