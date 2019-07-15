@@ -49,63 +49,80 @@
 
 <p>1. Create the installation directory path:</p>
 
-<p><code>$ mkdir ISATSS_HOME</code></p>
+<p><span style="color:#e74c3c"><code>$ mkdir ISATSS_HOME</code></span></p>
 
-<p><code>$ cd ISATSS_HOME</code></p>
+<p><span style="color:#e74c3c"><code>$ cd ISATSS_HOME</code></span></p>
 
 <p>2. Clone the ISatSS baseline repository.</p>
 
-<p><code>ISATSS_HOME&gt; git clone ssh://Your.Name@vlab.ncep.noaa.gov:29418/ISatSS</code></p>
+<p><span style="color:#e74c3c"><code>ISATSS_HOME&gt; git clone ssh://Your.Name@vlab.ncep.noaa.gov:29418/ISatSS</code></span></p>
 
-<p>3. Change directory into the root of the repository.&nbsp; Going forward, this path will be denoded as ISATSS_CODE in this document.</p>
+<p>3. Clone the ISatSS_NCEP configuration file repository.</p>
 
-<p><code>ISATSS_HOME&gt; cd ISatSS</code></p>
+<p><span style="color:#e74c3c"><code>ISATSS_HOME&gt; git clone ssh://Your.Name@vlab.ncep.noaa.gov:29418/ISatSS_NCEP</code></span></p>
 
-<p>4. Check out the latest branch from the repository (currently p37_n116_v3.0).&nbsp; Branch names are based on three components: the python version, the numpy version, and the source code version.</p>
+<p>4. Change directory into the root of the ISatSS source code repository.&nbsp; Going forward, this path will be denoded as ISATSS_CODE in this document.</p>
 
-<p><code>ISATSS_CODE&gt; git checkout p37_n116_v3.0</code></p>
+<p><span style="color:#e74c3c"><code>ISATSS_HOME&gt; cd ISatSS</code></span></p>
 
-<p>5. Change to the apps sub-directory.</p>
+<p>5. Check out the latest branch from the repository (currently p37_n116_v3.0).&nbsp; Branch names are based on three components: the python version, the numpy version, and the source code version.</p>
 
-<p><code>ISATSS_CODE&gt; cd apps</code></p>
+<p><span style="color:#e74c3c"><code>ISATSS_CODE&gt; git checkout p37_n116_v3.0</code></span></p>
 
-<p>6. Using the editor of your choice, create the file isatss_setup.py and populate it with the following:</p>
+<p>6.&nbsp;Change directory into the configuration repository.&nbsp; Going forward, this path will be denoded as ISATSS_CONFIG&nbsp;in this document.</p>
 
-<p><code># isatss configuration<br />
-import os</code></p>
+<p><span style="color:#e74c3c"><code>ISATSS_CODE&gt; cd ../ISatSS_NCEP</code></span></p>
 
-<p><code># path to instance of isatss_support directory. &nbsp;If not using isatss_support, set to None<br />
-conda_home &nbsp; &nbsp; = None<br />
+<p>7. Check out the latest branch from the repository (currently p37_n116_v3.0).&nbsp; Branch names are based on three components: the python version, the numpy version, and the source code version.</p>
+
+<p><span style="color:#e74c3c"><code>ISATSS_CONFIG&gt; git checkout p37_n116_v3.0</code></span></p>
+
+<p>8. Copy the default shapefile RPM setup file into the ISatSS baseline.</p>
+
+<p><span style="color:#e74c3c"><code>ISATSS_CONFIG&gt;</code>&nbsp;cp shaper/cfg/isatss_setup.py &lt;ISATSS_CODE&gt;/apps</span></p>
+
+<p>9. Change to the apps sub-directory of the source code repository.</p>
+
+<p><span style="color:#e74c3c"><code>$ cd </code>&lt;ISATSS_CODE&gt;/<code>apps</code></span></p>
+
+<p>10. Using the editor of your choice, open the file isatss_setup.py.&nbsp; The file contents will be similar to this:</p>
+
+<p><span style="color:#16a085"><code># isatss configuration<br />
+import os</code></span></p>
+
+<p><span style="color:#16a085"><code># path to instance of isatss_support directory. &nbsp;If not using isatss_support, set to None<br />
+conda_home = None<br />
 # path to installed anaconda install. &nbsp;If not using a local anaconda install, set to None<br />
-conda_path &nbsp; &nbsp; = &#39;&lt;NWSPY&gt;/anaconda&#39;</code></p>
+conda_path = &#39;</code></span><span style="color:#e74c3c"><code>&lt;NWSPY&gt;</code></span><span style="color:#16a085"><code>/anaconda&#39;</code></span></p>
 
-<p><code># path to the python binary to be used by ISatSS<br />
-python&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp; = conda_path+&#39;/bin/python&#39;</code></p>
+<p><span style="color:#16a085"><code># path to the python binary to be used by ISatSS<br />
+python = conda_path+&#39;/bin/python&#39;</code></span></p>
 
-<p><code>isatss_home &nbsp; &nbsp;= &#39;&lt;ISATSS_CODE&gt;&#39;</code></p>
+<p><span style="color:#16a085"><code>isatss_home = &#39;</code></span><span style="color:#e74c3c"><code>&lt;ISATSS_CODE&gt;</code></span><span style="color:#16a085"><code>&#39;</code></span></p>
 
-<p><code>import_tracebacks = True</code></p>
+<p><span style="color:#16a085"><code>sitemods = &#39;</code></span><span style="color:#e74c3c"><code>&lt;ISATSS_CONFIG&gt;</code></span><span style="color:#16a085"><code>/shaper&#39;</code></span></p>
 
-<p><code>add_ons = {&#39;top&#39;:&#39;&#39;,&#39;packages&#39;:{},&#39;authid&#39;:0,&#39;protocol&#39;:&#39;ssh&#39;}<br />
-add_ons[&#39;top&#39;] = &#39;&lt;NWSPY&gt;/addons&#39;<br />
-add_ons[&#39;packages&#39;][&#39;svn&#39;] = {&#39;stype&#39;:&#39;pypi&#39;, &#39;src&#39;:&#39;https://files.pythonhosted.org/packages/a1/e7/79a64af11e5d2a1e0996e1e2ce781e297ce711d9835fbe37b43dd6134343/svn-0.3.46.tar.gz&#39;}</code><br />
-&nbsp;</p>
+<p><span style="color:#16a085"><code>import_tracebacks = True</code></span></p>
 
-<p>7. Modify the references to &lt;NWSPY&gt; and &lt;ISATSS_CODE&gt; with the actual full paths for the NWS Python and ISatSS git repo directories as previously defined.</p>
+<p><span style="color:#16a085"><code>add_ons = {&#39;top&#39;:&#39;&#39;,&#39;packages&#39;:{},&#39;authid&#39;:0,&#39;protocol&#39;:&#39;ssh&#39;}<br />
+add_ons[&#39;top&#39;] = &#39;</code></span><span style="color:#e74c3c"><code>&lt;NWSPY&gt;</code></span><span style="color:#16a085"><code>/addons&#39;<br />
+add_ons[&#39;packages&#39;][&#39;svn&#39;] = {&#39;stype&#39;:&#39;pypi&#39;, &#39;src&#39;:&#39;https://files.pythonhosted.org/packages/a1/e7/79a64af11e5d2a1e0996e1e2ce781e297ce711d9835fbe37b43dd6134343/svn-0.3.46.tar.gz&#39;}</code></span></p>
 
-<p>8. Execute the update_rc.py program, which updates the shell .rc file (.bashrc, .cshrc, or .tcshrc) file with an alias for each ISatSS application.</p>
+<p>11. Modify the references to &lt;NWSPY&gt;,&nbsp;&lt;ISATSS_CODE&gt;, and &lt;ISATSS_CONFIG&gt;&nbsp;with the actual full paths for the NWS Python and ISatSS source git repository directories as previously defined, then save the file and exit from the editor session.</p>
 
-<p><code>ISATSS_CODE/apps&gt; npy update_rc.py</code></p>
+<p>12. Execute the update_rc.py program, which updates the shell .rc file (.bashrc, .cshrc, or .tcshrc) file with an alias for each ISatSS application.</p>
 
-<p>9. Source the shell .rc file.</p>
+<p><span style="color:#e74c3c"><code>ISATSS_CODE/apps&gt; npy update_rc.py</code></span></p>
 
-<p><code>source ~/.bashrc</code> (or ~/.cshrc) depending on your default shell</p>
+<p>13. Source the shell .rc file.</p>
 
-<p>10. Confirm the installation by running the isatss command with no arguments.&nbsp; A commandline help summary should be displayed.</p>
+<p><span style="color:#e74c3c"><code>$ source ~/.bashrc</code> (or ~/.cshrc) depending on your default shell</span></p>
 
-<p><code>ISATSS_CODE/apps&gt; cd</code></p>
+<p>14. Confirm the installation by running the isatss command with no arguments.&nbsp; A commandline help summary should be displayed.</p>
 
-<p><code>$ isatss<br />
+<p><span style="color:#e74c3c"><code>ISATSS_CODE/apps&gt; cd</code></span></p>
+
+<p><span style="color:#e74c3c"><code>$ isatss<br />
 isatss - ISatSS Utility Functions<br />
 <br />
 Syntax:<br />
@@ -169,24 +186,24 @@ Switches:<br />
 &nbsp;&nbsp;status &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- provide job status with listing (default: False)<br />
 &nbsp;&nbsp;theory &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Print command theory of operation (default: False)<br />
 &nbsp;&nbsp;traceback &nbsp;&nbsp;&nbsp;&nbsp;- Print full traceback on handled exception (default: False)<br />
-&nbsp;&nbsp;usage &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Print usage description for command (default: False)</code><br />
+&nbsp;&nbsp;usage &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Print usage description for command (default: False)</code></span><br />
 <br />
-11. Install the add-on python libraries (svn) defined in isatss_setup.py earlier.</p>
+15. Install the add-on python libraries (svn) defined in isatss_setup.py earlier.</p>
 
-<p>$ addons install</p>
+<p><code><span style="color:#e74c3c">$ addons install</span></code></p>
 
-<p>12. Verify that the subversion library is now available from python.</p>
+<p>16. Verify that the subversion library is now available from python.</p>
 
-<p><code>brapp@chiark $ npy<br />
+<p><span style="color:#e74c3c"><code>brapp@chiark $ npy<br />
 Python 3.7.2 (default, Dec 29 2018, 06:19:36) &nbsp;<br />
 [GCC 7.3.0] :: Anaconda, Inc. on linux<br />
 Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.<br />
 &gt;&gt;&gt; import svn<br />
-&gt;&gt;&gt; ^D</code><br />
+&gt;&gt;&gt; ^D</code></span><br />
 <br />
-13. Use the &quot;isatss check&quot; command to confirm that all python modules are avilable and can be successfully imported.</p>
+17. Use the &quot;isatss check&quot; command to confirm that all python modules are avilable and can be successfully imported.</p>
 
-<p><code>$ isatss check<br />
+<p><span style="color:#e74c3c"><code>$ isatss check<br />
 Module &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ver &nbsp;&nbsp;&nbsp;Ck &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Imported By<br />
 <br />
 baseline/_strptime &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(ncm)<br />
@@ -305,6 +322,6 @@ isatss/replicator &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n
 isatss/scp &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0.10.2 OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(im_dataclient)<br />
 isatss/xmcron &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(im_utils,isatss,im_daemon,im_shoephone)<br />
 netCDF4/netCDF4 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.4.2 &nbsp;OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(im_ncfile)<br />
-numpy/numpy &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.15.3 OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(george,im_gridtrans,im_luts,im_mcfile,im_ncfile,im_projections,ncm,mojo)</code><br />
+numpy/numpy &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.15.3 OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(george,im_gridtrans,im_luts,im_mcfile,im_ncfile,im_projections,ncm,mojo)</code></span><br />
 <br />
 &nbsp;</p>

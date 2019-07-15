@@ -1,0 +1,368 @@
+<h2 style="text-align:center">NHC-Dev ISatSS Software Installation</h2>
+
+<p>&nbsp;</p>
+
+<h3>1.0 Introduction</h3>
+
+<p>The NHCDev&nbsp;deployment of ISatSS follows the &quot;Multiple Server Centrally Installed&quot; scenario described in the <a href="https://vlab.ncep.noaa.gov/group/isatss/installation#Section%202.3">Software Installation</a> guide.&nbsp; The specific instructions provided in this article should be used to deploy the NHCDev ISatSS, with the general installation guide only used for reference.&nbsp; Versions of the ISatSS software and configuration packages to be used for NHCDev ISatSS are listed in table 1.</p>
+
+<table align="center" border="1" cellpadding="1" cellspacing="1" style="width:70%">
+	<thead>
+		<tr>
+			<th scope="col">Package</th>
+			<th scope="col">Current Branch</th>
+			<th scope="col">Current NHCDev Tag</th>
+			<th scope="col">Description</th>
+		</tr>
+	</thead>
+	<caption><strong>Table 1:&nbsp; NHCDev ISatSS Software Packages</strong></caption>
+	<tbody>
+		<tr>
+			<td>ISatSS</td>
+			<td>p37_n116_v3.0</td>
+			<td>&nbsp;</td>
+			<td>ISatSS core application software</td>
+		</tr>
+		<tr>
+			<td>ISatSS_NCEP</td>
+			<td>p37_n116_v3.0</td>
+			<td>&nbsp;</td>
+			<td>ISatSS NCEP configuration collection</td>
+		</tr>
+		<tr>
+			<td>NWS_python_support</td>
+			<td>p37_n116_2</td>
+			<td>&nbsp;</td>
+			<td>ISatSS Python support environment</td>
+		</tr>
+		<tr>
+			<td>grb_processing</td>
+			<td>master</td>
+			<td>&nbsp;</td>
+			<td>GRB CCSDS processing</td>
+		</tr>
+	</tbody>
+</table>
+
+<p>&nbsp;</p>
+
+<h3>2.0&nbsp; Preparation</h3>
+
+<p>Prior to performing the installation, the following prerequisites should be checked.</p>
+
+<p>1.&nbsp; The installer must have an account from which all machines in the NHCDev ISatSS cluster can be reached via ssh.&nbsp; The list of machines can be found in the <a href="https://vlab.ncep.noaa.gov/redmine/projects/isatss/repository/isatss_ncep/revisions/p37_n116_v3.0/entry/NHCDev/cfg/isatss_config.py">ISatSS_NCEP/NHCDev/cfg/isatss_config.py</a>&nbsp;(/home/isatsssw/isatss/ISatSS_NCEP/NHCDev/cfg/isatss_config.py) file.&nbsp; (Be sure to look at the correct version per the &#39;Current NHCDev&nbsp;Tag&#39; value in Table 1.</p>
+
+<p>2.&nbsp; The installer must be able to assume the role of the users defined in the isatss_config.py hosts dictionary as well as the default ISatSS user defined in the isatss_config.py defaults table.&nbsp; In summary, these users should be &#39;isatss&#39; for all processing hosts, and &#39;ldm&#39; for the LDM hosts.</p>
+
+<p>3.&nbsp; The installer must be a member of the <a href="https://vlab.ncep.noaa.gov/group/isatss/home">VLab ISatSS Community</a>, the <a href="https://vlab.ncep.noaa.gov/redmine/projects/isatss">VLab ISatSS Redmine Project</a>, and the <a href="https://vlab.ncep.noaa.gov/code-review/#/admin/projects/ISatSS">VLab ISatSS Gerrit Project</a> (in a role that provides at a minimum &#39;read&#39; access to the .git repos.)</p>
+
+<p>4.&nbsp; The isatss&nbsp;and ldm users must have read, write, and execute access to the /home/isatsssw&nbsp;file system.</p>
+
+<p>5.&nbsp; The following system utilities must be installed on the system:&nbsp; git, bunzip2, unzip, gcc, gcc-c++</p>
+
+<p>6.&nbsp; crontab must be enabled for the isatss&nbsp;and ldm users</p>
+
+<p>&nbsp;</p>
+
+<h3>3.0&nbsp; Download and Installation</h3>
+
+<p>The ISatSS software is deployed to the /home/isatsssw/isatss/isatss3&nbsp;file system, owned by the isatss&nbsp;account.&nbsp;</p>
+
+<p>1. Log in to the target&nbsp;system using your personal Linux account.&nbsp; Assume the identity of the&nbsp;isatss&nbsp;user via the sudo command.</p>
+
+<p><code>user@isatssN&nbsp;sudo -iu isatss</code></p>
+
+<p>2. Create the directory path for the new python environment installation and set that as your current working directory.</p>
+
+<p><code>isatss@isatssN&gt; mkdir -p /home/isatsssw/isatss3/nwspy</code></p>
+
+<p><code>isatss@isatssN&gt; cd /home/isatsssw/isatss3/nwspy</code></p>
+
+<p>3. Log in to the VLab Gerrit site (<a href="https://vlab.ncep.noaa.gov/code-review/#/settings/http-password" target="">https://vlab.ncep.noaa.gov/code-review/#/settings/http-password</a>) to obtain a challenge password, which can be found by clicking the &quot;HTTP Password&quot; item in the menu on the left side of the screen.&nbsp; If a password is not shown, create one by clicking the &quot;Generate Password&quot; button.</p>
+
+<p>4. By default, many Linux distributions will attempt to display a graphical interface for password entry, such as ksshaskpass. If the GUI is not desired, or is not feasible due to remote access restrictions, the simple text prompt can be restored by removing the SSH_ASKPASS environment variable:</p>
+
+<p><code>isatss@isatssN&gt; unset SSH_ASKPASS</code></p>
+
+<p>5. Clone the NWS_python_support repository to the current directory (/home/isatsssw/isatss3/nwspy) and enter your challenge password (retrieved in step 3 above) when prompted.</p>
+
+<p><code>isatss@isatssN&gt; git clone https://your.name@vlab.ncep.noaa.gov/code-review/a/NWS_python_support</code></p>
+
+<p>6. Configure Git to not issue warnings when checking out tags:</p>
+
+<p><code>isatss@isatssN&gt; git config --global advice.detachedHead false</code></p>
+
+<p>7. Change your working directory to NWS_python_support</p>
+
+<p><code>isatss@isatssN&gt; cd NWS_python_support</code></p>
+
+<p>8. Check out the branch designated in Table 1 for NWS_python_support:</p>
+
+<p><code>isatss@wisatssN&gt; git checkout pX_nY_Z</code>&nbsp;(per table 1)</p>
+
+<p>9. Add the following command to the .bashrc file for the isatss account (/home/isatss/.bashrc), if not already present:</p>
+
+<p><code>unset SUDO_UID SUDO_GID SUDO_USER</code></p>
+
+<p>10. Change your working directory to the location of the installation script and run it:</p>
+
+<p><code>isatss@isatssN&gt; cd /home/isatsssw/isatss3/nwspy/NWS_python_support/anaconda/setup</code></p>
+
+<p><code>isatss@isatssN&gt; python conda_setup.py</code></p>
+
+<p>11. On completion of the install, the package can be accessed via aliases added to the user shell .rc file.&nbsp; The &#39;npy&#39; alias provides a shortcut to the python binary, and the &#39;nconda&#39; alias to the conda configuration utility for adding and updating packages.</p>
+
+<p><code>isatss@isatssN&gt; source ~/.bashrc</code></p>
+
+<p><code>isatss@isatssN&gt; alias npy</code></p>
+
+<div style="background:#eeeeee; border:1px solid #cccccc; padding:5px 10px"><span style="font-family:Courier New,Courier,monospace">alias npy=&#39;/home/isatsssw/isatss3/nwspy/anaconda/bin/python&#39;</span></div>
+
+<p><code>isatss@isatssN&gt; npy</code></p>
+
+<div style="background:#eeeeee; border:1px solid #cccccc; padding:5px 10px"><span style="font-family:Courier New,Courier,monospace">Python 3.7.0 (default, Oct&nbsp; 9 2018, 10:31:47)<br />
+[GCC 7.3.0] :: Anaconda, Inc. on linux<br />
+Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.<br />
+&gt;&gt;&gt;</span></div>
+
+<p><em>Note:&nbsp; To exit the Python shell, type &quot;&lt;cntl&gt; d&quot; on the keyboard</em></p>
+
+<p><code>isatss@isatssN&gt; alias nconda</code></p>
+
+<div style="background:#eeeeee; border:1px solid #cccccc; padding:5px 10px"><span style="font-family:Courier New,Courier,monospace">alias nconda= &#39;/home/isatsssw/isatss3/nwspy/anaconda/bin/conda&#39;</span></div>
+
+<p><code>isatss@isatssN&gt; nconda</code></p>
+
+<div style="background:#eeeeee; border:1px solid #cccccc; padding:5px 10px"><span style="font-size:9px"><span style="font-family:Courier New,Courier,monospace">usage: conda [-h] [-V] command ...<br />
+conda is a tool for managing and deploying applications, environments and packages.<br />
+Options:<br />
+positional arguments:<br />
+&nbsp; command<br />
+&nbsp;&nbsp;&nbsp; clean&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Remove unused packages and caches.<br />
+&nbsp;&nbsp;&nbsp; config&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Modify configuration values in .condarc. This is modeled<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; after the git config command. Writes to the user .condarc<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; file (/home/isatss/.condarc) by default.<br />
+&nbsp;&nbsp;&nbsp; create&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Create a new conda environment from a list of specified packages.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+&nbsp;&nbsp;&nbsp; help&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Displays a list of available conda commands and their help strings.&nbsp;&nbsp;&nbsp;&nbsp;<br />
+&nbsp;&nbsp;&nbsp; info&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Display information about current conda install.<br />
+&nbsp;&nbsp;&nbsp; install&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Installs a list of packages into a specified conda environment.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+&nbsp;&nbsp;&nbsp; list&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; List linked packages in a conda environment.<br />
+&nbsp;&nbsp;&nbsp; package&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Low-level conda package utility. (EXPERIMENTAL)<br />
+&nbsp;&nbsp;&nbsp; remove&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Remove a list of packages from a specified conda environment.<br />
+&nbsp;&nbsp;&nbsp; uninstall&nbsp;&nbsp;&nbsp; Alias for conda remove. See conda remove --help.<br />
+&nbsp;&nbsp;&nbsp; search&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Search for packages and display associated information. The<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; input is a MatchSpec, a query language for conda packages.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; See examples below.<br />
+&nbsp;&nbsp;&nbsp; update&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Updates conda packages to the latest compatible version. This<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; command accepts a list of package names and updates them to<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; the latest versions that are compatible with all other<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; packages in the environment. Conda attempts to install the<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; newest versions of the requested packages. To accomplish<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this, it may update some packages that are already installed,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; or install additional packages. To prevent existing packages<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; from updating, use the --no-update-deps option. This may<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; force conda to install older versions of the requested<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; packages, and it does not prevent additional dependency<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; packages from being installed. If you wish to skip dependency<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; checking altogether, use the &#39;--force&#39; option. This may<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; result in an environment with incompatible packages, so this<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; option must be used with great caution.<br />
+&nbsp;&nbsp;&nbsp; upgrade&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Alias for conda update. See conda update --help.<br />
+optional arguments:<br />
+&nbsp; -h, --help&nbsp;&nbsp;&nbsp;&nbsp; Show this help message and exit.<br />
+&nbsp; -V, --version&nbsp; Show the conda version number and exit.<br />
+<br />
+conda commands available from other packages:<br />
+&nbsp; build<br />
+&nbsp; convert<br />
+&nbsp; develop<br />
+&nbsp; env<br />
+&nbsp; index<br />
+&nbsp; inspect<br />
+&nbsp; metapackage<br />
+&nbsp; render<br />
+&nbsp; skeleton</span></span></div>
+
+<p>&nbsp;</p>
+
+<p>12. Set your current working directory to the software installation base directory, clone the two ISatSS repositories:</p>
+
+<p><code>isatss@isatssN&gt; cd /home/isatsssw/isatss3</code></p>
+
+<p><code>isatss@isatssN&gt; git clone https://your.name@vlab.ncep.noaa.gov/code-review/a/ISatSS</code></p>
+
+<p><code>isatss@isatssN&gt; git clone https://your.name@vlab.ncep.noaa.gov/code-review/a/ISatSS_NCEP</code></p>
+
+<p>13. For each of the packages, perform a &#39;git checkout&#39; to the current ISatSS branch or NHCDev&nbsp;Tag.</p>
+
+<p><code>isatss@isatssN&gt; cd ISatSS</code></p>
+
+<p><code>isatss@isatssN&gt; git checkout p37_n116_v3.0 (per table 1)</code></p>
+
+<p><code>isatss@isatssN&gt; cd ../ISatSS_NCEP</code></p>
+
+<p><code>isatss@isatssN&gt; git checkout p37_n116_v3.0&nbsp;(per table 1)</code></p>
+
+<h3>4.0&nbsp; Configuration</h3>
+
+<p>The specific configuration for each system is contained in the directory ISatSS_NCEP/NHCDev/cfg.&nbsp; Perform the following actions to configure the deployed software.</p>
+
+<p>1. As the isatss&nbsp;user, copy the site isatss_setup.py into the ISatSS/apps directory.&nbsp; This module provides path information required by the software.</p>
+
+<p><code>isatss@isatssN&gt; cp /home/isatsssw/isatss3/ISatSS_NCEP/NHCDev/cfg/isatss_setup.py /home/isatsssw/isatss3/ISatSS/apps</code></p>
+
+<p>2. Configure the command aliases for the isatss user</p>
+
+<p><code>isatss@isatssN&gt; cd /home/isatsssw/isatss3/ISatSS/apps<br />
+isatss@isatssN&gt; npy update_rc.py<br />
+isatss@isatssN&gt; source ~/.bashrc</code></p>
+
+<p>3.&nbsp; Switch to the ldm account, and configure command aliases</p>
+
+<p><code>user@isatssN&gt; sudo su - ldm<br />
+isatss@isatssN&gt; cd /home/isatsssw/isatss3/ISatSS/apps<br />
+isatss@isatssN&gt; npy update_rc.py<br />
+isatss@isatssN&gt; source ~/.bashrc</code></p>
+
+<h3>5.0&nbsp; Initial Checkout</h3>
+
+<p>Prior to initiating the system&#39;s infrastructure processes, the following checks will establish confidence that the installation was successful.</p>
+
+<p>1. Initiate a fresh session on the server, using your personal Linux account</p>
+
+<p>2. Start a session as the isatss&nbsp;user.&nbsp; Enter your account password when prompted for a password.</p>
+
+<p><code>user@isatssN&gt; sudo su -&nbsp;isatss</code></p>
+
+<p>3. The configuration process created aliases for all of the isatss commands, along with a convenience alias to the version of python used by ISatSS.&nbsp; Check that those aliases are working properly.</p>
+
+<p><code>isatss@isatssN&gt; npy</code></p>
+
+<div style="background:#eeeeee; border:1px solid #cccccc; padding:5px 10px"><span style="font-family:Courier New,Courier,monospace">Python 3.7.3 (default, Mar 27 2019, 22:11:17)&nbsp;<br />
+[GCC 7.3.0] :: Anaconda, Inc. on linux<br />
+Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.<br />
+&gt;&gt;&gt;&nbsp;</span></div>
+
+<p><em>The python shell can be terminated by typing &#39;quit()&#39;</em></p>
+
+<p><code>isatss@isatssN&gt; isatss</code></p>
+
+<div style="background:#eeeeee; border:1px solid #cccccc; padding:5px 10px"><span style="font-family:Courier New,Courier,monospace">isatss - ISatSS Utility Functions<br />
+Syntax:<br />
+&nbsp; &nbsp;isatss &lt;cmd&gt; &lt;tgt&gt; &lt;gid=&gt; &lt;jid=&gt; &lt;ndx=&gt; &lt;--cfg=&gt; &lt;--force&gt; &lt;--service&gt; &lt;--preview&gt;<br />
+Positional arguments:<br />
+&nbsp; &nbsp;cmd - admin action (default: list)<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;apps &nbsp; &nbsp; - list available applications<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;check &nbsp; &nbsp;- check required modules for application &lt;tgt&gt;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;checkfs &nbsp;- check that all nodes can be written/read/cleaned &lt;read/write&gt;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;circular - check for circular module imports<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;clean &nbsp; &nbsp;- clean out all dynamic data areas<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;cluster &nbsp;- cluster shell for group &lt;tgt&gt;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;codeup &nbsp; - automated code update tool<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;creds &nbsp; &nbsp;- manage ISatSS external credentials (add,delete &lt;ndx&gt;,update &lt;ndx&gt;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;deploy &nbsp; - deploy instance of isatss on a node per &lt;cfg&gt;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;docs &nbsp; &nbsp; - documentation for module &lt;tgt&gt;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;groups &nbsp; - list processing groups<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;init &nbsp; &nbsp; - initialize an ISatSS host<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;list &nbsp; &nbsp; - list tables from isatss_config (nodes, hosts)<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;logmerge - merge log files listed in &lt;tgt&gt; (g1.j1/g2.j2/g3.j3...<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;pydoc &nbsp; &nbsp;- print pydoc for module &lt;tgt&gt;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;start &nbsp; &nbsp;- start processing group or job<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;stop &nbsp; &nbsp; - stop processing group or job<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;reload &nbsp; - restart system-wide agent86 instances<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;shutdown - forced shutdown of all ISatSS process<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;status &nbsp; - determine status of processing group or job<br />
+&nbsp; &nbsp;tgt - command target<br />
+Keyword-only arguments:<br />
+&nbsp; &nbsp;gid - group id for start/stop/status (default: 0)<br />
+&nbsp; &nbsp;jid - id of job definition for start/stop/status (default: 0)<br />
+&nbsp; &nbsp;ndx - Credential Index (default: 0)<br />
+Switches:<br />
+&nbsp; &nbsp;brief &nbsp; &nbsp; &nbsp; &nbsp; - indicates that detailed output to console should be supressed (default: False)<br />
+&nbsp; &nbsp;cfg &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; - full path to configuration area<br />
+&nbsp; &nbsp;configuration - Print command configuration options (default: False)<br />
+&nbsp; &nbsp;description &nbsp; - Print command description (default: False)<br />
+&nbsp; &nbsp;details &nbsp; &nbsp; &nbsp; - Print full detailed documentation on command (default: False)<br />
+&nbsp; &nbsp;force &nbsp; &nbsp; &nbsp; &nbsp; - terminate non-responding daemon applications (default: False)<br />
+&nbsp; &nbsp;help &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- Get command line help (default: False)<br />
+&nbsp; &nbsp;host &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- host id force<br />
+&nbsp; &nbsp;interfaces &nbsp; &nbsp;- Print command interfaces (default: False)<br />
+&nbsp; &nbsp;license &nbsp; &nbsp; &nbsp; - Print license header for command (default: False)<br />
+&nbsp; &nbsp;log &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; - provide job fullpath log file with listing (default: False)<br />
+&nbsp; &nbsp;loglevel &nbsp; &nbsp; &nbsp;- Force log level (default: Default)<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Default - Default log level from configuration file chain<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Always &nbsp;- Fatal errors, or items that should always be logged<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Error &nbsp; - Recoverable errors<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Warning - Warnings<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Task &nbsp; &nbsp;- High-level task messages (task completed, etc.)<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Info &nbsp; &nbsp;- Informational messages lower than task-level<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Status &nbsp;- Status messages that are lower than info<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Debug &nbsp; - Detailed, debugging-level messages<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Trace &nbsp; - Lowest level detailing entry/exit to/from each function<br />
+&nbsp; &nbsp;option &nbsp; &nbsp; &nbsp; &nbsp;- for clean directive: &nbsp;optional deletion filter - attached/network<br />
+&nbsp; &nbsp;preview &nbsp; &nbsp; &nbsp; - preview action instead of executing (default: False)<br />
+&nbsp; &nbsp;service &nbsp; &nbsp; &nbsp; - indicates that cluster should authenticate as service user (default: False)<br />
+&nbsp; &nbsp;status &nbsp; &nbsp; &nbsp; &nbsp;- provide job status with listing (default: False)<br />
+&nbsp; &nbsp;theory &nbsp; &nbsp; &nbsp; &nbsp;- Print command theory of operation (default: False)<br />
+&nbsp; &nbsp;traceback &nbsp; &nbsp; - Print full traceback on handled exception (default: False)<br />
+&nbsp; &nbsp;usage &nbsp; &nbsp; &nbsp; &nbsp; - Print usage description for command (default: False)</span></div>
+
+<h3>6.0&nbsp; Add Ons</h3>
+
+<p>Some ISatSS applications require modules that are not included in the nwspy collection.&nbsp; For example, the glm gridding applications require modules named &#39;glmtools&#39;, &#39;stormdrain&#39;, &#39;lmatools&#39;, and &#39;pyclipper&#39;.&nbsp; Add-on module requirements are configured in the add_ons dictionary in the isatss_setup.py file, and the Add-on modules are installed using the isatss addons command.</p>
+
+<p>1.&nbsp; The addons command utilizes the isatss credentials management capability to store the user name for the git repositories containing the add-on packages.&nbsp; Create a credential as follows.&nbsp;&nbsp;You will be prompted for a user name and a password.&nbsp; For the user name, provide your vlab ldap name.&nbsp; If you are using ssh protocol with keys, the names must be capitalized, i.e. John.Smith.&nbsp; If using https, the names are all lower case, i.e. john.smith.&nbsp; The password is not used, so no entry value is required.</p>
+
+<p><code>isatss@isatssN&gt;&nbsp; isatss creds add</code></p>
+
+<div style="background:#eeeeee; border:1px solid #cccccc; padding:5px 10px"><span style="font-family:Courier New,Courier,monospace">Username:&nbsp; john.smith<br />
+Password: &nbsp;<br />
+INFO &nbsp; &nbsp;2019-05-15T13:37:30.470799 23343 11.1 [MainThread] Added authid 1&nbsp;to /home/isatss/.vlabber</span></div>
+
+<p><em>NOTE -- The authid number returned in the output of the &quot;isatss creds add&quot; command above must be changed in the&nbsp;&#39;authid&#39; string if it is not &#39;1&#39;&nbsp;in the add_ons dictionary in ISatSS/apps/isatss_setup.py as indicated below.</em></p>
+
+<p><samp><span style="font-family:Courier New,Courier,monospace">add_ons = {&#39;top&#39;:&#39;&#39;,&#39;packages&#39;:{},&#39;authid&#39;:1,&#39;protocol&#39;:&#39;https&#39;}<br />
+add_ons[&#39;top&#39;] = &#39;/home/isatsss2/isatss3/add_ons&#39;<br />
+add_ons[&#39;packages&#39;][&#39;glmtools&#39;] &nbsp; = {&#39;branch&#39;:&#39;p37_n116_v3&#39;}<br />
+add_ons[&#39;packages&#39;][&#39;lmatools&#39;] &nbsp; = {&#39;branch&#39;:&#39;p37_n116_v3&#39;}<br />
+add_ons[&#39;packages&#39;][&#39;stormdrain&#39;] = {&#39;branch&#39;:&#39;p37_n116_v3&#39;}<br />
+add_ons[&#39;packages&#39;][&#39;pyclipper&#39;] &nbsp;= {&#39;branch&#39;:&#39;p37_n116_v3&#39;}</span></samp></p>
+
+<p>2.&nbsp; The add_ons packages will be installed in the directory identified in the add_ons[&#39;top&#39;], which will be created if it does not exist.&nbsp; Each package will be downloaded, configured to the identified branch, built, and installed in nwspy.&nbsp; &nbsp; Note that the credentials file may only be available on the &nbsp;machine on which it was created, depending on how the isatss&nbsp;account has been set up.&nbsp; The addons command must be run on a machine where the credentials file exists.&nbsp;&nbsp;If https protocol is being used, it will be necessary to enter the vlab gerrit password once for each package.&nbsp; &nbsp;<em>The next version of addons will cache the password so that it will only need to be entered once.</em></p>
+
+<p><code>isatss@isatssN&gt;&nbsp; addons install</code></p>
+
+<p>3.&nbsp; The add_on packages can be checked by starting an interactive nwspy session and manually importing the modules</p>
+
+<p><code>isatss@wrkr1&gt; npy</code></p>
+
+<div style="background:#eeeeee; border:1px solid #cccccc; padding:5px 10px"><span style="font-family:Courier New,Courier,monospace">Python 3.7.3 (default, Mar 27 2019, 22:11:17)&nbsp;<br />
+[GCC 7.3.0] :: Anaconda, Inc. on linux<br />
+Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.<br />
+&gt;&gt;&gt; import glmtools<br />
+&gt;&gt;&gt; import lmatools<br />
+&gt;&gt;&gt; import pyclipper<br />
+&gt;&gt;&gt; import stormdrain</span></div>
+
+<p><em>The python shell can be terminated by typing &#39;quit()&#39;</em></p>
+
+<h3>7.0&nbsp; Checkout</h3>
+
+<p>Prior to initiating the system&#39;s infrastructure processes, the following checks will establish confidence that the installation was successful.</p>
+
+<p>1. Initiate a fresh session on any of the system&#39;s hosts, using your personal Linux account.</p>
+
+<p>2. Start a session as the isatss&nbsp;user.&nbsp; Enter your account password when prompted for a password.</p>
+
+<p><code>user@isatssN&gt; sudo su -&nbsp;isatss</code></p>
+
+<p>3. The configuration process created aliases for all of the isatss commands, along with a convenience alias to the version of python used by ISatSS.&nbsp; If desired, repeat the initial checkout steps listed in section five of this document.</p>
+
+<p>4. Use the &quot;isatss check&quot; command to confirm that all python modules used by the ISatSS applications and library are available from the configured instance of python, and can be successfully imported.&nbsp;</p>
+
+<p><code>isatss@isatssN&gt; isatss check</code></p>
+
+<p><em>This list checks the import dependencies of all modules in the ISatSS software package and reports any failures, which should be resolved before proceeding.</em></p>
+
+<p><br />
+&nbsp; &nbsp;</p>
