@@ -114,55 +114,24 @@ indexes['abi_meta_stats']['curator_args']['index_maxage']    = 365
 indexes['abi_meta_stats']['curator_args']['age_units']       = 'days'
 indexes['abi_meta_stats']['curator_args']['time_template']   = indexes['abi_meta_stats']['time_template']
 
+esearch_connection = [
+    {
+        'host':    'isatss', 
+        'port':    9200, 
+        'use_ssl': False
+    }
+]
+
 job['publishers']['telemetry'][4] = {}
 job['publishers']['telemetry'][4]['provider']            = 'esearch'
 job['publishers']['telemetry'][4]['enabled']             = False
 job['publishers']['telemetry'][4]['parms']               = {}
 #job['publishers']['telemetry'][4]['parms']['connection'] = [{'host':'isatss', 'port':9200, 'use_ssl': False}, {'host':'lotus', 'port':9200, 'use_ssl':False}]
-job['publishers']['telemetry'][4]['parms']['connection'] = [{'host':'isatss', 'port':9200, 'use_ssl': False}]
-job['publishers']['telemetry'][4]['parms']['indexes']    = indexes
-job['publishers']['telemetry'][4]['parms']['cache']      = {'node': jobvars['cache'], 'rootname': 'lotus', 'batch_size':100} # Filename = <node>/<rootname>_<index>.cache
-job['publishers']['telemetry'][4]['include']             = ['GOES_Radiance_Monitor']
-
-
-esearch_connection = [
-	{
-		'host':    'isatss', 
-		'port':    9200, 
-		'use_ssl': False
-	}
-]
-
-indexes = {}
-indexes['abi_meta_stats'] = {}
-#indexes['abi_meta_stats']['index_alias']   = 'abi_meta_stats'
-indexes['abi_meta_stats']['doc_types']     = ['radiance_variance']
-indexes['abi_meta_stats']['settings']      = {'number_of_shards':5, 'number_of_replicas':1}
-indexes['abi_meta_stats']['time_template'] = '%Y-%m-%d'
-indexes['abi_meta_stats']['batch_period']  = 0         # If <= 0, then batches are disabled, else submit batches this often (in seconds)
-indexes['abi_meta_stats']['use_curator']   = True
-indexes['abi_meta_stats']['curator_args']  = {}
-indexes['abi_meta_stats']['curator_args']['use_threading']   = True
-indexes['abi_meta_stats']['curator_args']['snapshot_maxage'] = 30
-indexes['abi_meta_stats']['curator_args']['index_maxage']    = 7
-indexes['abi_meta_stats']['curator_args']['age_units']       = 'days'
-indexes['abi_meta_stats']['curator_args']['time_template']   = indexes['abi_meta_stats']['time_template']
-#indexes['abi_meta_stats']['curator_args']['es_repo']         = 'abi_meta_stats-backup'
-#indexes['abi_meta_stats']['curator_args']['repo_location']   = 'abi_meta_stats-repo'
-#indexes['abi_meta_stats']['curator_args']['index_prefix']    = 'abi_meta_stats-'
-
-# index_alias = key
-# index_prefix = key+'-'
-# es_repo = key+'-backup'
-# repo_location = key+'-repo'
-
-job['publishers']['telemetry'][4] = {}
-job['publishers']['telemetry'][4]['provider']            = 'esearch'
-job['publishers']['telemetry'][4]['enabled']             = True
-job['publishers']['telemetry'][4]['parms']               = {}
 job['publishers']['telemetry'][4]['parms']['connection'] = esearch_connection
 job['publishers']['telemetry'][4]['parms']['indexes']    = indexes
-job['publishers']['telemetry'][4]['include']             = ['GOES_Radiance_Values']
+job['publishers']['telemetry'][4]['parms']['cache']      = {'node': job['cache_node'], 'rootname': 'lotus', 'batch_size':100} # Filename = <node>/<rootname>_<index>.cache
+job['publishers']['telemetry'][4]['include']             = ['GOES_Radiance_Monitor']
+
 
 job['publishers']['alert'] = {}
 job['publishers']['alert'][0] = {}
