@@ -90,6 +90,21 @@ job['publishers']['telemetry'][3]['enabled']  = False
 job['publishers']['telemetry'][3]['parms']    = {'node':job['monitor_node'], 'rootname':'isatss_system_status', 'mode':'daily'}
 job['publishers']['telemetry'][3]['include']  = ['BB_Monitor'] 
 
+indexes = {}
+indexes['abi_meta_stats'] = {}
+indexes['abi_meta_stats']['doc_types']     = ['radiance_variance']
+indexes['abi_meta_stats']['settings']      = {'number_of_shards':5, 'number_of_replicas':1}
+indexes['abi_meta_stats']['time_template'] = '%Y-%m-%d'
+indexes['abi_meta_stats']['time_field']    = 'scene_time'
+indexes['abi_meta_stats']['batch_period']  = 30         # If <= 0, then batches are disabled, else submit batches this often (in seconds)
+indexes['abi_meta_stats']['use_curator']   = True
+indexes['abi_meta_stats']['curator_args']  = {}
+indexes['abi_meta_stats']['curator_args']['use_threading']   = True
+indexes['abi_meta_stats']['curator_args']['snapshot_maxage'] = 365
+indexes['abi_meta_stats']['curator_args']['index_maxage']    = 365
+indexes['abi_meta_stats']['curator_args']['age_units']       = 'days'
+indexes['abi_meta_stats']['curator_args']['time_template']   = indexes['abi_meta_stats']['time_template']
+
 job['publishers']['telemetry'][4] = {}
 job['publishers']['telemetry'][4]['provider']            = 'esearch'
 job['publishers']['telemetry'][4]['enabled']             = False
