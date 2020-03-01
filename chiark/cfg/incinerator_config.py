@@ -19,6 +19,11 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+try:
+    import jobvarmod
+    jobvars = jobvarmod.jobvars.copy()
+except:
+    jobvars = {'cntl':0}
 
 job = {}
 job['name']     = 'incinerator'
@@ -37,7 +42,7 @@ job['data']['log']['method']          = {'technique':'inplace'}
 job['data']['log']['schedule']        = {'interval':3600}
 job['data']['log']['activeonly']      = True
 
-job['cntl_node']        = 13
+job['cntl_node']        = jobvars['cntl']
 
 job['targets']    = 'all'
 
