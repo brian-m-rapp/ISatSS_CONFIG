@@ -90,6 +90,17 @@ job['publishers']['telemetry'][3]['enabled']  = False
 job['publishers']['telemetry'][3]['parms']    = {'node':job['monitor_node'], 'rootname':'isatss_system_status', 'mode':'daily'}
 job['publishers']['telemetry'][3]['include']  = ['BB_Monitor'] 
 
+job['publishers']['telemetry'][4] = {}
+job['publishers']['telemetry'][4]['provider']            = 'esearch'
+job['publishers']['telemetry'][4]['enabled']             = False
+job['publishers']['telemetry'][4]['parms']               = {}
+#job['publishers']['telemetry'][4]['parms']['connection'] = [{'host':'isatss', 'port':9200, 'use_ssl': False}, {'host':'lotus', 'port':9200, 'use_ssl':False}]
+job['publishers']['telemetry'][4]['parms']['connection'] = [{'host':'isatss', 'port':9200, 'use_ssl': False}]
+job['publishers']['telemetry'][4]['parms']['indexes']    = indexes
+job['publishers']['telemetry'][4]['parms']['cache']      = {'node': job['cache_node'], 'rootname': 'lotus', 'batch_size':100} # Filename = <node>/<rootname>_<index>.cache
+job['publishers']['telemetry'][4]['include']             = ['GOES_Radiance_Monitor']
+
+
 esearch_connection = [
 	{
 		'host':    'isatss', 
