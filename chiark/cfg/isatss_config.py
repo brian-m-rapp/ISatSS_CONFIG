@@ -117,6 +117,7 @@ nodes[11]  = {'path':'cntl/011_mi6_cntl',               'fstype':'fastest', 'cty
 nodes[12]  = {'path':'monitor_data',                    'fstype':'local',   'ctype':'data'}
 nodes[13]  = {'path':'cntl/013_gchq_cntl',              'fstype':'fastest', 'ctype':'cntl'}
 nodes[14]  = {'path':'cntl/014_mi6_ldm_cntl',           'fstype':'fastest', 'ctype':'cntl'}
+nodes[15]  = {'path':'esearch_cache',                   'fstype':'local',   'ctype':'data'}
 
 nodes[20]  = {'path':'info/20_ldmer_cntl',              'fstype':'fastest',  'ctype':'cntl'}
 nodes[21]  = {'path':'data/21_pqact_dropzone',          'fstype':'local',    'ctype':'data'}
@@ -203,7 +204,7 @@ groups[3]['jobs']     = {}
 groups[3]['jobs'][1]  = {'host':1,'cfg':'mi6_config',  'vars':{'deaddrop':10, 'cntl':11}}
 groups[3]['jobs'][2]  = {'host':2,'cfg':'mi6_config',  'vars':{'deaddrop':10, 'cntl':11}}
 groups[3]['jobs'][3]  = {'host':3,'cfg':'mi6_config',  'vars':{'deaddrop':10, 'cntl':14}}
-groups[3]['jobs'][4]  = {'host':2,'cfg':'gchq_config', 'vars':{'deaddrop':10, 'cntl':13}}
+groups[3]['jobs'][4]  = {'host':2,'cfg':'gchq_config', 'vars':{'deaddrop':10, 'cntl':13, 'monitor':12, 'cache':15}}
 
 # io1_ldm
 groups[4] = {}

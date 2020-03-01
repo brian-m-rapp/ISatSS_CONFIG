@@ -33,15 +33,24 @@ mi6 knows how to format the data it gets from each agent99 module for each speci
 reformat as necessary for that writer
 '''
 
+try:
+    import jobvarmod
+    jobvars = jobvarmod.jobvars.copy()
+except:
+    jobvars = {}
+    for parm in ['cntl','deaddrop','monitor', 'cache']:
+        jobvars[parm] = 0
+
 job = {}
 job['name']         = 'gchq'
 job['cmd']          = 'gchq'
 job['class']        = 'GCHQ'
 job['log']          = 'gchq_log'
 job['log_node']     = 1
-job['monitor_node'] = 32
-
-job['input_type']   = {'type':'infofile', 'node':31}
+job['monitor_node'] = jobvars['monitor']
+job['cntl_node']    = jobvars['cntl']
+job['cache_node']   = jobvars['cache']
+job['input_type']  = {'type':'infofile', 'node':jobvars['deaddrop']}
 
 job['data'] = {}
 job['data']['log']                    = {}
@@ -112,7 +121,7 @@ job['publishers']['telemetry'][4]['parms']               = {}
 #job['publishers']['telemetry'][4]['parms']['connection'] = [{'host':'isatss', 'port':9200, 'use_ssl': False}, {'host':'lotus', 'port':9200, 'use_ssl':False}]
 job['publishers']['telemetry'][4]['parms']['connection'] = [{'host':'isatss', 'port':9200, 'use_ssl': False}]
 job['publishers']['telemetry'][4]['parms']['indexes']    = indexes
-job['publishers']['telemetry'][4]['parms']['cache']      = {'node': job['cache_node'], 'rootname': 'lotus', 'batch_size':100} # Filename = <node>/<rootname>_<index>.cache
+job['publishers']['telemetry'][4]['parms']['cache']      = {'node': jobvars['cache'], 'rootname': 'lotus', 'batch_size':100} # Filename = <node>/<rootname>_<index>.cache
 job['publishers']['telemetry'][4]['include']             = ['GOES_Radiance_Monitor']
 
 
