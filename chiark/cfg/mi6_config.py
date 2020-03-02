@@ -90,3 +90,10 @@ job['hattr'][2]['filesystems'].append({'fs': '/usr1'})
 job['hattr'][2]['filesystems'].append({'fs': '/var'})
 job['hattr'][2]['filesystems'].append({'fs': '/var/log'})
 job['hattr'][2]['filesystems'].append({'fs': '/var/log/audit'})
+
+job['monitor'] = {'agents':{},'mi6':{}}
+job['monitor']['agents']['pmd_admin']                = {'enabled':True, 'module':'im_daemon', 'class':'PMDAdmin', 'args':{'alerts':[27,28], 'telemetry':[26,27,28]}}
+job['monitor']['mi6']['non_isatss']                  = {'enabled':True, 'lockout':1800}
+job['monitor']['mi6']['forward']                     = {'enabled':True, 'types':{}, 'messages':{}}
+job['monitor']['mi6']['forward']['types']['ERROR']   = {'enabled':True, 'alert':{'enabled':True, 'lockout':1800}, 'tm':{'enabled':False}}
+job['monitor']['mi6']['forward']['types']['WARNING'] = {'enabled':True, 'alert':{'enabled':True, 'lockout':1800}, 'tm':{'enabled':False}}    #or include
