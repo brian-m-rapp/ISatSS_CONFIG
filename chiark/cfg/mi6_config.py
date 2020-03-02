@@ -16,6 +16,14 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+try:
+    import jobvarmod
+    jobvars = jobvarmod.jobvars.copy()
+except:
+    jobvars = {}
+    for parm in ['cntl','deaddrop']:
+        jobvars[parm] = 0
+
 job = {}
 job['name']     = 'mi6'
 job['cmd']      = 'mi6'
@@ -24,7 +32,7 @@ job['log']      = 'mi6_log'
 job['log_node'] = 1
 
 job['notifications'] = {}
-job['notifications']['deaddrop']      = {'node':31,'enabled':True}
+job['notifications']['deaddrop']      = {'node':jobvars['deaddrop'], 'enabled':True}
 
 job['data'] = {}
 job['data']['log']                    = {}
@@ -36,7 +44,7 @@ job['data']['log']['method']          = {'technique':'inplace'}
 job['data']['log']['schedule']        = {'interval':3600}
 job['data']['log']['activeonly']      = True
 
-job['cntl_node']                 = 22
+job['cntl_node']                 = jobvars['cntl']
 
 job['loopsleep']                 = 1
 job['loglevel']                  = 6
