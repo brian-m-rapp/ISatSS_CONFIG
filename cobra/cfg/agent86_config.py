@@ -21,10 +21,11 @@ job['name']  = 'agent86'
 job['cmd']   = 'agent86'
 job['class'] = 'Agent86'
 job['log']   = 'agent86_log'
+job['log_node'] = 1
 
 job['data'] = {}
 job['data']['log']                    = {}
-job['data']['log']['location']        = {'node':0,'type':'datapath','path':'log'}
+job['data']['log']['location']        = {'node':job['log_node'],'type':'datapath','path':'log'}
 job['data']['log']['aging']           = {'window':2,'mode':'count'}
 job['data']['log']['archive']         = {'window':7,'mode':'count'}
 job['data']['log']['roots']           = [job['log']]

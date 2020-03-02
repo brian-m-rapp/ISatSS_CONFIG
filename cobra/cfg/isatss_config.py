@@ -31,7 +31,7 @@ if a site has separate 'dev', 'qa', and 'ops' installations covered by a single 
 or if sub-sites are defined within a single configuration tree (see SPC).  It can also be used to
 allows the same configuration tree to be used across multiple physical locations.
 
-The 'sites' construct is a list of dictionaries, with each dictionary defining a 'site', and the 
+The 'sites' construct is a list of dictionaries, with each dictionary defining a 'site', and the
 method to be used to determine a match.  Note that the same site can be listed more than once with
 multiple means of performing a match specified.  The first matching record is the winner.
 Dictionary fields:
@@ -39,7 +39,7 @@ Dictionary fields:
 	var      (optional) Dictionary of variables to be defined in isc.
 	method   (required)	Method for performing a match.  Values can be 'by_ip' or 'by_name'.  For 'by_ip', the IP address
 	                    of the interface specified by the 'intf' key is matched.  For 'by_name', the hose name of the
-	                    current machine is matched. 
+	                    current machine is matched.
 	intf     (optional) Defines the interface that will contain the matching IP address.  Only used for 'by_ip' method.
 	operator (required) Defines how to compare the value returned by the method with the 'value' key.  Possible values
 	                    are 'start_with', 'ends_with', 'contains', and 'is'.
@@ -84,7 +84,7 @@ hosts[2] = {'host':['grb01.nhc.noaa.gov'],'user':'ldm', 'ext':1336,'cmd':4,'resp
 hosts = {}
 hosts['NAPO'] = {}
 hosts['NAPO'][1] = {'host':['cobra.napo.nws.noaa.gov'], 'shortname':'cobra', 'sudocmd':'sudo -iu'}
-hosts['NAPO'][2] = {'host':['cobra.napo.nws.noaa.gov'], 'shortname':'ldm',   'sudocmd':'sudo -iu', 'user':'ldm', 'ext':1338, 'cmd':72, 'resp':73, 'shell':'csh'}
+hosts['NAPO'][2] = {'host':['cobra.napo.nws.noaa.gov'], 'shortname':'ldm',   'sudocmd':'sudo -iu', 'user':'ldm', 'ext':1338, 'cmd':72, 'resp':73, 'shell':'bash'}
 hosts['ROCK'] = {}
 hosts['ROCK'][1] = {'host':['chiark.dilireum.org'], 'shortname':'chiark'}
 hosts['ROCK'][2] = {'host':['masaq.dilireum.org'],  'shortname':'masaq'}
@@ -119,180 +119,183 @@ Dictionary fields:
 Regardless of configuration, nodes are required for the following system defaults (defined in isatss_config.defaults)
 
 """
-
+fstypes = {}
+fstypes['fastest'] = {'root':'/dev/shm/isatss_data', 'filesystem':'/dev/shm', 'stype':'attached'}
+fstypes['local']   = {'root':'/scratch/isatss_data', 'filesystem':'/',        'stype':'attached'}
+fstypes['data']    = {'root':'/data/isatss_data',    'filesystem':'/data',    'stype':'attached'}
 
 nodes = {}
-nodes[0]  = {'path':'/scratch/isatss_data/info/default_info',		      'filesystem': '/scratch', 'ctype':'info','stype':'attached','root':'/scratch/isatss_data'}
-nodes[1]  = {'path':'/scratch/isatss_data/log',                           'filesystem': '/scratch', 'ctype':'log', 'stype':'attached','root':'/scratch/isatss_data'}
-nodes[2]  = {'path':'/scratch/isatss_data/info/02_agent86_commands_out',  'filesystem': '/scratch', 'ctype':'cmd', 'stype':'attached','root':'/scratch/isatss_data'}
-nodes[3]  = {'path':'/scratch/isatss_data/info/03_agent86_response',      'filesystem': '/scratch', 'ctype':'resp','stype':'attached','root':'/scratch/isatss_data'}
-nodes[72] = {'path':'/scratch/isatss_data/info/72_agent86_commands_out',  'filesystem': '/scratch', 'ctype':'cmd', 'stype':'attached','root':'/scratch/isatss_data'}
-nodes[73] = {'path':'/scratch/isatss_data/info/73_agent86_response',      'filesystem': '/scratch', 'ctype':'resp','stype':'attached','root':'/scratch/isatss_data'}
-nodes[18] = {'path':'/scratch/isatss_data/work',		                  'filesystem': '/scratch', 'ctype':'data','stype':'attached','root':'/scratch/isatss_data'}
-nodes[19] = {'path':'/scratch/isatss_data/fault_cache',                   'filesystem': '/scratch', 'ctype':'data','stype':'attached','root':'/scratch/isatss_data'}
+nodes[0]  = {'path':'info/default_info',		       'fstype':'local',   'ctype':'info'}
+nodes[1]  = {'path':'001_log',                         'fstype':'local',   'ctype':'log'}
+nodes[2]  = {'path':'info/02_agent86_commands_out',    'fstype':'local',   'ctype':'cmd'}
+nodes[3]  = {'path':'info/03_agent86_response',        'fstype':'local',   'ctype':'resp'}
+nodes[72] = {'path':'info/72_agent86_commands_out',    'fstype':'local',   'ctype':'cmd'}
+nodes[73] = {'path':'info/73_agent86_response',        'fstype':'local',   'ctype':'resp'}
+nodes[18] = {'path':'work',		                       'fstype':'local',   'ctype':'data'}
+nodes[19] = {'path':'fault_cache',                     'fstype':'local',   'ctype':'data'}
 
-nodes[4]  = {'path':'/dev/shm/isatss_data/data/04_incoming/grb_lhcp',     'filesystem': '/dev/shm', 'ctype':'data','stype':'attached','root':'/scratch/isatss_data'}
-nodes[5]  = {'path':'/dev/shm/isatss_data/data/05_incoming/grb_rhcp',     'filesystem': '/dev/shm', 'ctype':'data','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[15] = {'path':'/dev/shm/isatss_data/data/15_grb_l1b_data_in',       'filesystem': '/dev/shm', 'ctype':'data','stype':'attached','root':'/dev/shm/isatss_data'} #
-nodes[16] = {'path':'/scratch/isatss_data/status',		                  'filesystem': '/scratch', 'ctype':'data','stype':'attached','root':'/scratch/isatss_data'}
-nodes[17] = {'path':'/dev/shm/isatss_data/data/17_hcast_data_in',         'filesystem': '/dev/shm', 'ctype':'data','stype':'attached','root':'/dev/shm/isatss_data'} #
-nodes[25] = {'path':'/dev/shm/isatss_data/data/25_ldm_out_replicate_in',  'filesystem': '/dev/shm', 'ctype':'data','stype':'attached','root':'/dev/shm/isatss_data'} #
-nodes[32] = {'path':'/scratch/isatss_data/monitor_output',                'filesystem': '/scratch', 'ctype':'data','stype':'attached','root':'/scratch/isatss_data'} #
+nodes[4]  = {'path':'data/04_incoming/grb_lhcp',       'fstype':'fastest', 'ctype':'data'}
+nodes[5]  = {'path':'data/05_incoming/grb_rhcp',       'fstype':'fastest', 'ctype':'data'}
+nodes[15] = {'path':'data/15_grb_l1b_data_in',         'fstype':'fastest', 'ctype':'data'}
+nodes[16] = {'path':'status',		                   'fstype':'local',   'ctype':'data'}
+nodes[17] = {'path':'data/17_hcast_data_in',           'fstype':'fastest', 'ctype':'data'}
+nodes[25] = {'path':'data/25_ldm_out_replicate_in',    'fstype':'fastest', 'ctype':'data'}
+nodes[32] = {'path':'monitor_output',                  'fstype':'local',   'ctype':'data'}
 
-nodes[42] = {'path':'/data/isatss_data/data/42_ldm_arch',                 'filesystem': '/data',    'ctype':'data','stype':'attached','root':'/data'} #
-nodes[43] = {'path':'/dev/shm/isatss_data/data/43_star_in',               'filesystem': '/dev/shm', 'ctype':'data','stype':'attached','root':'/dev/shm/isatss_data'} #
-nodes[44] = {'path':'/dev/shm/isatss_data/data/44_h8_ncm_data_in',        'filesystem': '/dev/shm', 'ctype':'data','stype':'attached','root':'/dev/shm/isatss_data'} #
-nodes[45] = {'path':'/dev/shm/isatss_data/data/45_h8_fdgrg_data_in',      'filesystem': '/dev/shm', 'ctype':'data','stype':'attached','root':'/dev/shm/isatss_data'} #
-nodes[46] = {'path':'/dev/shm/isatss_data/data/46_h8_tiles_data',         'filesystem': '/dev/shm', 'ctype':'data','stype':'attached','root':'/dev/shm/isatss_data'} #
-nodes[47] = {'path':'/dev/shm/isatss_data/data/47_g16_tiles_data',        'filesystem': '/dev/shm', 'ctype':'data','stype':'attached','root':'/dev/shm/isatss_data'} #
-nodes[48] = {'path':'/dev/shm/isatss_data/data/48_g16_fcgrg_data_in',     'filesystem': '/dev/shm', 'ctype':'data','stype':'attached','root':'/dev/shm/isatss_data'} #
-nodes[49] = {'path':'/dev/shm/isatss_data/data/49_g16_mgrg_data_in',      'filesystem': '/dev/shm', 'ctype':'data','stype':'attached','root':'/dev/shm/isatss_data'} #
-nodes[50] = {'path':'/dev/shm/isatss_data/data/50_h8_mgrg_data_in',       'filesystem': '/dev/shm', 'ctype':'data','stype':'attached','root':'/dev/shm/isatss_data'} #
-nodes[51] = {'path':'/dev/shm/isatss_data/data/51_g16_ncm_data_in',       'filesystem': '/dev/shm', 'ctype':'data','stype':'attached','root':'/dev/shm/isatss_data'} #
-nodes[53] = {'path':'/dev/shm/isatss_data/data/53_ldm_out_data_in',       'filesystem': '/dev/shm', 'ctype':'data','stype':'attached','root':'/dev/shm/isatss_data'} #
+nodes[42] = {'path':'data/42_ldm_arch',                'fstype':'data',    'ctype':'data'}
+nodes[43] = {'path':'data/43_star_in',                 'fstype':'fastest', 'ctype':'data'}
+nodes[44] = {'path':'data/44_h8_ncm_data_in',          'fstype':'fastest', 'ctype':'data'}
+nodes[45] = {'path':'data/45_h8_fdgrg_data_in',        'fstype':'fastest', 'ctype':'data'}
+nodes[46] = {'path':'data/46_h8_tiles_data',           'fstype':'fastest', 'ctype':'data'}
+nodes[47] = {'path':'data/47_g16_tiles_data',          'fstype':'fastest', 'ctype':'data'}
+nodes[48] = {'path':'data/48_g16_fcgrg_data_in',       'fstype':'fastest', 'ctype':'data'}
+nodes[49] = {'path':'data/49_g16_mgrg_data_in',        'fstype':'fastest', 'ctype':'data'}
+nodes[50] = {'path':'data/50_h8_mgrg_data_in',         'fstype':'fastest', 'ctype':'data'}
+nodes[51] = {'path':'data/51_g16_ncm_data_in',         'fstype':'fastest', 'ctype':'data'}
+nodes[53] = {'path':'data/53_ldm_out_data_in',         'fstype':'fastest', 'ctype':'data'}
 
-nodes[14] = {'path':'/data/isatss_data/incoming',		                  'filesystem': '/data',    'ctype':'data','stype':'attached', 'root':'/data/isatss_data'} #
-nodes[24] = {'path':'/data/isatss_data/products/h8_tiles',		          'filesystem': '/data',    'ctype':'data','stype':'attached', 'root':'/data/isatss_data'}  #
-nodes[30] = {'path':'/data/isatss_data/products/h8_slabs',		          'filesystem': '/data',    'ctype':'data','stype':'attached', 'root':'/data/isatss_data'}  #
-nodes[39] = {'path':'/data/isatss_data/products/g16_area',	              'filesystem': '/data',    'ctype':'data','stype':'attached', 'root':'/data/isatss_data'}  #
-nodes[40] = {'path':'/data/isatss_data/products/g16_tiles',		          'filesystem': '/data',    'ctype':'data','stype':'attached', 'root':'/data/isatss_data'}  #
-nodes[62] = {'path':'/data/isatss_data/esearch_cache',		              'filesystem': '/data',    'ctype':'data','stype':'attached', 'root':'/data/isatss_data'}  #
+nodes[14] = {'path':'incoming',		                   'fstype':'data',    'ctype':'data'}
+nodes[24] = {'path':'products/h8_tiles',               'fstype':'data',    'ctype':'data'}
+nodes[30] = {'path':'products/h8_slabs',               'fstype':'data',    'ctype':'data'}
+nodes[39] = {'path':'products/g16_area',               'fstype':'data',    'ctype':'data'}
+nodes[40] = {'path':'products/g16_tiles',              'fstype':'data',    'ctype':'data'}
+nodes[62] = {'path':'esearch_cache',                   'fstype':'data',    'ctype':'data'}
 
-nodes[7]  = {'path':'/dev/shm/isatss_data/info/07_ldmer_in_cntl',         'filesystem': '/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[9]  = {'path':'/dev/shm/isatss_data/info/09_ldm_in_dispatch_cntl',  'filesystem': '/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[11] = {'path':'/dev/shm/isatss_data/info/11_ldm_in_replicate_cntl', 'filesystem': '/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[13] = {'path':'/dev/shm/isatss_data/info/13_incinerator_cntl',      'filesystem': '/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[20] = {'path':'/dev/shm/isatss_data/info/20_agent86_cntl',          'filesystem': '/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[22] = {'path':'/dev/shm/isatss_data/info/22_mi6_cntl',              'filesystem': '/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[23] = {'path':'/dev/shm/isatss_data/info/23_g16_grg_l1b_cntl',      'filesystem': '/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[26] = {'path':'/dev/shm/isatss_data/info/26_g16_tile_rep_cntl',     'filesystem': '/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[28] = {'path':'/dev/shm/isatss_data/info/28_g16_fdco_cntl',         'filesystem': '/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[29] = {'path':'/dev/shm/isatss_data/info/29_g16_meso_cntl',         'filesystem': '/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[52] = {'path':'/dev/shm/isatss_data/info/52_g16_ncm_cntl',          'filesystem': '/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[55] = {'path':'/dev/shm/isatss_data/info/55_ldm_out_repl_cntl',     'filesystem': '/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[56] = {'path':'/dev/shm/isatss_data/info/56_ldm_out_cntl',          'filesystem': '/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[57] = {'path':'/dev/shm/isatss_data/info/57_star_dispatcher_cntl',  'filesystem': '/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[7]  = {'path':'info/07_ldmer_in_cntl',           'fstype':'fastest', 'ctype':'cntl'}
+nodes[9]  = {'path':'info/09_ldm_in_dispatch_cntl',    'fstype':'fastest', 'ctype':'cntl'}
+nodes[11] = {'path':'info/11_ldm_in_replicate_cntl',   'fstype':'fastest', 'ctype':'cntl'}
+nodes[13] = {'path':'info/13_incinerator_cntl',        'fstype':'fastest', 'ctype':'cntl'}
+nodes[20] = {'path':'info/20_agent86_cntl',            'fstype':'fastest', 'ctype':'cntl'}
+nodes[22] = {'path':'info/22_mi6_cntl',                'fstype':'fastest', 'ctype':'cntl'}
+nodes[23] = {'path':'info/23_g16_grg_l1b_cntl',        'fstype':'fastest', 'ctype':'cntl'}
+nodes[26] = {'path':'info/26_g16_tile_rep_cntl',       'fstype':'fastest', 'ctype':'cntl'}
+nodes[28] = {'path':'info/28_g16_fdco_cntl',           'fstype':'fastest', 'ctype':'cntl'}
+nodes[29] = {'path':'info/29_g16_meso_cntl',           'fstype':'fastest', 'ctype':'cntl'}
+nodes[52] = {'path':'info/52_g16_ncm_cntl',            'fstype':'fastest', 'ctype':'cntl'}
+nodes[55] = {'path':'info/55_ldm_out_repl_cntl',       'fstype':'fastest', 'ctype':'cntl'}
+nodes[56] = {'path':'info/56_ldm_out_cntl',            'fstype':'fastest', 'ctype':'cntl'}
+nodes[57] = {'path':'info/57_star_dispatcher_cntl',    'fstype':'fastest', 'ctype':'cntl'}
 
-nodes[6]  = {'path':'/dev/shm/isatss_data/info/06_ldm_out_replicator_in', 'filesystem': '/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'} #
-nodes[8]  = {'path':'/dev/shm/isatss_data/info/08_g16ncm_input',          'filesystem': '/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[10] = {'path':'/dev/shm/isatss_data/info/10_g16mgrg_input',         'filesystem': '/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'} #
-nodes[12] = {'path':'/dev/shm/isatss_data/info/12_g16fcgrg_input',        'filesystem': '/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'} #
-nodes[21] = {'path':'/dev/shm/isatss_data/info/21_star_input',            'filesystem': '/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'} #
-nodes[27] = {'path':'/dev/shm/isatss_data/info/27_g16_tile_replicator_in','filesystem': '/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'} #
-nodes[31] = {'path':'/scratch/isatss_data/info/31_deaddrop',              'filesystem': '/scratch', 'ctype':'info','stype':'attached','root':'/scratch/isatss_data'} #
-nodes[33] = {'path':'/dev/shm/isatss_data/info/33_h8_ncm_input',          'filesystem': '/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'} #
-nodes[34] = {'path':'/dev/shm/isatss_data/info/34_h8_mgrg_input',         'filesystem': '/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'} #
-nodes[35] = {'path':'/dev/shm/isatss_data/info/35_h8_fdgrg_input',        'filesystem': '/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'} #
-nodes[36] = {'path':'/dev/shm/isatss_data/info/36_h8_replicator_input',   'filesystem': '/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'} #
-nodes[37] = {'path':'/dev/shm/isatss_data/info/37_g16l1bgrg_input',       'filesystem': '/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'} #
-nodes[38] = {'path':'/dev/shm/isatss_data/info/38_hcast_input',           'filesystem': '/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'} #
-nodes[41] = {'path':'/dev/shm/isatss_data/info/41_ldm_arch_input',        'filesystem': '/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'} #
-nodes[54] = {'path':'/dev/shm/isatss_data/info/54_ldm_out_input',         'filesystem': '/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[6]  = {'path':'info/06_ldm_out_replicator_in',   'fstype':'fastest', 'ctype':'info'}
+nodes[8]  = {'path':'info/08_g16ncm_input',            'fstype':'fastest', 'ctype':'info'}
+nodes[10] = {'path':'info/10_g16mgrg_input',           'fstype':'fastest', 'ctype':'info'}
+nodes[12] = {'path':'info/12_g16fcgrg_input',          'fstype':'fastest', 'ctype':'info'}
+nodes[21] = {'path':'info/21_star_input',              'fstype':'fastest', 'ctype':'info'}
+nodes[27] = {'path':'info/27_g16_tile_replicator_in',  'fstype':'fastest', 'ctype':'info'}
+nodes[31] = {'path':'info/31_deaddrop',                'fstype':'local',   'ctype':'info'}
+nodes[33] = {'path':'info/33_h8_ncm_input',            'fstype':'fastest', 'ctype':'info'}
+nodes[34] = {'path':'info/34_h8_mgrg_input',           'fstype':'fastest', 'ctype':'info'}
+nodes[35] = {'path':'info/35_h8_fdgrg_input',          'fstype':'fastest', 'ctype':'info'}
+nodes[36] = {'path':'info/36_h8_replicator_input',     'fstype':'fastest', 'ctype':'info'}
+nodes[37] = {'path':'info/37_g16l1bgrg_input',         'fstype':'fastest', 'ctype':'info'}
+nodes[38] = {'path':'info/38_hcast_input',             'fstype':'fastest', 'ctype':'info'}
+nodes[41] = {'path':'info/41_ldm_arch_input',          'fstype':'fastest', 'ctype':'info'}
+nodes[54] = {'path':'info/54_ldm_out_input',           'fstype':'fastest', 'ctype':'info'}
 
-nodes[58] = {'path':'/dev/shm/isatss_data/58_pda',                        'filesystem': '/dev/shm',  'ctype':'data','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[59] = {'path':'/dev/shm/isatss_data/59_pda_replicator_in',          'filesystem': '/dev/shm',  'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[60] = {'path':'/mnt/ldm2/decoders',                                 'filesystem': '/mnt/ldm2', 'ctype':'data','stype':'network', 'root':'/mnt/ldm2', 'incinerator':{'gid':2,'jid':1}} 
-nodes[61] = {'path':'/data/isatss_data/ledgers',                          'filesystem': '/data',     'ctype':'data','stype':'attached','root':'/data/isatss_data'}
+nodes[58] = {'path':'58_pda',                          'fstype':'fastest', 'ctype':'data'}
+nodes[59] = {'path':'59_pda_replicator_in',            'fstype':'fastest', 'ctype':'info'}
+nodes[60] = {'path':'decoders',                        'fstype':'data',    'ctype':'data'}
+nodes[61] = {'path':'ledgers',                         'fstype':'data',    'ctype':'data'}
 
-nodes[64] = {'path':'/dev/shm/isatss_data/info/64_amsr2_cutter_cntl',     'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[65] = {'path':'/dev/shm/isatss_data/info/65_amsr2_cutter_info',     'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[66] = {'path':'/data/isatss_data/data/66_amsr2_cutter_data',        'filesystem':'/data',   'ctype':'data','stype':'attached','root':'/data/isatss_data'}
+nodes[64] = {'path':'info/64_amsr2_cutter_cntl',       'fstype':'fastest', 'ctype':'cntl'}
+nodes[65] = {'path':'info/65_amsr2_cutter_info',       'fstype':'fastest', 'ctype':'info'}
+nodes[66] = {'path':'data/66_amsr2_cutter_data',       'fstype':'data',    'ctype':'data'}
 
-nodes[67] = {'path':'/dev/shm/isatss_data/info/67_amsr2_cntl',            'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[68] = {'path':'/dev/shm/isatss_data/info/68_amsr2_info',            'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[69] = {'path':'/data/isatss_data/data/69_amsr2_data',               'filesystem':'/data',   'ctype':'data','stype':'attached','root':'/data/isatss_data'}
+nodes[67] = {'path':'info/67_amsr2_cntl',              'fstype':'fastest', 'ctype':'cntl'}
+nodes[68] = {'path':'info/68_amsr2_info',              'fstype':'fastest', 'ctype':'info'}
+nodes[69] = {'path':'data/69_amsr2_data',              'fstype':'data',    'ctype':'data'}
 
-nodes[70] = {'path':'/dev/shm/isatss_data/info/70_gcom_cntl',             'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[71] = {'path':'/dev/shm/isatss_data/info/71_gcom_info',             'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[74] = {'path':'/data/isatss_data/data/74_gcom_data',                'filesystem':'/data',   'ctype':'data','stype':'attached','root':'/data/isatss_data'}
+nodes[70] = {'path':'info/70_gcom_cntl',               'fstype':'fastest', 'ctype':'cntl'}
+nodes[71] = {'path':'info/71_gcom_info',               'fstype':'fastest', 'ctype':'info'}
+nodes[74] = {'path':'data/74_gcom_data',               'fstype':'data',    'ctype':'data'}
 
-nodes[75] = {'path':'/dev/shm/isatss_data/info/75_h8_dispatch_cntl',      'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[76] = {'path':'/dev/shm/isatss_data/info/76_h8_dispatch_info',      'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[77] = {'path':'/data/isatss_data/data/77_h8_dispatch_data',         'filesystem':'/ddata',  'ctype':'data','stype':'attached','root':'/data/isatss_data'}
-nodes[78] = {'path':'/dev/shm/isatss_data/info/78_h8_dispatch_info',      'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[75] = {'path':'info/75_h8_dispatch_cntl',        'fstype':'fastest', 'ctype':'cntl'}
+nodes[76] = {'path':'info/76_h8_dispatch_info',        'fstype':'fastest', 'ctype':'info'}
+nodes[77] = {'path':'data/77_h8_dispatch_data',        'fstype':'data',    'ctype':'data'}
+nodes[78] = {'path':'info/78_h8_dispatch_info',        'fstype':'fastest', 'ctype':'info'}
 
-nodes[80] = {'path':'/dev/shm/isatss_data/info/80_remote_dispatcher_cntl','filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[81] = {'path':'/dev/shm/isatss_data/info/81_ascat_info',            'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[82] = {'path':'/dev/shm/isatss_data/data/82_ascat_data',            'filesystem':'/dev/shm','ctype':'data','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[83] = {'path':'/dev/shm/isatss_data/data/83_ascat_ledger',          'filesystem':'/dev/shm','ctype':'data','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[80] = {'path':'info/80_remote_dispatcher_cntl',  'fstype':'fastest', 'ctype':'cntl'}
+nodes[81] = {'path':'info/81_ascat_info',              'fstype':'fastest', 'ctype':'info'}
+nodes[82] = {'path':'data/82_ascat_data',              'fstype':'fastest', 'ctype':'data'}
+nodes[83] = {'path':'data/83_ascat_ledger',            'fstype':'fastest', 'ctype':'data'}
 
-nodes[85] = {'path':'/dev/shm/isatss_data/info/85_fls_cntl',              'filesystem':'/dev/shm', 'ctype':'cntl', 'stype':'attached', 'root':'/dev/shm/isatss_data', 'incinerator':{'gid':2,'jid':1}}
-nodes[86] = {'path':'/data/isatss_data/data/86_fls_data',                 'filesystem':'/data',    'ctype':'data', 'stype':'attached', 'root':'/data/isatss_data', 'incinerator':{'gid':2,'jid':1}}
-nodes[87] = {'path':'/dev/shm/isatss_data/info/87_fls_info',              'filesystem':'/dev/shm', 'ctype':'info', 'stype':'attached', 'root':'/dev/shm/isatss_data'}
-nodes[88] = {'path':'/dev/shm/isatss_data/info/88_fls_proc_cntl',         'filesystem':'/dev/shm', 'ctype':'cntl', 'stype':'attached', 'root':'/dev/shm/isatss_data', 'incinerator':{'gid':2,'jid':1}}
+nodes[85] = {'path':'info/85_fls_cntl',                'fstype':'fastest', 'ctype':'cntl'}
+nodes[86] = {'path':'data/86_fls_data',                'fstype':'data',    'ctype':'data'}
+nodes[87] = {'path':'info/87_fls_info',                'fstype':'fastest', 'ctype':'info'}
+nodes[88] = {'path':'info/88_fls_proc_cntl',           'fstype':'fastest', 'ctype':'cntl'}
 
-nodes[91] = {'path':'/dev/shm/isatss_data/info/041_ldm_out_info',         'filesystem':'/dev/shm', 'ctype':'info', 'stype':'attached', 'root':'/dev/shm/isatss_data', 'incinerator':{'gid':2,'jid':1}}
-nodes[92] = {'path':'/data/isatss_data/data/042_ldm_out_data',            'filesystem':'/data',    'ctype':'data', 'stype':'attached', 'root':'/data/isatss_data', 'incinerator':{'gid':2,'jid':1}}
+nodes[91] = {'path':'info/041_ldm_out_info',           'fstype':'fastest', 'ctype':'info'}
+nodes[92] = {'path':'data/042_ldm_out_data',           'fstype':'data',    'ctype':'data'}
 
-nodes[95] = {'path':'/dev/shm/isatss_data/info/95_jason_disp_cntl',       'filesystem':'/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[96] = {'path':'/data/isatss_data/data/96_jason_disp_data',          'filesystem':'/data',    'ctype':'data','stype':'attached','root':'/data/isatss_data'}
-nodes[97] = {'path':'/dev/shm/isatss_data/info/97_jason_disp_info',       'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[95] = {'path':'info/95_jason_disp_cntl',         'fstype':'fastest', 'ctype':'cntl'}
+nodes[96] = {'path':'data/96_jason_disp_data',         'fstype':'data',    'ctype':'data'}
+nodes[97] = {'path':'info/97_jason_disp_info',         'fstype':'fastest', 'ctype':'info'}
 
-nodes[93] = {'path':'/dev/shm/isatss_data/info/93_jason_proc_cntl',       'filesystem':'/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[98] = {'path':'/data/isatss_data/data/98_jason_proc_data',          'filesystem':'/data',    'ctype':'data','stype':'attached','root':'/data/isatss_data'}
-nodes[99] = {'path':'/dev/shm/isatss_data/info/99_jason_proc_info',       'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[93] = {'path':'info/93_jason_proc_cntl',         'fstype':'fastest', 'ctype':'cntl'}
+nodes[98] = {'path':'data/98_jason_proc_data',         'fstype':'data',    'ctype':'data'}
+nodes[99] = {'path':'info/99_jason_proc_info',         'fstype':'fastest', 'ctype':'info'}
 
-nodes[100] = {'path':'/dev/shm/isatss_data/info/100_gpm_puller_cntl',     'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[101] = {'path':'/dev/shm/isatss_data/info/101_gpm_puller_info',     'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[102] = {'path':'/data/isatss_data/data/102_gpm_puller_data',        'filesystem':'/data',   'ctype':'data','stype':'attached','root':'/data/isatss_data'}
+nodes[100] = {'path':'info/100_gpm_puller_cntl',       'fstype':'fastest', 'ctype':'cntl'}
+nodes[101] = {'path':'info/101_gpm_puller_info',       'fstype':'fastest', 'ctype':'info'}
+nodes[102] = {'path':'data/102_gpm_puller_data',       'fstype':'data',    'ctype':'data'}
 
-nodes[104] = {'path':'/dev/shm/isatss_data/info/104_atms_puller_cntl',    'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[105] = {'path':'/dev/shm/isatss_data/info/105_atms_puller_info',    'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[106] = {'path':'/data/isatss_data/data/106_atms_puller_data',       'filesystem':'/data',   'ctype':'data','stype':'attached','root':'/data/isatss_data'}
+nodes[104] = {'path':'info/104_atms_puller_cntl',      'fstype':'fastest', 'ctype':'cntl'}
+nodes[105] = {'path':'info/105_atms_puller_info',      'fstype':'fastest', 'ctype':'info'}
+nodes[106] = {'path':'data/106_atms_puller_data',      'fstype':'data',    'ctype':'data'}
 
-nodes[107] = {'path':'/dev/shm/isatss_data/info/107_atms_cutter_cntl',    'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[108] = {'path':'/dev/shm/isatss_data/info/108_atms_cutter_info',    'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[109] = {'path':'/data/isatss_data/data/109_atms_cutter_data',       'filesystem':'/data',   'ctype':'data','stype':'attached','root':'/data'}
-nodes[110] = {'path':'/dev/shm/isatss_data/info/110_atms_proj_cntl',      'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[107] = {'path':'info/107_atms_cutter_cntl',      'fstype':'fastest', 'ctype':'cntl'}
+nodes[108] = {'path':'info/108_atms_cutter_info',      'fstype':'fastest', 'ctype':'info'}
+nodes[109] = {'path':'data/109_atms_cutter_data',      'fstype':'data',    'ctype':'data'}
+nodes[110] = {'path':'info/110_atms_proj_cntl',        'fstype':'fastest', 'ctype':'cntl'}
 
-nodes[111] = {'path':'/dev/shm/isatss_data/info/111_gpm_cutter_cntl',     'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[112] = {'path':'/dev/shm/isatss_data/info/112_gpm_cutter_info',     'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[113] = {'path':'/data/isatss_data/data/113_gpm_cutter_data',        'filesystem':'/data',   'ctype':'data','stype':'attached','root':'/data'}
-nodes[114] = {'path':'/dev/shm/isatss_data/info/114_gpm_proj_cntl',       'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[111] = {'path':'info/111_gpm_cutter_cntl',       'fstype':'fastest', 'ctype':'cntl'}
+nodes[112] = {'path':'info/112_gpm_cutter_info',       'fstype':'fastest', 'ctype':'info'}
+nodes[113] = {'path':'data/113_gpm_cutter_data',       'fstype':'data',    'ctype':'data'}
+nodes[114] = {'path':'info/114_gpm_proj_cntl',         'fstype':'fastest', 'ctype':'cntl'}
 
-nodes[120] = {'path':'/dev/shm/isatss_data/info/120_cryosat_disp_cntl',   'filesystem':'/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[121] = {'path':'/data/isatss_data/data/121_cryosat_disp_data',      'filesystem':'/data',    'ctype':'data','stype':'attached','root':'/data/isatss_data'}
-nodes[122] = {'path':'/dev/shm/isatss_data/info/122_cryosat_disp_info',   'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[120] = {'path':'info/120_cryosat_disp_cntl',     'fstype':'fastest', 'ctype':'cntl'}
+nodes[121] = {'path':'data/121_cryosat_disp_data',     'fstype':'data',    'ctype':'data'}
+nodes[122] = {'path':'info/122_cryosat_disp_info',     'fstype':'fastest', 'ctype':'info'}
 
-nodes[123] = {'path':'/dev/shm/isatss_data/info/123_cryosat_proc_cntl',   'filesystem':'/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[124] = {'path':'/data/isatss_data/data/124_cryosat_proc_data',      'filesystem':'/data',    'ctype':'data','stype':'attached','root':'/data/isatss_data'}
-nodes[125] = {'path':'/dev/shm/isatss_data/info/125_cryosat_proc_info',   'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[123] = {'path':'info/123_cryosat_proc_cntl',     'fstype':'fastest', 'ctype':'cntl'}
+nodes[124] = {'path':'data/124_cryosat_proc_data',     'fstype':'data',    'ctype':'data'}
+nodes[125] = {'path':'info/125_cryosat_proc_info',     'fstype':'fastest', 'ctype':'info'}
 
-nodes[130] = {'path':'/dev/shm/isatss_data/info/130_altika_disp_cntl',    'filesystem':'/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[131] = {'path':'/data/isatss_data/data/131_altika_disp_data',       'filesystem':'/data',    'ctype':'data','stype':'attached','root':'/data/isatss_data'}
-nodes[132] = {'path':'/dev/shm/isatss_data/info/132_altika_disp_info',    'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[130] = {'path':'info/130_altika_disp_cntl',      'fstype':'fastest', 'ctype':'cntl'}
+nodes[131] = {'path':'data/131_altika_disp_data',      'fstype':'data',    'ctype':'data'}
+nodes[132] = {'path':'info/132_altika_disp_info',      'fstype':'fastest', 'ctype':'info'}
 
-nodes[133] = {'path':'/dev/shm/isatss_data/info/133_altika_proc_cntl',    'filesystem':'/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[134] = {'path':'/data/isatss_data/data/134_altika_proc_data',       'filesystem':'/data',    'ctype':'data','stype':'attached','root':'/data/isatss_data'}
-nodes[135] = {'path':'/dev/shm/isatss_data/info/135_altika_proc_info',    'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[133] = {'path':'info/133_altika_proc_cntl',      'fstype':'fastest', 'ctype':'cntl'}
+nodes[134] = {'path':'data/134_altika_proc_data',      'fstype':'data',    'ctype':'data'}
+nodes[135] = {'path':'info/135_altika_proc_info',      'fstype':'fastest', 'ctype':'info'}
 
-nodes[140] = {'path':'/dev/shm/isatss_data/info/140_sentinel_disp_cntl',  'filesystem':'/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[141] = {'path':'/data/isatss_data/data/141_sentinel_disp_data',     'filesystem':'/data',    'ctype':'data','stype':'attached','root':'/data/isatss_data'}
-nodes[142] = {'path':'/dev/shm/isatss_data/info/142_sentinel_disp_info',  'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[143] = {'path':'/dev/shm/isatss_data/info/143_sentinel_proc_cntl',  'filesystem':'/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[144] = {'path':'/data/isatss_data/data/144_sentinel_proc_data',     'filesystem':'/data',    'ctype':'data','stype':'attached','root':'/data/isatss_data'}
-nodes[145] = {'path':'/dev/shm/isatss_data/info/145_sentinel_proc_info',  'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[140] = {'path':'info/140_sentinel_disp_cntl',    'fstype':'fastest', 'ctype':'cntl'}
+nodes[141] = {'path':'data/141_sentinel_disp_data',    'fstype':'data',    'ctype':'data'}
+nodes[142] = {'path':'info/142_sentinel_disp_info',    'fstype':'fastest', 'ctype':'info'}
+nodes[143] = {'path':'info/143_sentinel_proc_cntl',    'fstype':'fastest', 'ctype':'cntl'}
+nodes[144] = {'path':'data/144_sentinel_proc_data',    'fstype':'data',    'ctype':'data'}
+nodes[145] = {'path':'info/145_sentinel_proc_info',    'fstype':'fastest', 'ctype':'info'}
 
-nodes[150] = {'path':'/dev/shm/isatss_data/info/150_vice_puller_cntl',    'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[151] = {'path':'/dev/shm/isatss_data/info/151_vice_puller_info',    'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[152] = {'path':'/data/isatss_data/data/152_vice_puller_data',       'filesystem':'/data',   'ctype':'data','stype':'attached','root':'/data/isatss_data'}
+nodes[150] = {'path':'info/150_vice_puller_cntl',      'fstype':'fastest', 'ctype':'cntl'}
+nodes[151] = {'path':'info/151_vice_puller_info',      'fstype':'fastest', 'ctype':'info'}
+nodes[152] = {'path':'data/152_vice_puller_data',      'fstype':'data',    'ctype':'data'}
 
-nodes[153] = {'path':'/dev/shm/isatss_data/info/153_vice_stitcher_cntl',  'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[154] = {'path':'/dev/shm/isatss_data/info/154_vice_stitcher_info',  'filesystem':'/dev/shm','ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[155] = {'path':'/data/isatss_data/data/155_vice_stitcher_data',     'filesystem':'/data',   'ctype':'data','stype':'attached','root':'/data'}
-nodes[156] = {'path':'/dev/shm/isatss_data/info/156_vice_proj_cntl',      'filesystem':'/dev/shm','ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[157] = {'path':'/data/isatss_data/viirs_ice_cache',                 'filesystem':'/data',   'ctype':'data','stype':'attached','root':'/data/isatss_data'}
+nodes[153] = {'path':'info/153_vice_stitcher_cntl',    'fstype':'fastest', 'ctype':'cntl'}
+nodes[154] = {'path':'info/154_vice_stitcher_info',    'fstype':'fastest', 'ctype':'info'}
+nodes[155] = {'path':'data/155_vice_stitcher_data',    'fstype':'data',    'ctype':'data'}
+nodes[156] = {'path':'info/156_vice_proj_cntl',        'fstype':'fastest', 'ctype':'cntl'}
+nodes[157] = {'path':'viirs_ice_cache',                'fstype':'data',    'ctype':'data'}
 
 
-nodes[700] = {'path':'/dev/shm/isatss_data/info/700_dmsp_f15_cut_cntl',     'filesystem':'/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[702] = {'path':'/dev/shm/isatss_data/info/702_dmsp_f15_cut_input',    'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[703] = {'path':'/data/isatss_data/data/703_dmsp_f15_cut_data',        'filesystem':'/data',    'ctype':'data','stype':'attached','root':'/data/isatss_data'}
-nodes[704] = {'path':'/dev/shm/isatss_data/info/704_dmsp_f15_cut_info_out', 'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[700] = {'path':'info/700_dmsp_f15_cut_cntl',     'fstype':'fastest', 'ctype':'cntl'}
+nodes[702] = {'path':'info/702_dmsp_f15_cut_input',    'fstype':'fastest', 'ctype':'info'}
+nodes[703] = {'path':'data/703_dmsp_f15_cut_data',     'fstype':'data',    'ctype':'data'}
+nodes[704] = {'path':'info/704_dmsp_f15_cut_info_out', 'fstype':'fastest', 'ctype':'info'}
 
-nodes[705] = {'path':'/dev/shm/isatss_data/info/705_reproject_cntl',      'filesystem':'/dev/shm', 'ctype':'cntl','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[706] = {'path':'/dev/shm/isatss_data/info/706_reproject_input',     'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
-nodes[707] = {'path':'/data/isatss_data/data/707_reproject_data',         'filesystem':'/data',    'ctype':'data','stype':'attached','root':'/data/isatss_data'}
-nodes[708] = {'path':'/dev/shm/isatss_data/info/708_reproject_info_out',  'filesystem':'/dev/shm', 'ctype':'info','stype':'attached','root':'/dev/shm/isatss_data'}
+nodes[705] = {'path':'info/705_reproject_cntl',        'fstype':'fastest', 'ctype':'cntl'}
+nodes[706] = {'path':'info/706_reproject_input',       'fstype':'fastest', 'ctype':'info'}
+nodes[707] = {'path':'data/707_reproject_data',        'fstype':'data',    'ctype':'data'}
+nodes[708] = {'path':'info/708_reproject_info_out',    'fstype':'fastest', 'ctype':'info'}
 
 # system defaults
 defaults = {}
@@ -356,7 +359,7 @@ based on each application's agent86 class.
 
 The mi6 applications write info messages to node 31 on each host, which are forwarded
 by agent86 to node 31 on host 0.  An instance of the gchq application running on host 0
-consumes the messages, and writes them to a file named system_tm.YYYYMMDD on node 32. 
+consumes the messages, and writes them to a file named system_tm.YYYYMMDD on node 32.
 """
 groups[3]['jobs']     = {}
 groups[3]['jobs'][1]  = {'host':1, 'cfg':'mi6_config'}
@@ -378,7 +381,7 @@ groups[5]                = {}
 groups[5]['name']        = 'FLS Processing'
 groups[5]['instance']    = ['ROCK', 'NAPO']
 groups[5]['description'] = """
-Job processing Fog and Low Stratus products 
+Job processing Fog and Low Stratus products
 """
 groups[5]['jobs']        = {}
 groups[5]['jobs'][1]     = {'host':1, 'cfg':'fls_puller'}
@@ -391,7 +394,7 @@ Jobs for ingesting, processing, and pushing GCOM products
 groups[6]['jobs']        = {}
 groups[6]['jobs'][1]     = {'host':1, 'cfg':'amsr2_ocean_puller'}
 groups[6]['jobs'][2]     = {'host':1, 'cfg':'amsr2_ocean_processor', 'icfg':{'io':{'x':2000,'y':3200}}}
-'''
+
 
 groups[8]                = {}
 groups[8]['name']        = 'Himawari Tile Processing'
@@ -401,7 +404,7 @@ Jobs for ingesting, processing, and pushing Himawari tiles
 groups[8]['jobs']        = {}
 groups[8]['jobs'][1]     = {'host':1, 'cfg':'star_dispatcher'}
 groups[8]['jobs'][2]     = {'host':1, 'cfg':'h8_slab2tile'}
-
+'''
 
 groups[9]                = {}
 groups[9]['name']        = 'DMSP SSMI Processing'
@@ -421,7 +424,7 @@ groups[10]['jobs']        = {}
 groups[10]['jobs'][1]     = {'host':1, 'cfg':'jason_dispatcher'}
 groups[10]['jobs'][2]     = {'host':1, 'cfg':'jason_processor'}
 
-
+'''
 groups[11]                = {}
 groups[11]['name']        = 'AMSR2 Imagery Processing'
 groups[11]['description'] = """
@@ -431,7 +434,7 @@ groups[11]['jobs']        = {}
 groups[11]['jobs'][1]     = {'host':1, 'cfg':'amsr2_puller'}
 groups[11]['jobs'][2]     = {'host':1, 'cfg':'amsr2_cutter'}
 groups[11]['jobs'][3]     = {'host':1, 'cfg':'amsr2_projector'}
-
+'''
 
 groups[12]                = {}
 groups[12]['name']        = 'ATMS Imagery Processing'
@@ -480,6 +483,7 @@ groups[16]['jobs']     = {}
 groups[16]['jobs'][1]  = {'host':1,'cfg':'sentinel_dispatcher'}
 groups[16]['jobs'][2]  = {'host':1,'cfg':'sentinel_processor'}
 
+'''
 groups[17] = {}
 groups[17]['name']     = 'VIIRS ice concentration processing'
 groups[17]['description'] = """
@@ -488,6 +492,7 @@ VIIRS ice concentration processing chain
 groups[17]['jobs']     = {}
 groups[17]['jobs'][2]  = {'host':1,'cfg':'viirs_ice_stitcher'}
 groups[17]['jobs'][3]  = {'host':1,'cfg':'viirs_ice_projector'}
+'''
 
 groups[18] = {}
 groups[18]['name']        = 'h8-tileproc'
