@@ -36,7 +36,6 @@ job['data']['log']['activeonly']      = True
 job['loopsleep']                 = 0
 job['loglevel']                  = 5
 job['pause_empty']               = 2
-job['actions_per_cycle']         = 5
 job['listenport']                = 1337
 job['msgmap']                    = {}
 job['watcher_timeout']           = 1000
