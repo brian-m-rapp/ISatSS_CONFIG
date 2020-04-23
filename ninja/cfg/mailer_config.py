@@ -1,6 +1,13 @@
 sender       = ('TOWR-S Updates', 'David.Bludis@noaa.gov')
-contact_list = '/home/brapp/Downloads/test_contact_list.csv'
+contact_list = '/home/brapp/Downloads/contact_list.csv'
 subject      = 'GOES-17 ABI Loop Heat Pipe Upcoming Event'
+
+# Contact list column layout
+name_col     = 1    # Addressee name column
+email_col    = 0    # Addressee e-mail column
+elig_col     = 7    # eligible flag column - is addressee eligible to receive
+send_col     = 9    # send flag column - should addressee be sent e-mail 
+data_row     = 2
 
 elements = {}
 elements[1] = {}
@@ -32,9 +39,7 @@ elements[3]['col']     = 1
 
 elements[4] = {}
 elements[4]['type']    = 'body'
-elements[4]['html']    = '''
-<p>This is the body of a <b><i>test</i> bulk e-mail</b></p>
-'''
+elements[4]['file']    = '/home/brapp/devl/body.html'
 
 elements[5] = {}
 elements[5]['type']       = 'gtracker'
