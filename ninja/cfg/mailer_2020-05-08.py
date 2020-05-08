@@ -1,26 +1,26 @@
 
-sender        = ('TOWR-S Updates', 'Brian.Rapp@noaa.gov')
+sender        = ('TOWR-S Updates', 'David.Bludis@noaa.gov')
 contact_list  = '/home/brapp/Downloads/test_contact_list.csv'
 header_rows   = 2
-subject       = 'Test Mailer w/attachment #3'
+subject       = 'Test - Access to GOES-R Mesoscale Domain Sector Request Tool Restored'
 
 email_host    = 'smtp.gmail.com'
 email_port    = 587
 email_auth_id = 1
-batch_size    = 1
+batch_size    = 100
 text_body     = None
 
 # Contact list column layout
 name_col      = 1    # Addressee name column
 email_col     = 0    # Addressee e-mail column
 elig_col      = 7    # eligible flag column - is addressee eligible to receive
-send_col      = -1    # send flag column - should addressee be sent e-mail 
+send_col      = -1   # send flag column - should addressee be sent e-mail 
 
 elements = {}
 
 elements[1] = {}
 elements[1]['type']    = 'body'
-elements[1]['file']    = '/home/brapp/git/ISatSS_CONFIG/ninja/docs/mailer_body.html'
+elements[1]['file']    = '/home/brapp/git/ISatSS_CONFIG/ninja/docs/mailer_body_2020-05-08.html'
 
 elements[2] = {}
 elements[2]['type']    = 'imagelink'
@@ -31,7 +31,3 @@ elements[2]['alt']     = 'TOWR-S VLab community page'
 elements[2]['ihash']   = True
 elements[2]['lhash']   = False
 elements[2]['col']     = 1
-
-elements[3] = {}
-elements[3]['type']    = 'attach'
-elements[3]['files']   = '/home/brapp/Downloads/census2020.pdf'

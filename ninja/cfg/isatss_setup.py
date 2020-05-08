@@ -21,30 +21,35 @@ conda_path     = '/home/brapp/nwspy/anaconda'
 # Additionally, isatss_init.py looks in the sitemods cfg directory for the file 'im_site_commands.py'.  If present, the
 # command definitions in that file are added to the isatss commands defined in the baseline cfg/im_commands.py file.
 #
-sitemods       = '/home/brapp/git/ISatSS_NCEP/SPC'
+sitemods       = '/home/brapp/git/ISatSS_NCEP/NAPO2'
 
 #add on packages
-add_ons = {'top':'','packages':{},'authid':0,'protocol':'ssh'}
+add_ons = {'authid':0, 'protocol':'ssh', 'packages':{}, 'javascript':{}}
 add_ons['top'] = '/home/brapp/nwspy/add_ons'
 add_ons['packages']['elasticsearch'] = {'stype':'conda', 'channel':'conda-forge'}
+add_ons['packages']['boto3']         = {'stype':'conda', 'channel':'anaconda'}
 add_ons['packages']['glmtools']      = {'branch':'p37_n117_v4.1'}
 add_ons['packages']['lmatools']      = {'branch':'p37_n116_v3'}
 add_ons['packages']['stormdrain']    = {'branch':'p37_n116_v3'}
 add_ons['packages']['pyclipper']     = {'branch':'p37_n116_v3'}
+add_ons['javascript']['ckeditor']    = 'ckeditor'  # this will look for ckeditor under the addons directory
 
 # local fstypes for development - if present, the localfstypes dictionary will override the fstypes dictionary
 # in the isatss_config.py file, allowing for convenient local development without change to the nodes dictionary.
 
 localfstypes = {}
-localfstypes['fastest']  = {'root':'/dev/shm/isatss_data',     'filesystem':'/dev/shm', 'stype':'attached'}
-localfstypes['grb']      = {'root':'/data/isatss_data',        'filesystem':'/data',    'stype':'attached'}
-localfstypes['local']    = {'root':'/scratch/isatss_data',     'filesystem':'/scratch', 'stype':'attached'}
-localfstypes['backup']   = {'root':'/data/isatss_data/nfsbak', 'filesystem':'/data',    'stype':'attached'}
-localfstypes['storage']  = {'root':'/data/isatss_data/nfsops', 'filesystem':'/data',    'stype':'attached'}
-localfstypes['storage1'] = {'root':'/data/isatss_data',        'filesystem':'/data',    'stype':'attached'}
-localfstypes['storage2'] = {'root':'/data/isatss_data',        'filesystem':'/data',    'stype':'attached'}
-localfstypes['pdainput'] = {'root':'/data/isatss_backup',      'filesystem':'/data',    'stype':'attached'}
+localfstypes['fastest']   = {'root':'/dev/shm/isatss_data',     'filesystem':'/dev/shm', 'stype':'attached'}
+localfstypes['grb']       = {'root':'/data/isatss_data',        'filesystem':'/data',    'stype':'attached'}
+localfstypes['local']     = {'root':'/scratch/isatss_data',     'filesystem':'/scratch', 'stype':'attached'}
+localfstypes['backup']    = {'root':'/data/isatss_data/nfsbak', 'filesystem':'/data',    'stype':'attached'}
+localfstypes['storage']   = {'root':'/data/isatss_data/nfsops', 'filesystem':'/data',    'stype':'attached'}
+localfstypes['storage1']  = {'root':'/data/isatss_data',        'filesystem':'/data',    'stype':'attached'}
+localfstypes['storage2']  = {'root':'/data/isatss_data',        'filesystem':'/data',    'stype':'attached'}
+localfstypes['pdainput']  = {'root':'/data/isatss_backup',      'filesystem':'/data',    'stype':'attached'}
+localfstypes['pdainput2'] = {'root':'/data/isatss_backup',      'filesystem':'/data',    'stype':'attached'}
+localfstypes['pdainput3'] = {'root':'/data/isatss_backup',      'filesystem':'/data',    'stype':'attached'}
 
+'''
 localhosts = {}
 localhosts['S1'] = {}
 localhosts['S1'][1] = {'host':['ninja.dilireum.org'], 'shortname':'isatss'}
@@ -55,9 +60,10 @@ localhosts['S2'][2] = {'host':['ninja.dilireum.org'], 'shortname':'ldm',  'user'
 localhosts['S3'] = {}
 localhosts['S3'][1] = {'host':['ninja.dilireum.org'], 'shortname':'isatss'}
 localhosts['S3'][2] = {'host':['ninja.dilireum.org'], 'shortname':'ldm',  'user': 'ldm', 'ext':1336,'cmd':6,'resp':7}
+'''
 
 defaultlocalhostid   = 1
-defaultlocalinstance = 'S2'
+defaultlocalinstance = 'N1'
 defaultlocaluser     = 'brapp'
 defaultlocalpidpath  = '/scratch/isatss_data/pid'
 
