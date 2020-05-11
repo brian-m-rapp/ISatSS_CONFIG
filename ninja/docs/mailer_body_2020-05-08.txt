@@ -1,0 +1,9 @@
+VLab is back online and access to the GOES-R Mesoscale Domain Sector (MDS) request tool has been restored. Please submit all MDS requests using the tool at the following link:
+
+https://vlab.ncep.noaa.gov/web/goes-r-end-user-mission-readiness-project/goesr-mds-main
+
+Contact David Bludis (david.bludis@noaa.gov) in the Office of Observations if you have any issues accessing the tool or submitting a request.
+
+Thank you,
+
+David, TOWR-S Team
