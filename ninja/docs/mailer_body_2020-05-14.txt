@@ -1,0 +1,23 @@
+The National Weather Service (NWS) Office of Observations is excited to invite you to the first session of the new Satellite Book Club Seminar Series today, May 14, at 12:00 p.m. EDT.
+
+Scatterometer Wind Data in Marine Forecasting
+
+Coastal NWS forecast offices are responsible for marine forecasting. Few people realize there are significantly less marine observations available to forecasters in comparison to land observations. To supplement this void, data is leveraged from the Scatterometer Satellite (SCATSAT) or the Advanced Scatterometer (ASCAT) instrument aboard the Metop satellites. During this session, we will explore how forecasters at the NWS office in Charleston, SC view and use ASCAT and SCATSAT data to verify and improve their marine forecasts.
+
+Speaker: Michael Stroz, Meteorologist at WFO in Charleston, SC (CHS)
+
+About the Speaker: Michael Stroz has been a forecaster with the NWS since 2008, beginning his career in Eureka, CA, and continuing now in Charleston, SC. Despite the radical differences between East and West Coast forecasting, both locations are similar in that they are responsible for marine forecasting. Michael is a member of the office marine team, where he assists with the latest rip current science, improvements to the Nearshore Wave Prediction System (NWPS), and Decision Support Services (DSS).
+
+When: Today, May 14, at 12:00 p.m. EDT  Click here to add this to your calendar! 
+
+How to Attend: Join the GoToMeeting here.
+
+What Interests You? Is there a topic that you would like to see featured in upcoming sessions? Click here to suggest your topic. All satellite-related topics are welcome!
+
+About the Satellite Book Club: The Satellite Book Club Seminar Series will take place weekly on Thursdays, providing an opportunity for meteorologists throughout the field to share a topic of interest to them with their peers. Topics may include applications of satellite data in the field, new and exciting changes to both polar and geostationary programs, and anything else satellite-related that the field would like to discuss. The sessions will be 30 minutes long with a 15 minute presentation and a 15 minute discussion afterwards.
+
+Questions? Contact David Bludis (david.bludis@noaa.gov), TOWR-S team member from the Office of Observations.
+
+Need assistance with AWIPS data flow or the configuration of satellite products? The TOWR-S team is available to help you! Feel free to reach out to the team for any support.
+
+Presenting next week (5/21): Jorel Torres, Research Associate and JPSS Satellite Liaison with the Cooperative Institute for Research in the Atmosphere (CIRA) at Colorado State University (CSU), will be presenting JPSS fire monitoring capabilities and the application of VIIRS Fire RGB imagery.
