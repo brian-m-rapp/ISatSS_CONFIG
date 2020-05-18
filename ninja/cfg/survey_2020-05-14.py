@@ -13,29 +13,18 @@ smtp_server['auth_id']    = 1
 smtp_server['sender']     = ('TOWR-S Updates', 'David.Bludis@noaa.gov')
 smtp_server['batch_size'] = 1
 
-subject       = 'Test #1 - The first session of the Satellite Book Club Seminar Series is today!'
+subject       = 'Test #1 - Satellite Book Club Seminar Series Session 1 Follow-Up'
 
 elements = []
 
-topimage = {}
-topimage['type']      = 'image'
-topimage['image']     = 'https://vlab.ncep.noaa.gov/documents/67059/10099454/Satellite_Book_Club_Seminar_Series_Session_1_Follow_Up_Graphic.png/496c2e57-b909-f789-3e2a-21d8fb8c0ce2?t=1589482026983'
-topimage['imageargs'] = {'campaign_id':'20200514_2'}
-topimage['imagehash'] = True
-topimage['alt']       = 'SBC Seminar Series - May 14, 2020 @ 12:00 PM EDT'
-topimage['max-width'] = '100%'
-topimage['width']     = 800
-topimage['col']       = 1
-elements.append(topimage)
-
 htmlbody = {}
 htmlbody['type']    = 'htmlbody'
-htmlbody['file']    = '/home/brapp/git/ISatSS_CONFIG/ninja/docs/mailer_body_2020-05-14.html'
+htmlbody['file']    = '/home/brapp/git/ISatSS_CONFIG/ninja/docs/survey_body_2020-05-14.html'
 elements.append(htmlbody)
 
 textbody = {}
 textbody['type']    = 'textbody'
-textbody['file']    = '/home/brapp/git/ISatSS_CONFIG/ninja/docs/mailer_body_2020-05-14.txt'
+textbody['file']    = '/home/brapp/git/ISatSS_CONFIG/ninja/docs/survey_body_2020-05-14.txt'
 elements.append(textbody)
 
 bottomimage = {}
@@ -48,4 +37,3 @@ bottomimage['imagehash'] = False
 bottomimage['linkhash']  = False
 bottomimage['col']       = 1
 elements.append(bottomimage)
-
