@@ -1,0 +1,26 @@
+Image source: Cooperative Institute for Research in the Atmosphere (CIRA) 
+
+The National Weather Service (NWS) Office of Observations is excited to invite you to the next session of the Satellite Book Club Seminar Series today, May 21, at 11:00 a.m. EDT.
+
+JPSS Fire Monitoring Capabilities 
+Using VIIRS Fire RGBs
+
+Red-Green-Blue (RGB) imagery band combinations are utilized to detect fires with imagery from the Visible Infrared Imaging Radiometer Suite (VIIRS) instrument deployed on the Joint Polar Satellite Series (JPSS) satellites. The VIIRS Fire Temperature RGB and VIIRS Day Land Cloud Fire RGB products are currently available for Alaska weather forecast offices via a local data manager (LDM) feed. Applications of these RGB products for fire monitoring will be presented. A comparison of VIIRS RGBs to Geostationary Operational Environmental Satellite (GOES) RGBs in addition to information on current VIIRS RGB training resources will be provided.
+
+Presenter: Jorel Torres, Research Associate II, Cooperative Institute for Research in the Atmosphere (CIRA)
+
+About the Presenter: Jorel Torres is a Research Associate II and JPSS Satellite Liaison at CIRA, located in Fort Collins, Colorado. His work incorporates facilitating interactions between NWS forecasters and the researchers in the meteorological field. He produces satellite training in the form of JPSS training modules, product application reference materials (Quick Guides/Quick Briefs/Satellite Blogs), along with developing satellite teletraining for forecasters.
+
+When: Today, May 21, at 11:00 a.m. EDT  Click here to add this to your calendar! 
+
+How to Attend: Join the GoToMeeting here.
+
+What Interests You? Is there a topic that you would like to see featured in upcoming PBC sessions? Click here to suggest your topic. All satellite-related topics are welcome!
+
+About the Satellite Book Club: The Satellite Book Club Seminar Series is convened weekly on Thursdays, providing an opportunity for scientists throughout the NOAA satellite domain to share a topic of interest to them with their peers. Topics may include applications of satellite data in the field, new and exciting changes to both polar and geostationary programs, and anything else satellite-related that the field would like to discuss. The sessions are 30 minutes long with a 15 minute presentation and a 15 minute discussion afterwards.
+
+Miss the last session on May 14? To view the recording on Scatterometer Wind Data in Marine Forecasting, click here.  Please share any feedback you may have about the session in a short survey linked here.
+
+Questions? Contact David Bludis (david.bludis@noaa.gov), TOWR-S team member in the Office of Observations.
+
+Need assistance with AWIPS data flow or the configuration of satellite products? The TOWR-S team is available to help you! Feel free to reach out to the team for any support.

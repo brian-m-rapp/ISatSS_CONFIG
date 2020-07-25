@@ -38,6 +38,9 @@ job['pause_empty']               = 2
 job['listenport']                = 1337
 job['msgmap']                    = {}
 job['watcher_timeout']           = 1000
+job['extra_hosts']               = ['ninja.dilireum.org']
+job['maxworkers']                = 200
+
 '''
 job['monitor'] = {'agents':{},'mi6':{}}
 job['monitor']['agents']['pmd_admin']                = {'enabled':True, 'module':'im_daemon', 'class':'PMDAdmin', 'args':{'alerts':[27,28], 'telemetry':[26,27,28]}}

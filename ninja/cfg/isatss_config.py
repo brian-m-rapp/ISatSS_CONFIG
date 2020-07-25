@@ -98,8 +98,11 @@ Regardless of configuration, nodes are required for the following system default
 """
 
 fstypes = {}
-fstypes['fastest'] = {'root':'/dev/shm/isatss_data', 'filesystem':'/dev/shm',     'stype':'attached'}
-fstypes['local']   = {'root':'/scratch/isatss_data', 'filesystem':'/',            'stype':'attached'}
+fstypes['fastest']   = {'root':'/dev/shm/isatss_data', 'filesystem':'/dev/shm',        'stype':'attached'}
+fstypes['local']     = {'root':'/scratch/isatss_data', 'filesystem':'/',               'stype':'attached'}
+fstypes['g16_store'] = {'root':'/stores/GOES-16',      'filesystem':'/stores/GOES-16', 'stype':'network'}
+fstypes['g17_store'] = {'root':'/stores/GOES-17',      'filesystem':'/stores/GOES-17', 'stype':'network'}
+fstypes['stores']    = {'root':'/stores',              'filesystem':'/stores',         'stype':'network'}
 
 nodes = {}
 nodes[0]   = {'path':'info/000_default_info',           'fstype':'local',   'ctype':'info'}
@@ -132,9 +135,12 @@ nodes[34]  = {'path':'data/34_glm_l1b',                 'fstype':'local',    'ct
 nodes[35]  = {'path':'info/35_glm_l1b',                 'fstype':'fastest',  'ctype':'info'}
 nodes[36]  = {'path':'info/36_input_archive_info',      'fstype':'local',    'ctype':'info'}
 
-nodes[40] = {'path':'info/40_ldm_repl_cntl',            'fstype':'fastest',  'ctype':'cntl'}
-nodes[41] = {'path':'data/41_abil1b_archive',           'fstype':'local',    'ctype':'data'}
-nodes[42] = {'path':'data/42_glml1b_archive',           'fstype':'local',    'ctype':'data'}
+nodes[40]  = {'path':'info/40_ldm_repl_cntl',           'fstype':'fastest',  'ctype':'cntl'}
+nodes[41]  = {'path':'data/41_abil1b_archive',          'fstype':'local',    'ctype':'data'}
+nodes[42]  = {'path':'data/42_glml1b_archive',          'fstype':'local',    'ctype':'data'}
+
+nodes[50]  = {'path':'info/50_aws_disp_ctl',            'fstype':'fastest',  'ctype':'cntl'}
+nodes[51]  = {'path':'GOES-16',                         'fstype':'stores',   'ctype':'data'}
 
 # system defaults
 defaults = {}
@@ -216,3 +222,4 @@ groups[4]['jobs']     = {}
 groups[4]['jobs'][1]  = {'host':3,'cfg':'ldm_manager',    'vars':{'cntl':20, 'in':22, 'outdata':21}}
 groups[4]['jobs'][2]  = {'host':2,'cfg':'ldm_dispatcher', 'vars':{'cntl':30, 'in':21, 'abiinfo':33, 'abidata':32, 'glminfo':35, 'glmdata':34, 'archinfo':36, 'archdata':31}}
 groups[4]['jobs'][3]  = {'host':2,'cfg':'ldm_replicator', 'vars':{'cntl':40, 'in':36, 'abiarch':41, 'glmarch':42}}
+groups[4]['jobs'][4]  = {'host':1,'cfg':'aws_replicator', 'vars':{'cntl':50, 'indata':51}}

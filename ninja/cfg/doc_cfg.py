@@ -18,3 +18,6 @@ articles['survey_2020-05-14']['document'] = 'survey_body_2020-05-14.html'
 
 articles['mailer_2020-05-18'] = {}
 articles['mailer_2020-05-18']['document'] = 'mailer_body_2020-05-18.html'
+
+articles['mailer_2020-05-21'] = {}
+articles['mailer_2020-05-21']['document'] = 'mailer_body_2020-05-21.html'
