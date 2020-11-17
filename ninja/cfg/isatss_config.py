@@ -100,8 +100,8 @@ Regardless of configuration, nodes are required for the following system default
 fstypes = {}
 fstypes['fastest']   = {'root':'/dev/shm/isatss_data', 'filesystem':'/dev/shm',        'stype':'attached'}
 fstypes['local']     = {'root':'/scratch/isatss_data', 'filesystem':'/',               'stype':'attached'}
-fstypes['g16_store'] = {'root':'/stores/GOES-16',      'filesystem':'/stores/GOES-16', 'stype':'network'}
-fstypes['g17_store'] = {'root':'/stores/GOES-17',      'filesystem':'/stores/GOES-17', 'stype':'network'}
+fstypes['g16store']  = {'root':'/stores/GOES-16',      'filesystem':'/stores/GOES-16', 'stype':'network'}
+fstypes['g17store']  = {'root':'/stores/GOES-17',      'filesystem':'/stores/GOES-17', 'stype':'network'}
 fstypes['stores']    = {'root':'/stores',              'filesystem':'/stores',         'stype':'network'}
 
 nodes = {}
@@ -141,6 +141,28 @@ nodes[42]  = {'path':'data/42_glml1b_archive',          'fstype':'local',    'ct
 
 nodes[50]  = {'path':'info/50_aws_disp_ctl',            'fstype':'fastest',  'ctype':'cntl'}
 nodes[51]  = {'path':'GOES-16',                         'fstype':'stores',   'ctype':'data'}
+
+nodes[110] = {'path':'info/110_g16_replicator_cntl', 'fstype':'fastest',  'ctype':'cntl'}
+#nodes[111] = {'path':'',                             'fstype':'g16store', 'ctype':'data'}
+nodes[111] = {'path':'data/111_abil1b_in',           'fstype':'local',    'ctype':'data'}
+nodes[112] = {'path':'data/112_abil1b_data',         'fstype':'local',    'ctype':'data'}
+nodes[113] = {'path':'info/113_abil1b_info',         'fstype':'fastest',  'ctype':'info'}
+nodes[114] = {'path':'data/114_glml1b_data',         'fstype':'local',    'ctype':'data'}
+nodes[115] = {'path':'info/115_glml1b_info',         'fstype':'fastest',  'ctype':'info'}
+
+nodes[120] = {'path':'info/120_g16_replicator_cntl', 'fstype':'fastest',  'ctype':'cntl'}
+#nodes[121] = {'path':'',                             'fstype':'g17store', 'ctype':'data'}
+nodes[121] = {'path':'data/121_abil1b_in',           'fstype':'local',    'ctype':'data'}
+nodes[122] = {'path':'data/122_abil1b_data',         'fstype':'local',    'ctype':'data'}
+nodes[123] = {'path':'info/123_abil1b_info',         'fstype':'fastest',  'ctype':'info'}
+nodes[124] = {'path':'data/124_glml1b_data',         'fstype':'local',    'ctype':'data'}
+nodes[125] = {'path':'info/125_glml1b_info',         'fstype':'fastest',  'ctype':'info'}
+
+nodes[130] = {'path':'info/130_h8_replicator_cntl',  'fstype':'fastest',  'ctype':'cntl'}
+nodes[131] = {'path':'data/131_h8fd_in',             'fstype':'local',    'ctype':'data'}
+nodes[132] = {'path':'data/132_h8fd_data',           'fstype':'local',    'ctype':'data'}
+nodes[133] = {'path':'info/133_h8fd_info',           'fstype':'fastest',  'ctype':'info'}
+
 
 # system defaults
 defaults = {}
@@ -210,7 +232,7 @@ groups[3]['jobs']     = {}
 groups[3]['jobs'][1]  = {'host':1,'cfg':'mi6_config',  'vars':{'deaddrop':10, 'cntl':11}}
 groups[3]['jobs'][2]  = {'host':2,'cfg':'mi6_config',  'vars':{'deaddrop':10, 'cntl':11}}
 groups[3]['jobs'][3]  = {'host':3,'cfg':'mi6_config',  'vars':{'deaddrop':10, 'cntl':14}}
-groups[3]['jobs'][4]  = {'host':2,'cfg':'gchq_config', 'vars':{'deaddrop':10, 'cntl':13, 'monitor':12, 'cache':15}}
+groups[3]['jobs'][4]  = {'host':1,'cfg':'gchq_config', 'vars':{'deaddrop':10, 'cntl':13, 'monitor':12, 'cache':15}}
 
 # io1_ldm
 groups[4] = {}
@@ -219,7 +241,11 @@ groups[4]['description'] = """
 The io1_ldm group provides i/o services for host #1 including ldm based ingest, and  output queue insertion.
 """
 groups[4]['jobs']     = {}
-groups[4]['jobs'][1]  = {'host':3,'cfg':'ldm_manager',    'vars':{'cntl':20, 'in':22, 'outdata':21}}
-groups[4]['jobs'][2]  = {'host':2,'cfg':'ldm_dispatcher', 'vars':{'cntl':30, 'in':21, 'abiinfo':33, 'abidata':32, 'glminfo':35, 'glmdata':34, 'archinfo':36, 'archdata':31}}
-groups[4]['jobs'][3]  = {'host':2,'cfg':'ldm_replicator', 'vars':{'cntl':40, 'in':36, 'abiarch':41, 'glmarch':42}}
-groups[4]['jobs'][4]  = {'host':1,'cfg':'aws_replicator', 'vars':{'cntl':50, 'indata':51}}
+#groups[4]['jobs'][1]  = {'host':3,'cfg':'ldm_manager',    'vars':{'cntl':20, 'in':22, 'outdata':21}}
+#groups[4]['jobs'][2]  = {'host':2,'cfg':'ldm_dispatcher', 'vars':{'cntl':30, 'in':21, 'abiinfo':33, 'abidata':32, 'glminfo':35, 'glmdata':34, 'archinfo':36, 'archdata':31}}
+#groups[4]['jobs'][3]  = {'host':2,'cfg':'ldm_replicator', 'vars':{'cntl':40, 'in':36, 'abiarch':41, 'glmarch':42}}
+groups[4]['jobs'][4]  = {'host':1,'cfg':'g16_replicator', 'vars':{'cntl':110, 'loglvl':5, 'indata':111, 'abidata':112, 'abiinfo':113,'glmdata':114,'glminfo':115}}
+groups[4]['jobs'][5]  = {'host':1,'cfg':'g17_replicator', 'vars':{'cntl':120, 'loglvl':5, 'indata':121, 'abidata':122, 'abiinfo':123,'glmdata':124,'glminfo':125}}
+groups[4]['jobs'][6]  = {'host':1,'cfg':'h8_replicator',  'vars':{'cntl':130, 'loglvl':5, 'indata':131, 'h8fddata':132, 'h8fdinfo':133}}
+
+

@@ -52,6 +52,7 @@ job['input_type']  = {}
 job['input_type']['type']          = 'awsqueue'
 job['input_type']['name']          = 'NewGOES16ObjectQueue_Test2'
 job['input_type']['data_location'] = 'local'
+job['input_type']['base_data_url'] = 'http://noaa-goes16.s3.amazonaws.com'
 job['input_type']['data_node']     = jobvars['indata']
 job['input_type']['aws_region']    = 'us-east-1'
 job['input_type']['authid']        = 4

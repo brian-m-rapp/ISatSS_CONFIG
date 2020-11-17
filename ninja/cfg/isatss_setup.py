@@ -21,12 +21,14 @@ conda_path     = '/home/brapp/nwspy/anaconda'
 # Additionally, isatss_init.py looks in the sitemods cfg directory for the file 'im_site_commands.py'.  If present, the
 # command definitions in that file are added to the isatss commands defined in the baseline cfg/im_commands.py file.
 #
-#sitemods       = '/home/brapp/git/ISatSS_NCEP/ATC'
 sitemods       = '/home/brapp/git/ISatSS_CONFIG/ninja'
+#sitemods       = '/home/brapp/git/ISatSS_CONFIG/ninja'
 
 #add on packages
 add_ons = {'authid':0, 'protocol':'ssh', 'packages':{}, 'javascript':{}}
 add_ons['top'] = '/home/brapp/nwspy/add_ons'
+add_ons['packages']['psycopg2']      = {'stype':'conda', 'channel':'anaconda'}
+add_ons['packages']['tabulate']      = {'stype':'conda', 'channel':'conda-forge'}
 add_ons['packages']['elasticsearch'] = {'stype':'conda', 'channel':'conda-forge'}
 add_ons['packages']['boto3']         = {'stype':'conda', 'channel':'anaconda'}
 add_ons['packages']['glmtools']      = {'branch':'p37_n118_v4.2'}
@@ -35,6 +37,13 @@ add_ons['packages']['stormdrain']    = {'branch':'p37_n118_v4.2'}
 add_ons['packages']['pyclipper']     = {'branch':'p37_n118_v4.2'}
 add_ons['packages']['svn']           = {'stype':'pypi', 'src':'https://files.pythonhosted.org/packages/a1/e7/79a64af11e5d2a1e0996e1e2ce781e297ce711d9835fbe37b43dd6134343/svn-0.3.46.tar.gz'}
 add_ons['javascript']['ckeditor']    = 'ckeditor'  # this will look for ckeditor under the addons directory
+
+'''
+localhosts = {}
+localhosts['GCP'] = {}
+localhosts['GCP'][1] = {'host':['ninja.dilireum.org'], 'shortname':'grb01'}
+localhosts['GCP'][2] = {'host':['ninja.dilireum.org'], 'shortname':'grb01ldm', 'user': 'ildm', 'ext':1336,'cmd':5,'resp':6}
+'''
 '''
 localhosts = {}
 localhosts['NHC1'] = {}
@@ -43,10 +52,11 @@ localhosts['NHC1'][2] = {'host':['ninja.dilireum.org'], 'shortname':'grb01ldm', 
 localhosts['NHC2'] = {}
 localhosts['NHC2'][1] = {'host':['nhc-vm-dev-isatss04.nhc.noaa.gov'], 'shortname':'grb02'}
 localhosts['NHC2'][2] = {'host':['nhc-vm-dev-isatss04.nhc.noaa.gov'], 'shortname':'grb02ldm', 'user': 'ldm', 'ext':1336,'cmd':4,'resp':5}
+'''
 
 # local fstypes for development - if present, the localfstypes dictionary will override the fstypes dictionary
 # in the isatss_config.py file, allowing for convenient local development without change to the nodes dictionary.
-
+'''
 localfstypes = {}
 localfstypes['fastest']   = {'root':'/dev/shm/isatss_data',     'filesystem':'/dev/shm', 'stype':'attached'}
 localfstypes['grb']       = {'root':'/data/isatss_data',        'filesystem':'/data',    'stype':'attached'}
@@ -55,10 +65,14 @@ localfstypes['backup']    = {'root':'/data/isatss_data/nfsbak', 'filesystem':'/d
 localfstypes['storage']   = {'root':'/data/isatss_data/nfsops', 'filesystem':'/data',    'stype':'attached'}
 localfstypes['storage1']  = {'root':'/data/isatss_data',        'filesystem':'/data',    'stype':'attached'}
 localfstypes['storage2']  = {'root':'/data/isatss_data',        'filesystem':'/data',    'stype':'attached'}
+localfstypes['storage3']  = {'root':'/data/isatss_data',        'filesystem':'/data',    'stype':'attached'}
+localfstypes['storage4']  = {'root':'/data/isatss_data',        'filesystem':'/data',    'stype':'attached'}
 localfstypes['pdainput']  = {'root':'/data/isatss_backup',      'filesystem':'/data',    'stype':'attached'}
 localfstypes['pdainput2'] = {'root':'/data/isatss_backup',      'filesystem':'/data',    'stype':'attached'}
 localfstypes['pdainput3'] = {'root':'/data/isatss_backup',      'filesystem':'/data',    'stype':'attached'}
+localfstypes['geocloud']  = {'root':'geostationary',            'filesystem':'',         'stype':'s3bucket', 'bucket':'geocloud-products', 'authid':0}
 '''
+
 '''
 localhosts = {}
 localhosts['S1'] = {}
@@ -72,8 +86,8 @@ localhosts['S3'][1] = {'host':['ninja.dilireum.org'], 'shortname':'isatss'}
 localhosts['S3'][2] = {'host':['ninja.dilireum.org'], 'shortname':'ldm',  'user': 'ldm', 'ext':1336,'cmd':6,'resp':7}
 '''
 
-defaultlocalhostid   = 1
-defaultlocalinstance = 'ROCK'
+#defaultlocalhostid   = 1
+#defaultlocalinstance = 'NHC1'
 defaultlocaluser     = 'brapp'
 defaultlocalpidpath  = '/scratch/isatss_data/pid'
 
