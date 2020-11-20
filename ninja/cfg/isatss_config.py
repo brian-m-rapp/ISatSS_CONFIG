@@ -185,6 +185,7 @@ defaults['vlab']['url']     = 'https://vlab.ncep.noaa.gov'
 defaults['vlab']['company'] = 10132
 defaults['vlab']['group']   = 1334496        # ISatSS community group ID
 defaults['logLockSize']     = '1G'
+defaults['aws_authid']      = 5
 
 groups = {}
 
