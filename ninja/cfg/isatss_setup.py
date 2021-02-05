@@ -1,5 +1,12 @@
+# isatss configuration
+
+devtop  = '/home/brapp/git'
+devdata = '/home/brapp'
+devfs   = '/home'
+
 # path to installed anaconda install.  If not using a local anaconda install, set to None
 conda_path     = '/home/brapp/nwspy/anaconda'
+
 
 # path to optional site customization area.  If not used, the sitemods variable can be set to None, or simply removed.
 # a customization area contains up to three directories:
@@ -21,81 +28,99 @@ conda_path     = '/home/brapp/nwspy/anaconda'
 # Additionally, isatss_init.py looks in the sitemods cfg directory for the file 'im_site_commands.py'.  If present, the
 # command definitions in that file are added to the isatss commands defined in the baseline cfg/im_commands.py file.
 #
-sitemods       = '/home/brapp/git/ISatSS_CONFIG/ninja'
-#sitemods       = '/home/brapp/git/ISatSS_CONFIG/ninja'
+# The mysite and mysitevals configuration parameters allow an install to mimic a deployed site.
+#     sitemod - name of site in ISatSS_NCEP
+#     hid     - host id to run all jobs as
+#     inst    - instance value to use in interpreting isatss_config.py
+#
+mysite = 'NHC1'
+mysitevals = {}
+mysitevals['AWC']     = {'sitemod':'AWC7',  'hid':1,'inst':'AWC7'}
+mysitevals['AWCDev1'] = {'sitemod':'AWCDev','hid':1,'inst':'AWCDEV7'}
+mysitevals['OPG']     = {'sitemod':'OPG',   'hid':1,'inst':'OPG'}
+mysitevals['SPC1']    = {'sitemod':'SPC',   'hid':1,'inst':'S1'}
+mysitevals['NHC1']    = {'sitemod':'NHC',   'hid':1,'inst':'NHC1'}
+mysitevals['NHC2']    = {'sitemod':'NHC',   'hid':1,'inst':'NHC2'}
+mysitevals['NHCDev1'] = {'sitemod':'NHCDev','hid':1,'inst':'NHCDEV1'}
+mysitevals['NHCDev2'] = {'sitemod':'NHCDev','hid':1,'inst':'NHCDEV2'}
+mysitevals['IDPDev1'] = {'sitemod':'IDPDev','hid':1,'inst':'CPDEV'}
+mysitevals['NAPO2']   = {'sitemod':'NAPO2', 'hid':1,'inst':'N1'}
+mysitevals['NAPO']    = {'sitemod':'NAPO',  'hid':1,'inst':'N1'}
+mysitevals['STAR']    = {'sitemod':'STAR',  'hid':1,'inst':'STAR'}
 
-#add on packages
-add_ons = {'authid':0, 'protocol':'ssh', 'packages':{}, 'javascript':{}}
-add_ons['top'] = '/home/brapp/nwspy/add_ons'
-add_ons['packages']['psycopg2']      = {'stype':'conda', 'channel':'anaconda'}
-add_ons['packages']['tabulate']      = {'stype':'conda', 'channel':'conda-forge'}
-add_ons['packages']['elasticsearch'] = {'stype':'conda', 'channel':'conda-forge'}
-add_ons['packages']['boto3']         = {'stype':'conda', 'channel':'anaconda'}
-add_ons['packages']['glmtools']      = {'branch':'p37_n118_v4.2'}
-add_ons['packages']['lmatools']      = {'branch':'p37_n118_v4.2'}
-add_ons['packages']['stormdrain']    = {'branch':'p37_n118_v4.2'}
-add_ons['packages']['pyclipper']     = {'branch':'p37_n118_v4.2'}
-add_ons['packages']['svn']           = {'stype':'pypi', 'src':'https://files.pythonhosted.org/packages/a1/e7/79a64af11e5d2a1e0996e1e2ce781e297ce711d9835fbe37b43dd6134343/svn-0.3.46.tar.gz'}
-add_ons['javascript']['ckeditor']    = 'ckeditor'  # this will look for ckeditor under the addons directory
+#
+# The mymods variable points to a personal directory for configuration, data, library, documentation, and applications.
+# If they exist, subdirectories cfg, lib, apps , agents, and data are placed in the python sys.path in front of the corresponding
+# sitemods and baseline counterparts.
+#
 
-'''
-localhosts = {}
-localhosts['GCP'] = {}
-localhosts['GCP'][1] = {'host':['ninja.dilireum.org'], 'shortname':'grb01'}
-localhosts['GCP'][2] = {'host':['ninja.dilireum.org'], 'shortname':'grb01ldm', 'user': 'ildm', 'ext':1336,'cmd':5,'resp':6}
-'''
-'''
-localhosts = {}
-localhosts['NHC1'] = {}
-localhosts['NHC1'][1] = {'host':['ninja.dilireum.org'], 'shortname':'grb01'}
-localhosts['NHC1'][2] = {'host':['ninja.dilireum.org'], 'shortname':'grb01ldm', 'user': 'ldm', 'ext':1336,'cmd':4,'resp':5}
-localhosts['NHC2'] = {}
-localhosts['NHC2'][1] = {'host':['nhc-vm-dev-isatss04.nhc.noaa.gov'], 'shortname':'grb02'}
-localhosts['NHC2'][2] = {'host':['nhc-vm-dev-isatss04.nhc.noaa.gov'], 'shortname':'grb02ldm', 'user': 'ldm', 'ext':1336,'cmd':4,'resp':5}
-'''
+ipacks = []
+ipacks.append({'path':devtop+'/Developer','name':'Developer'})
 
-# local fstypes for development - if present, the localfstypes dictionary will override the fstypes dictionary
-# in the isatss_config.py file, allowing for convenient local development without change to the nodes dictionary.
-'''
-localfstypes = {}
-localfstypes['fastest']   = {'root':'/dev/shm/isatss_data',     'filesystem':'/dev/shm', 'stype':'attached'}
-localfstypes['grb']       = {'root':'/data/isatss_data',        'filesystem':'/data',    'stype':'attached'}
-localfstypes['local']     = {'root':'/scratch/isatss_data',     'filesystem':'/scratch', 'stype':'attached'}
-localfstypes['backup']    = {'root':'/data/isatss_data/nfsbak', 'filesystem':'/data',    'stype':'attached'}
-localfstypes['storage']   = {'root':'/data/isatss_data/nfsops', 'filesystem':'/data',    'stype':'attached'}
-localfstypes['storage1']  = {'root':'/data/isatss_data',        'filesystem':'/data',    'stype':'attached'}
-localfstypes['storage2']  = {'root':'/data/isatss_data',        'filesystem':'/data',    'stype':'attached'}
-localfstypes['storage3']  = {'root':'/data/isatss_data',        'filesystem':'/data',    'stype':'attached'}
-localfstypes['storage4']  = {'root':'/data/isatss_data',        'filesystem':'/data',    'stype':'attached'}
-localfstypes['pdainput']  = {'root':'/data/isatss_backup',      'filesystem':'/data',    'stype':'attached'}
-localfstypes['pdainput2'] = {'root':'/data/isatss_backup',      'filesystem':'/data',    'stype':'attached'}
-localfstypes['pdainput3'] = {'root':'/data/isatss_backup',      'filesystem':'/data',    'stype':'attached'}
-localfstypes['geocloud']  = {'root':'geostationary',            'filesystem':'',         'stype':'s3bucket', 'bucket':'geocloud-products', 'authid':0}
-'''
+# sitemods defines the path to the mimic'ed configuration area
+sitemods       = devtop+'/ISatSS-config/'+mysitevals[mysite]['sitemod']
 
-'''
-localhosts = {}
-localhosts['S1'] = {}
-localhosts['S1'][1] = {'host':['ninja.dilireum.org'], 'shortname':'isatss'}
-localhosts['S1'][2] = {'host':['ninja.dilireum.org'], 'shortname':'ldm',  'user': 'ldm', 'ext':1336,'cmd':6,'resp':7}
-localhosts['S2'] = {}
-localhosts['S2'][1] = {'host':['ninja.dilireum.org'], 'shortname':'isatss'}
-localhosts['S2'][2] = {'host':['ninja.dilireum.org'], 'shortname':'ldm',  'user': 'ldm', 'ext':1336,'cmd':6,'resp':7}
-localhosts['S3'] = {}
-localhosts['S3'][1] = {'host':['ninja.dilireum.org'], 'shortname':'isatss'}
-localhosts['S3'][2] = {'host':['ninja.dilireum.org'], 'shortname':'ldm',  'user': 'ldm', 'ext':1336,'cmd':6,'resp':7}
-'''
+# add_ons provides configuration information for software that augments what is provided by nwspy
+# The authid value corresponds to an authentication entry made using the "isatss creds add" command
+# 'packages' entries are populated using the addons command
+# 'binaries' are manually placed'
+# TODO: update this and make it clearer and document it
 
-#defaultlocalhostid   = 1
-#defaultlocalinstance = 'NHC1'
-defaultlocaluser     = 'brapp'
-defaultlocalpidpath  = '/scratch/isatss_data/pid'
+add_ons = {'top':'','packages':{},'binaries':{},'javascript':{},'authid':0,'protocol':'ssh'}
+add_ons['top']                        = devtop+'/add_ons'
+add_ons['packages']['glmtools']       = {'branch':'p37_n117_v4.2'} 
+add_ons['packages']['lmatools']       = {'branch':'p37_n117_v4.2'}
+add_ons['packages']['stormdrain']     = {'branch':'p37_n116_v3'}
+add_ons['packages']['pyclipper']      = {'branch':'p37_n116_v3'}
+add_ons['javascript']['ckeditor']     = 'ckeditor'
+#add_ons['javascript']['d3']           = 'd3'      
+#add_ons['binaries']['xRITDecompress'] = 'xRITDecompress/2.06/xRITDecompress/xRITDecompress'
 
 # Flag to indicate if Tracebacks are to be displayed on failed imports
 import_tracebacks = True
 
 # Flag to indicate handling of failed import
-quit_on_failed_import = True
+quit_on_failed_import = False
 
 # python run time warnings
 pythonWarnings = 'disabled'
+
+# local fstypes for development - comment out completely if not used
+# these fstypes override the entries in the isatss_config.py configuration file for the mimic'ed site
+localfstypes = {}
+localfstypes['fastest']   = {'root':'/dev/shm/isatss_data',           'filesystem':'/dev/shm', 'stype':'attached','cutoff':100e6}
+localfstypes['grb']       = {'root':'/dev/shm/isatss_data',           'filesystem':'/dev/shm', 'stype':'attached','cutoff':100e6}
+localfstypes['local']     = {'root':devdata+'/isatss_data',           'filesystem':devfs,      'stype':'attached','cutoff':100e6}
+localfstypes['backup']    = {'root':devdata+'/isatss_data/backup',    'filesystem':devfs,      'stype':'network', 'cutoff':100e6}
+localfstypes['storage']   = {'root':devdata+'/isatss_data/storage',   'filesystem':devfs,      'stype':'network', 'cutoff':100e6}
+localfstypes['storage1']  = {'root':devdata+'/isatss_data/storage1',  'filesystem':devfs,      'stype':'network', 'cutoff':100e6}
+localfstypes['storage2']  = {'root':devdata+'/isatss_data/storage2',  'filesystem':devfs,      'stype':'network', 'cutoff':100e6}
+localfstypes['storage3']  = {'root':devdata+'/isatss_data/storage3',  'filesystem':devfs,      'stype':'network', 'cutoff':100e6}
+localfstypes['storage4']  = {'root':devdata+'/isatss_data/storage4',  'filesystem':devfs,      'stype':'network', 'cutoff':100e6}
+localfstypes['storage5']  = {'root':devdata+'/isatss_data/storage5',  'filesystem':devfs,      'stype':'network', 'cutoff':100e6}
+localfstypes['storage6']  = {'root':devdata+'/isatss_data/storage6',  'filesystem':devfs,      'stype':'network', 'cutoff':100e6}
+localfstypes['storage7']  = {'root':devdata+'/isatss_data/storage7',  'filesystem':devfs,      'stype':'network', 'cutoff':100e6}
+localfstypes['storage8']  = {'root':devdata+'/isatss_data/storage8',  'filesystem':devfs,      'stype':'network', 'cutoff':100e6}
+localfstypes['storage9']  = {'root':devdata+'/isatss_data/storage9',  'filesystem':devfs,      'stype':'network', 'cutoff':100e6}
+localfstypes['storage10'] = {'root':devdata+'/isatss_data/storage10', 'filesystem':devfs,      'stype':'network', 'cutoff':100e6}
+localfstypes['storage11'] = {'root':devdata+'/isatss_data/storage11', 'filesystem':devfs,      'stype':'network', 'cutoff':100e6}
+localfstypes['storage12'] = {'root':devdata+'/isatss_data/storage12', 'filesystem':devfs,      'stype':'network', 'cutoff':100e6}
+localfstypes['storage13'] = {'root':devdata+'/isatss_data/storage13', 'filesystem':devfs,      'stype':'network', 'cutoff':100e6}
+localfstypes['storage14'] = {'root':devdata+'/isatss_data/storage14', 'filesystem':devfs,      'stype':'network', 'cutoff':100e6}
+localfstypes['storage15'] = {'root':devdata+'/isatss_data/storage15', 'filesystem':devfs,      'stype':'network', 'cutoff':100e6}
+localfstypes['pdainput']  = {'root':devdata+'/isatss_data/pdainput',  'filesystem':devfs,      'stype':'attached','cutoff':100e6}
+localfstypes['pdainput2'] = {'root':devdata+'/isatss_data/pdainput2', 'filesystem':devfs,      'stype':'attached','cutoff':100e6}
+localfstypes['pdainput3'] = {'root':devdata+'/isatss_data/pdainput3', 'filesystem':devfs,      'stype':'attached','cutoff':100e6}
+
+# default host and instance - comment out completely if not used
+# These entries override default entries in the isatss_config.py configuration file for the mimic'ed site
+defaultlocalhostid   = mysitevals[mysite]['hid']
+defaultlocalpidpath  = devdata+'/isatss_data/pid'
+defaultlocalinstance = mysitevals[mysite]['inst']
+
+# vugraf variables
+#vugraf_d3         = '/home/jzajic/isatss/ISatSS/admin/d3.js'
+#vugraf_ckeditor   = '/home/jzajic/isatss/ISatSS/admin/ckeditor'
+#vugraf_draftcount = 15
+#vugraf_thingdb_config = 'spbot'
+

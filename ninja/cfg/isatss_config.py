@@ -42,6 +42,7 @@ to define the hosts, groups, jobs, site ID, and tier in the current instance.
 
 instance_attrs = {}
 instance_attrs['ROCK'] = {'site':'ROCK', 'tier':'dev', 'instance_keys':['ROCK']}
+instance_attrs['AWS1'] = {'site':'ROCK', 'tier':'dev', 'instance_keys':['ROCK']}
 
 """
 The host dictionary identifies all of the members of an ISatSS cluster, and defines the ports and nodes used by the agent86 control and communications app.
